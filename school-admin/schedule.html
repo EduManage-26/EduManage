@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Schedule | School Admin</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries">
+    </script>
+    <link rel="icon" type="image/x-icon" href="../image/icon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+    <style>
+        * { font-family: 'Inter', sans-serif; }
+        body { background-color: #f9f9ff; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .sidebar-link { transition: all 0.2s ease; }
+        .sidebar-link:hover { background-color: #f0f3ff; transform: translateX(4px); }
+        .sidebar-link.active { background-color: rgba(37, 99, 235, 0.1); color: #004ac6; border-left: 4px solid #004ac6; font-weight: 700; }
+        .card-shadow { box-shadow: 0 1px 3px 0 rgba(0,0,0,0.1), 0 1px 2px -1px rgba(0,0,0,0.1); }
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #e2e8f0; border-radius: 10px; }
+        .animate-fade-in { animation: fadeIn 0.3s ease-out forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .badge-pulse { animation: pulse 2s infinite; }
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.2); } 100% { transform: scale(1); } }
+        .notification-toast { transition: all 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55); }
+        .schedule-grid { display: grid; grid-template-columns: 80px repeat(5, 1fr); grid-auto-rows: minmax(75px, auto); }
+        .schedule-cell { transition: all 0.2s ease; min-height: 75px; border-right: 1px solid rgba(195,198,215,0.3); }
+        .schedule-cell:hover { background-color: #f0f3ff; }
+        .schedule-cell.dragover { background-color: #d0e1fb; border: 2px dashed #004ac6; }
+        .event-card { transition: all 0.2s ease; cursor: grab; }
+        .event-card:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        .event-card:active { cursor: grabbing; }
+        @media (max-width: 768px) { .schedule-grid { display: block; } }
+        .time-slot { background: rgba(240,243,255,0.2); border-right: 1px solid rgba(195,198,215,0.3); }
+        .day-header { background: rgba(240,243,255,0.3); border-bottom: 1px solid rgba(195,198,215,0.5); }
+    </style>
+</head>
+<body>
+
+    <!-- ==================== SIDEBAR ==================== -->
+    <aside class="fixed left-0 top-0 h-full w-[260px] z-50 bg-[#f9f9ff] border-r border-[#c3c6d7] shadow-sm flex flex-col py-4 gap-1">
+        <div class="px-4 mb-6">
+            <div class="flex items-center gap-2">
+                <div class="w-10 h-10 rounded-lg bg-[#2563eb] flex items-center justify-center text-white">
+                    <span class="material-symbols-outlined" style="font-variation-settings:'FILL'1;">school</span>
+                </div>
+                <div>
+                    <h1 class="text-[20px] font-[600] leading-[28px] text-[#004ac6]">EduManage</h1>
+                    <p class="text-[12px] font-[500] leading-[16px] tracking-[0.05em] text-[#505f76]">School Admin</p>
+                </div>
+            </div>
+        </div>
+        <nav class="flex-1 px-2 space-y-1 overflow-y-auto custom-scrollbar">
+            <a href="index.html" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-lg text-[#505f76]">
+                <span class="material-symbols-outlined">dashboard</span>
+                <span class="text-[12px] font-[500] leading-[16px] tracking-[0.05em]">Dashboard</span>
+            </a>
+            <a href="teachers.html" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-lg text-[#505f76]">
+                <span class="material-symbols-outlined">person</span>
+                <span class="text-[12px] font-[500] leading-[16px] tracking-[0.05em]">Teachers</span>
+            </a>
+            <a href="students.html" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-lg text-[#505f76]">
+                <span class="material-symbols-outlined">groups</span>
+                <span class="text-[12px] font-[500] leading-[16px] tracking-[0.05em]">Students</span>
+            </a>
+            <a href="parents.html" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-lg text-[#505f76]">
+                <span class="material-symbols-outlined">family_restroom</span>
+                <span class="text-[12px] font-[500] leading-[16px] tracking-[0.05em]">Parents</span>
+            </a>
+            <a href="classes.html" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-lg text-[#505f76]">
+                <span class="material-symbols-outlined">class</span>
+                <span class="text-[12px] font-[500] leading-[16px] tracking-[0.05em]">Classes</span>
+            </a>
+            <a href="subjects.html" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-lg text-[#505f76]">
+                <span class="material-symbols-outlined">menu_book</span>
+                <span class="text-[12px] font-[500] leading-[16px] tracking-[0.05em]">Subjects</span>
+            </a>
+            <a href="schedule.html" class="sidebar-link active flex items-center gap-4 px-4 py-3 rounded-lg text-[#004ac6] bg-[rgba(37,99,235,0.1)] border-l-4 border-[#004ac6] font-bold">
+                <span class="material-symbols-outlined">calendar_month</span>
+                <span class="text-[12px] font-[500] leading-[16px] tracking-[0.05em]">Schedule</span>
+            </a>
+            <a href="attendance.html" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-lg text-[#505f76]">
+                <span class="material-symbols-outlined">fact_check</span>
+                <span class="text-[12px] font-[500] leading-[16px] tracking-[0.05em]">Attendance</span>
+            </a>
+            <a href="analytics.html" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-lg text-[#505f76]">
+                <span class="material-symbols-outlined">analytics</span>
+                <span class="text-[12px] font-[500] leading-[16px] tracking-[0.05em]">Analytics</span>
+            </a>
+            <a href="reports.html" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-lg text-[#505f76]">
+                <span class="material-symbols-outlined">description</span>
+                <span class="text-[12px] font-[500] leading-[16px] tracking-[0.05em]">Reports</span>
+            </a>
+            <a href="notifications.html" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-lg text-[#505f76]">
+                <span class="material-symbols-outlined">notifications</span>
+                <span class="text-[12px] font-[500] leading-[16px] tracking-[0.05em]">Notifications</span>
+            </a>
+            <a href="settings.html" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-lg text-[#505f76]">
+                <span class="material-symbols-outlined">settings</span>
+                <span class="text-[12px] font-[500] leading-[16px] tracking-[0.05em]">Settings</span>
+            </a>
+            <a href="profile.html" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-lg text-[#505f76]">
+                <span class="material-symbols-outlined">person</span>
+                <span class="text-[12px] font-[500] leading-[16px] tracking-[0.05em]">Profile</span>
+            </a>
+        </nav>
+        <div class="px-4 mt-auto pt-4 border-t border-[#c3c6d7]">
+            <div class="flex items-center gap-3">
+                <img alt="Admin profile" class="w-10 h-10 rounded-full border border-[#c3c6d7] object-cover"
+                src="https://ui-avatars.com/api/?name=John+Doe&background=137fec&color=fff&size=128" />
+                <div>
+                    <p class="text-[14px] font-[400] leading-[20px] font-bold text-[#111c2d]">John Doe</p>
+                    <p class="text-[12px] font-[500] leading-[16px] tracking-[0.05em] text-[#505f76]">School Admin</p>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- ==================== MAIN CONTENT ==================== -->
+    <main class="ml-[260px] min-h-screen flex flex-col">
+
+        <!-- ==================== TOP NAV BAR ==================== -->
+        <header class="sticky top-0 z-40 w-full h-16 bg-[#f9f9ff] border-b border-[#c3c6d7] shadow-sm flex justify-between items-center px-6">
+            <div class="flex items-center gap-4 flex-1">
+                <div class="relative w-full max-w-md">
+                    <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-[#737686]">search</span>
+                    <input class="w-full bg-[#f0f3ff] border-none rounded-full py-2 pl-10 pr-4 text-[14px] font-[400] leading-[20px] focus:ring-2 focus:ring-[#2563eb] focus:ring-opacity-20 transition-all"
+                    placeholder="Search events..." type="text" id="searchInput" oninput="filterEvents()" />
+                </div>
+            </div>
+            <div class="flex items-center gap-4">
+                <button class="p-2 text-[#505f76] hover:bg-[#f0f3ff] rounded-full transition-colors relative" onclick="toggleNotifications()" id="notifBtn">
+                    <span class="material-symbols-outlined">notifications</span>
+                    <span class="absolute -top-1 -right-1 min-w-[18px] h-[18px] bg-[#ba1a1a] text-white text-[10px] font-bold rounded-full flex items-center justify-center px-1 badge-pulse" id="notifBadge">3</span>
+                </button>
+                <div class="flex items-center gap-2 cursor-pointer hover:bg-[#f0f3ff] p-1 rounded-lg transition-colors" onclick="window.location.href='profile.html'">
+                    <img alt="Admin avatar" class="w-8 h-8 rounded-full object-cover"
+                    src="https://ui-avatars.com/api/?name=John+Doe&background=137fec&color=fff&size=128" />
+                    <div class="hidden md:block text-left">
+                        <p class="text-[12px] font-[500] leading-[16px] tracking-[0.05em] font-bold leading-tight">John Doe</p>
+                        <p class="text-[10px] text-[#505f76]">School Admin</p>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- ==================== NOTIFICATION DROPDOWN ==================== -->
+        <div id="notifDropdown" class="fixed top-16 right-6 z-50 bg-white rounded-xl border border-[#c3c6d7] shadow-2xl max-w-sm w-full transform scale-95 opacity-0 transition-all duration-200 pointer-events-none">
+            <div class="p-4 border-b border-[#c3c6d7] flex justify-between items-center">
+                <h3 class="text-[16px] font-bold text-[#111c2d]">Notifications</h3>
+                <span class="text-[12px] text-[#004ac6] font-bold cursor-pointer hover:underline" onclick="markAllRead()">Mark all read</span>
+            </div>
+            <div class="max-h-80 overflow-y-auto custom-scrollbar" id="notifDropdownList">
+                <div class="p-3 border-b border-[rgba(195,198,215,0.3)] hover:bg-[#f0f3ff] transition-all cursor-pointer unread">
+                    <p class="text-[14px] font-semibold text-[#111c2d]">Schedule Change</p>
+                    <p class="text-[12px] text-[#505f76]">Math class moved to Room 204</p>
+                    <p class="text-[10px] text-[#737686] mt-1">2 hours ago</p>
+                </div>
+                <div class="p-3 border-b border-[rgba(195,198,215,0.3)] hover:bg-[#f0f3ff] transition-all cursor-pointer unread">
+                    <p class="text-[14px] font-semibold text-[#111c2d]">New Event Added</p>
+                    <p class="text-[12px] text-[#505f76]">Parent-Teacher Meeting scheduled</p>
+                    <p class="text-[10px] text-[#737686] mt-1">1 day ago</p>
+                </div>
+                <div class="p-3 hover:bg-[#f0f3ff] transition-all cursor-pointer">
+                    <p class="text-[14px] font-semibold text-[#111c2d]">System Update</p>
+                    <p class="text-[12px] text-[#505f76]">New schedule features added</p>
+                    <p class="text-[10px] text-[#737686] mt-1">3 days ago</p>
+                </div>
+            </div>
+            <div class="p-3 border-t border-[#c3c6d7] text-center">
+                <button class="text-[12px] text-[#004ac6] font-bold hover:underline" onclick="window.location.href='notifications.html'">View all →</button>
+            </div>
+        </div>
+
+        <!-- ==================== PAGE CONTENT ==================== -->
+        <div class="p-6 space-y-6">
+
+            <!-- Header -->
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                <div>
+                    <h2 class="text-[24px] font-[600] leading-[32px] text-[#111c2d]">School Schedule</h2>
+                    <p class="text-[16px] font-[400] leading-[24px] text-[#505f76]">Manage weekly class schedule and events</p>
+                </div>
+                <div class="flex gap-3 flex-wrap">
+                    <div class="flex bg-[#f0f3ff] p-1 rounded-lg">
+                        <button onclick="setView('week')" class="px-4 py-1.5 text-[12px] font-bold rounded-md bg-white shadow-sm text-[#004ac6]" id="viewWeek">Week</button>
+                        <button onclick="setView('month')" class="px-4 py-1.5 text-[12px] font-bold rounded-md text-[#505f76] hover:bg-white/50 transition-colors" id="viewMonth">Month</button>
+                    </div>
+                    <button onclick="openAddEventModal()" class="bg-[#004ac6] text-white px-4 py-2 rounded-lg text-[12px] font-bold hover:bg-[#2563eb] transition-all flex items-center gap-2">
+                        <span class="material-symbols-outlined text-[18px]">add</span>
+                        Add Event
+                    </button>
+                </div>
+            </div>
+
+            <!-- Stats -->
+            <div class="grid grid-cols-1 sm:grid-cols-4 gap-6">
+                <div class="bg-white rounded-xl border p-4 text-center card-shadow">
+                    <p class="text-2xl font-bold text-[#004ac6]" id="totalEvents">8</p>
+                    <p class="text-sm text-gray-500">Total Events</p>
+                </div>
+                <div class="bg-white rounded-xl border p-4 text-center card-shadow">
+                    <p class="text-2xl font-bold text-green-600" id="todayEvents">2</p>
+                    <p class="text-sm text-gray-500">Today</p>
+                </div>
+                <div class="bg-white rounded-xl border p-4 text-center card-shadow">
+                    <p class="text-2xl font-bold text-orange-600" id="thisWeekEvents">5</p>
+                    <p class="text-sm text-gray-500">This Week</p>
+                </div>
+                <div class="bg-white rounded-xl border p-4 text-center card-shadow">
+                    <p class="text-2xl font-bold text-purple-600" id="upcomingEvents">3</p>
+                    <p class="text-sm text-gray-500">Upcoming</p>
+                </div>
+            </div>
+
+            <!-- Schedule Grid -->
+            <div class="bg-white rounded-xl border card-shadow overflow-hidden">
+                <!-- Navigation -->
+                <div class="px-4 py-3 border-b bg-[#f0f3ff] flex flex-wrap justify-between items-center gap-3">
+                    <div class="flex items-center gap-3">
+                        <button onclick="changeWeek(-1)" class="p-1.5 hover:bg-white rounded-md transition-colors">
+                            <span class="material-symbols-outlined">chevron_left</span>
+                        </button>
+                        <span class="text-[16px] font-bold text-[#111c2d]" id="currentWeekLabel">June 17 - 21, 2024</span>
+                        <button onclick="changeWeek(1)" class="p-1.5 hover:bg-white rounded-md transition-colors">
+                            <span class="material-symbols-outlined">chevron_right</span>
+                        </button>
+                        <button onclick="goToToday()" class="px-3 py-1 text-[12px] font-bold text-[#004ac6] hover:bg-white rounded-md transition-colors">Today</button>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <div class="flex items-center gap-1 text-[10px] text-[#505f76]">
+                            <span class="w-3 h-3 rounded-full bg-[#004ac6]"></span> Core
+                        </div>
+                        <div class="flex items-center gap-1 text-[10px] text-[#505f76]">
+                            <span class="w-3 h-3 rounded-full bg-[#006242]"></span> Admin
+                        </div>
+                        <div class="flex items-center gap-1 text-[10px] text-[#505f76]">
+                            <span class="w-3 h-3 rounded-full bg-[#ba1a1a]"></span> Office
+                        </div>
+                        <div class="flex items-center gap-1 text-[10px] text-[#505f76]">
+                            <span class="w-3 h-3 rounded-full bg-[#f59e0b]"></span> Event
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Grid -->
+                <div class="overflow-x-auto" id="scheduleContainer">
+                    <div class="schedule-grid" id="scheduleGrid">
+                        <!-- Header -->
+                        <div class="p-2 text-center text-[12px] font-bold text-[#505f76] time-slot">Time</div>
+                        <div class="p-2 text-center text-[12px] font-bold text-[#111c2d] day-header" data-day="0">Monday</div>
+                        <div class="p-2 text-center text-[12px] font-bold text-[#111c2d] day-header" data-day="1">Tuesday</div>
+                        <div class="p-2 text-center text-[12px] font-bold text-[#111c2d] day-header" data-day="2">Wednesday</div>
+                        <div class="p-2 text-center text-[12px] font-bold text-[#111c2d] day-header" data-day="3">Thursday</div>
+                        <div class="p-2 text-center text-[12px] font-bold text-[#111c2d] day-header" data-day="4">Friday</div>
+
+                        <!-- Row 8:00 -->
+                        <div class="p-2 text-center text-[12px] font-medium text-[#505f76] time-slot">8:00</div>
+                        <div class="p-1 schedule-cell" data-day="0" data-time="8:00">
+                            <div class="event-card bg-[rgba(37,99,235,0.1)] border-l-4 border-[#004ac6] p-2 rounded-md m-1" draggable="true" data-event="Math-Gr10A" onclick="viewEvent('Math - Gr10A')">
+                                <p class="text-[12px] font-bold text-[#004ac6] truncate">Math - Gr10A</p>
+                                <p class="text-[10px] text-[#505f76]">Rm 204</p>
+                            </div>
+                        </div>
+                        <div class="p-1 schedule-cell" data-day="1" data-time="8:00">
+                            <div class="event-card bg-[rgba(0,98,66,0.1)] border-l-4 border-[#006242] p-2 rounded-md m-1" draggable="true" data-event="Physics-Gr11B" onclick="viewEvent('Physics - Gr11B')">
+                                <p class="text-[12px] font-bold text-[#006242] truncate">Physics - Gr11B</p>
+                                <p class="text-[10px] text-[#505f76]">Lab B</p>
+                            </div>
+                        </div>
+                        <div class="p-1 schedule-cell" data-day="2" data-time="8:00"></div>
+                        <div class="p-1 schedule-cell" data-day="3" data-time="8:00">
+                            <div class="event-card bg-[rgba(186,26,26,0.1)] border-l-4 border-[#ba1a1a] p-2 rounded-md m-1" draggable="true" data-event="History-Gr10A" onclick="viewEvent('History - Gr10A')">
+                                <p class="text-[12px] font-bold text-[#ba1a1a] truncate">History - Gr10A</p>
+                                <p class="text-[10px] text-[#505f76]">Rm 101</p>
+                            </div>
+                        </div>
+                        <div class="p-1 schedule-cell" data-day="4" data-time="8:00"></div>
+
+                        <!-- Row 9:30 -->
+                        <div class="p-2 text-center text-[12px] font-medium text-[#505f76] time-slot">9:30</div>
+                        <div class="p-1 schedule-cell" data-day="0" data-time="9:30"></div>
+                        <div class="p-1 schedule-cell" data-day="1" data-time="9:30">
+                            <div class="event-card bg-[rgba(37,99,235,0.1)] border-l-4 border-[#004ac6] p-2 rounded-md m-1" draggable="true" data-event="Algebra-II" onclick="viewEvent('Algebra II')">
+                                <p class="text-[12px] font-bold text-[#004ac6] truncate">Algebra II</p>
+                                <p class="text-[10px] text-[#505f76]">Rm 201</p>
+                            </div>
+                        </div>
+                        <div class="p-1 schedule-cell" data-day="2" data-time="9:30">
+                            <div class="event-card bg-[rgba(37,99,235,0.1)] border-l-4 border-[#004ac6] p-2 rounded-md m-1" draggable="true" data-event="Algebra-II" onclick="viewEvent('Algebra II')">
+                                <p class="text-[12px] font-bold text-[#004ac6] truncate">Algebra II</p>
+                                <p class="text-[10px] text-[#505f76]">Rm 201</p>
+                            </div>
+                        </div>
+                        <div class="p-1 schedule-cell" data-day="3" data-time="9:30"></div>
+                        <div class="p-1 schedule-cell" data-day="4" data-time="9:30">
+                            <div class="event-card bg-[rgba(37,99,235,0.1)] border-l-4 border-[#004ac6] p-2 rounded-md m-1" draggable="true" data-event="Algebra-II" onclick="viewEvent('Algebra II')">
+                                <p class="text-[12px] font-bold text-[#004ac6] truncate">Algebra II</p>
+                                <p class="text-[10px] text-[#505f76]">Rm 201</p>
+                            </div>
+                        </div>
+
+                        <!-- Row 11:00 -->
+                        <div class="p-2 text-center text-[12px] font-medium text-[#505f76] time-slot">11:00</div>
+                        <div class="p-1 schedule-cell" data-day="0" data-time="11:00">
+                            <div class="event-card bg-[rgba(245,158,11,0.1)] border-l-4 border-[#f59e0b] p-2 rounded-md m-1" draggable="true" data-event="Staff-Meeting" onclick="viewEvent('Staff Meeting')">
+                                <p class="text-[12px] font-bold text-[#f59e0b] truncate">Staff Meeting</p>
+                                <p class="text-[10px] text-[#505f76]">Hall A</p>
+                            </div>
+                        </div>
+                        <div class="p-1 schedule-cell" data-day="1" data-time="11:00"></div>
+                        <div class="p-1 schedule-cell" data-day="2" data-time="11:00">
+                            <div class="event-card bg-[rgba(0,98,66,0.1)] border-l-4 border-[#006242] p-2 rounded-md m-1" draggable="true" data-event="Physics-Gr11B" onclick="viewEvent('Physics - Gr11B')">
+                                <p class="text-[12px] font-bold text-[#006242] truncate">Physics - Gr11B</p>
+                                <p class="text-[10px] text-[#505f76]">Lab B</p>
+                            </div>
+                        </div>
+                        <div class="p-1 schedule-cell" data-day="3" data-time="11:00"></div>
+                        <div class="p-1 schedule-cell" data-day="4" data-time="11:00">
+                            <div class="event-card bg-[rgba(245,158,11,0.1)] border-l-4 border-[#f59e0b] p-2 rounded-md m-1" draggable="true" data-event="Student-Assembly" onclick="viewEvent('Student Assembly')">
+                                <p class="text-[12px] font-bold text-[#f59e0b] truncate">Student Assembly</p>
+                                <p class="text-[10px] text-[#505f76]">Hall</p>
+                            </div>
+                        </div>
+
+                        <!-- Lunch Break -->
+                        <div class="p-2 text-center text-[12px] font-medium text-[#505f76] time-slot" style="background:#f8f9fa;">12:30</div>
+                        <div class="p-2 text-center text-[12px] font-bold italic text-[#505f76]/60 flex items-center justify-center gap-2" colspan="5" style="background:#f8f9fa;">
+                            <span class="material-symbols-outlined text-sm">restaurant</span>
+                            Lunch Break
+                        </div>
+
+                        <!-- Row 13:30 -->
+                        <div class="p-2 text-center text-[12px] font-medium text-[#505f76] time-slot">13:30</div>
+                        <div class="p-1 schedule-cell" data-day="0" data-time="13:30"></div>
+                        <div class="p-1 schedule-cell" data-day="1" data-time="13:30">
+                            <div class="event-card bg-[rgba(37,99,235,0.1)] border-l-4 border-[#004ac6] p-2 rounded-md m-1" draggable="true" data-event="Math-Gr10A" onclick="viewEvent('Math - Gr10A')">
+                                <p class="text-[12px] font-bold text-[#004ac6] truncate">Math - Gr10A</p>
+                                <p class="text-[10px] text-[#505f76]">Rm 204</p>
+                            </div>
+                        </div>
+                        <div class="p-1 schedule-cell" data-day="2" data-time="13:30"></div>
+                        <div class="p-1 schedule-cell" data-day="3" data-time="13:30">
+                            <div class="event-card bg-[rgba(37,99,235,0.1)] border-l-4 border-[#004ac6] p-2 rounded-md m-1" draggable="true" data-event="Math-Gr10A" onclick="viewEvent('Math - Gr10A')">
+                                <p class="text-[12px] font-bold text-[#004ac6] truncate">Math - Gr10A</p>
+                                <p class="text-[10px] text-[#505f76]">Rm 204</p>
+                            </div>
+                        </div>
+                        <div class="p-1 schedule-cell" data-day="4" data-time="13:30">
+                            <div class="event-card bg-[rgba(186,26,26,0.1)] border-l-4 border-[#ba1a1a] p-2 rounded-md m-1" draggable="true" data-event="Office-Hours" onclick="viewEvent('Office Hours')">
+                                <p class="text-[12px] font-bold text-[#ba1a1a] truncate">Office Hours</p>
+                                <p class="text-[10px] text-[#505f76]">Online</p>
+                            </div>
+                        </div>
+
+                        <!-- Row 15:00 -->
+                        <div class="p-2 text-center text-[12px] font-medium text-[#505f76] time-slot">15:00</div>
+                        <div class="p-1 schedule-cell" data-day="0" data-time="15:00"></div>
+                        <div class="p-1 schedule-cell" data-day="1" data-time="15:00"></div>
+                        <div class="p-1 schedule-cell" data-day="2" data-time="15:00">
+                            <div class="event-card bg-[rgba(245,158,11,0.1)] border-l-4 border-[#f59e0b] p-2 rounded-md m-1" draggable="true" data-event="Parent-Teacher-Meeting" onclick="viewEvent('Parent-Teacher Meeting')">
+                                <p class="text-[12px] font-bold text-[#f59e0b] truncate">Parent-Teacher Meeting</p>
+                                <p class="text-[10px] text-[#505f76]">Hall A</p>
+                            </div>
+                        </div>
+                        <div class="p-1 schedule-cell" data-day="3" data-time="15:00"></div>
+                        <div class="p-1 schedule-cell" data-day="4" data-time="15:00">
+                            <div class="event-card bg-[rgba(0,98,66,0.1)] border-l-4 border-[#006242] p-2 rounded-md m-1" draggable="true" data-event="Physics-Gr11B" onclick="viewEvent('Physics - Gr11B')">
+                                <p class="text-[12px] font-bold text-[#006242] truncate">Physics - Gr11B</p>
+                                <p class="text-[10px] text-[#505f76]">Lab B</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="mt-auto py-4 px-6 border-t border-[#c3c6d7] bg-[#f9f9ff]">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-[12px] font-[500] text-[#505f76]">© 2024 EduManage Solutions. All rights reserved.</p>
+                <div class="flex gap-6">
+                    <a class="text-[12px] text-[#505f76] hover:text-[#004ac6]" href="#">Help Center</a>
+                    <a class="text-[12px] text-[#505f76] hover:text-[#004ac6]" href="#">Privacy Policy</a>
+                    <a class="text-[12px] text-[#505f76] hover:text-[#004ac6]" href="#">Terms of Service</a>
+                </div>
+            </div>
+        </footer>
+    </main>
+
+    <!-- ==================== ADD EVENT MODAL ==================== -->
+    <div id="addEventModal" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-black/50 backdrop-blur-sm">
+        <div class="bg-white rounded-xl max-w-md w-full mx-4 p-6 shadow-2xl animate-fade-in">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-[18px] font-[600] text-[#111c2d]">Add Event</h3>
+                <button onclick="closeAddEventModal()" class="p-1 hover:bg-[#f0f3ff] rounded-lg">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+            </div>
+            <form id="addEventForm" class="space-y-4">
+                <div>
+                    <label class="block text-[12px] font-semibold text-[#505f76]">Event Title</label>
+                    <input type="text" id="eventTitle" placeholder="e.g., Math - Gr10A" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-[#004ac6] outline-none" required>
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-[12px] font-semibold text-[#505f76]">Day</label>
+                        <select id="eventDay" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-[#004ac6] outline-none">
+                            <option value="0">Monday</option>
+                            <option value="1">Tuesday</option>
+                            <option value="2">Wednesday</option>
+                            <option value="3">Thursday</option>
+                            <option value="4">Friday</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-[12px] font-semibold text-[#505f76]">Time</label>
+                        <select id="eventTime" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-[#004ac6] outline-none">
+                            <option value="8:00">8:00</option>
+                            <option value="9:30">9:30</option>
+                            <option value="11:00">11:00</option>
+                            <option value="13:30">13:30</option>
+                            <option value="15:00">15:00</option>
+                        </select>
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-[12px] font-semibold text-[#505f76]">Location</label>
+                    <input type="text" id="eventLocation" placeholder="e.g., Room 204" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-[#004ac6] outline-none">
+                </div>
+                <div>
+                    <label class="block text-[12px] font-semibold text-[#505f76]">Type</label>
+                    <select id="eventType" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-[#004ac6] outline-none">
+                        <option value="core">Core Course</option>
+                        <option value="admin">Administrative</option>
+                        <option value="office">Office Hours</option>
+                        <option value="event">Event</option>
+                    </select>
+                </div>
+                <div class="flex gap-3 pt-2">
+                    <button type="button" onclick="closeAddEventModal()" class="flex-1 py-2 bg-[#f0f3ff] text-[#505f76] rounded-lg font-bold hover:bg-[#dee8ff]">Cancel</button>
+                    <button type="submit" class="flex-1 py-2 bg-[#004ac6] text-white rounded-lg font-bold hover:bg-[#2563eb]">Add Event</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ==================== VIEW EVENT MODAL ==================== -->
+    <div id="viewEventModal" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-black/50 backdrop-blur-sm">
+        <div class="bg-white rounded-xl max-w-md w-full mx-4 p-6 shadow-2xl animate-fade-in">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-[18px] font-[600] text-[#111c2d]" id="viewEventTitle">Event Details</h3>
+                <button onclick="closeViewEventModal()" class="p-1 hover:bg-[#f0f3ff] rounded-lg">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+            </div>
+            <div class="space-y-4">
+                <div class="p-4 bg-[#f0f3ff] rounded-lg">
+                    <p class="text-[12px] text-[#505f76]">Event</p>
+                    <p class="text-[16px] font-bold text-[#111c2d]" id="viewEventName">Math - Gr10A</p>
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="p-3 bg-[#f9f9ff] border rounded-lg">
+                        <p class="text-[10px] text-[#505f76]">Day</p>
+                        <p class="text-[14px] font-bold" id="viewEventDay">Monday</p>
+                    </div>
+                    <div class="p-3 bg-[#f9f9ff] border rounded-lg">
+                        <p class="text-[10px] text-[#505f76]">Time</p>
+                        <p class="text-[14px] font-bold" id="viewEventTime">8:00</p>
+                    </div>
+                </div>
+                <div class="p-3 bg-[#f9f9ff] border rounded-lg">
+                    <p class="text-[10px] text-[#505f76]">Location</p>
+                    <p class="text-[14px]" id="viewEventLocation">Room 204</p>
+                </div>
+                <div class="flex gap-3 pt-2">
+                    <button onclick="deleteEventFromView()" class="flex-1 py-2 bg-red-500 text-white rounded-lg font-bold hover:bg-red-600 transition-all">Delete</button>
+                    <button onclick="closeViewEventModal()" class="flex-1 py-2 bg-[#004ac6] text-white rounded-lg font-bold hover:bg-[#2563eb] transition-all">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== TOAST ==================== -->
+    <div id="toast" class="fixed bottom-6 right-6 z-50 bg-[#111c2d] text-white rounded-xl p-4 shadow-2xl max-w-sm transform translate-y-full opacity-0 transition-all duration-500">
+        <div class="flex items-start gap-3">
+            <span class="material-symbols-outlined text-[#6ffbbe]">check_circle</span>
+            <div>
+                <p class="text-[14px] font-bold" id="toastTitle">Success</p>
+                <p class="text-[12px] text-[#b7c8e1]" id="toastMessage">Action completed!</p>
+            </div>
+            <button onclick="closeToast()" class="text-[#b7c8e1] hover:text-white">
+                <span class="material-symbols-outlined text-[16px]">close</span>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // ==================== DATA ====================
+        let currentWeekOffset = 0;
+        let currentView = 'week';
+        let notifOpen = false;
+        let draggedEvent = null;
+        let currentViewEvent = null;
+
+        const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
+        const dayColors = {
+            'core': { bg: 'rgba(37,99,235,0.1)', border: '#004ac6', text: '#004ac6' },
+            'admin': { bg: 'rgba(0,98,66,0.1)', border: '#006242', text: '#006242' },
+            'office': { bg: 'rgba(186,26,26,0.1)', border: '#ba1a1a', text: '#ba1a1a' },
+            'event': { bg: 'rgba(245,158,11,0.1)', border: '#f59e0b', text: '#f59e0b' }
+        };
+
+        // ==================== TOAST ====================
+        function showToast(title, message) {
+            document.getElementById('toastTitle').textContent = title;
+            document.getElementById('toastMessage').textContent = message;
+            const toast = document.getElementById('toast');
+            toast.classList.remove('translate-y-full', 'opacity-0');
+            toast.classList.add('translate-y-0', 'opacity-100');
+            setTimeout(closeToast, 4000);
+        }
+        function closeToast() {
+            const toast = document.getElementById('toast');
+            toast.classList.add('translate-y-full', 'opacity-0');
+            toast.classList.remove('translate-y-0', 'opacity-100');
+        }
+
+        // ==================== NOTIFICATIONS ====================
+        function toggleNotifications() {
+            const dropdown = document.getElementById('notifDropdown');
+            notifOpen = !notifOpen;
+            if (notifOpen) {
+                dropdown.classList.remove('scale-95', 'opacity-0', 'pointer-events-none');
+                dropdown.classList.add('scale-100', 'opacity-100', 'pointer-events-auto');
+            } else {
+                dropdown.classList.add('scale-95', 'opacity-0', 'pointer-events-none');
+                dropdown.classList.remove('scale-100', 'opacity-100', 'pointer-events-auto');
+            }
+        }
+        document.addEventListener('click', function(e) {
+            const dropdown = document.getElementById('notifDropdown');
+            const btn = document.getElementById('notifBtn');
+            if (notifOpen && !dropdown.contains(e.target) && !btn.contains(e.target)) {
+                toggleNotifications();
+            }
+        });
+
+        function markAllRead() {
+            document.querySelectorAll('#notifDropdownList .unread').forEach(el => {
+                el.classList.remove('unread');
+                el.style.borderLeft = 'none';
+            });
+            document.getElementById('notifBadge').style.display = 'none';
+            showToast('All Read', 'Notifications marked as read.');
+        }
+
+        // ==================== VIEW ====================
+        function setView(view) {
+            currentView = view;
+            document.querySelectorAll('[id^="view"]').forEach(btn => {
+                btn.classList.remove('bg-white', 'shadow-sm', 'text-[#004ac6]');
+                btn.classList.add('text-[#505f76]');
+            });
+            if (view === 'week') {
+                document.getElementById('viewWeek').classList.add('bg-white', 'shadow-sm', 'text-[#004ac6]');
+                document.getElementById('viewWeek').classList.remove('text-[#505f76]');
+                document.getElementById('scheduleContainer').style.display = 'block';
+            } else {
+                document.getElementById('viewMonth').classList.add('bg-white', 'shadow-sm', 'text-[#004ac6]');
+                document.getElementById('viewMonth').classList.remove('text-[#505f76]');
+                showToast('Month View', 'Monthly calendar view (coming soon)');
+            }
+        }
+
+        // ==================== WEEK NAVIGATION ====================
+        function changeWeek(offset) {
+            currentWeekOffset += offset;
+            updateWeekLabel();
+        }
+
+        function goToToday() {
+            currentWeekOffset = 0;
+            updateWeekLabel();
+        }
+
+        function updateWeekLabel() {
+            const now = new Date();
+            const currentDay = now.getDay();
+            const mondayOffset = currentDay === 0 ? -6 : 1 - currentDay;
+            const monday = new Date(now);
+            monday.setDate(now.getDate() + mondayOffset + (currentWeekOffset * 7));
+            const friday = new Date(monday);
+            friday.setDate(friday.getDate() + 4);
+            const options = { month: 'short', day: 'numeric', year: 'numeric' };
+            document.getElementById('currentWeekLabel').textContent = 
+                monday.toLocaleDateString('en-US', options) + ' - ' + friday.toLocaleDateString('en-US', options);
+        }
+
+        // ==================== DRAG & DROP ====================
+        document.addEventListener('dragstart', function(e) {
+            const card = e.target.closest('.event-card');
+            if (card) {
+                draggedEvent = card;
+                card.style.opacity = '0.5';
+                e.dataTransfer.effectAllowed = 'move';
+                e.dataTransfer.setData('text/plain', card.dataset.event || '');
+            }
+        });
+
+        document.addEventListener('dragend', function(e) {
+            const card = e.target.closest('.event-card');
+            if (card) {
+                card.style.opacity = '1';
+            }
+            document.querySelectorAll('.schedule-cell.dragover').forEach(el => el.classList.remove('dragover'));
+        });
+
+        document.addEventListener('dragover', function(e) {
+            const cell = e.target.closest('.schedule-cell');
+            if (cell && draggedEvent) {
+                e.preventDefault();
+                e.dataTransfer.dropEffect = 'move';
+                document.querySelectorAll('.schedule-cell.dragover').forEach(el => el.classList.remove('dragover'));
+                cell.classList.add('dragover');
+            }
+        });
+
+        document.addEventListener('dragleave', function(e) {
+            const cell = e.target.closest('.schedule-cell');
+            if (cell) {
+                cell.classList.remove('dragover');
+            }
+        });
+
+        document.addEventListener('drop', function(e) {
+            e.preventDefault();
+            const cell = e.target.closest('.schedule-cell');
+            if (cell && draggedEvent) {
+                cell.classList.remove('dragover');
+                const newDay = cell.dataset.day;
+                const newTime = cell.dataset.time;
+                if (newDay !== undefined && newTime !== undefined) {
+                    const dayName = days[parseInt(newDay)];
+                    const time = newTime;
+                    const eventTitle = draggedEvent.dataset.event || 'Event';
+                    showToast('Moved', `${eventTitle} moved to ${dayName} at ${time}`);
+                    // Optionally update the event location in UI
+                    const locationSpan = draggedEvent.querySelector('.text-[10px]');
+                    if (locationSpan) {
+                        locationSpan.textContent = `Moved to ${dayName}`;
+                    }
+                }
+                draggedEvent = null;
+                document.querySelectorAll('.schedule-cell.dragover').forEach(el => el.classList.remove('dragover'));
+            }
+        });
+
+        // ==================== VIEW EVENT ====================
+        function viewEvent(title) {
+            const card = document.querySelector(`[data-event="${title}"]`);
+            if (card) {
+                currentViewEvent = card;
+                document.getElementById('viewEventTitle').textContent = 'Event Details';
+                document.getElementById('viewEventName').textContent = title;
+                const parentCell = card.closest('.schedule-cell');
+                if (parentCell) {
+                    const dayIndex = parseInt(parentCell.dataset.day);
+                    document.getElementById('viewEventDay').textContent = days[dayIndex] || 'Monday';
+                    document.getElementById('viewEventTime').textContent = parentCell.dataset.time || '8:00';
+                }
+                const locationEl = card.querySelector('.text-[10px]');
+                document.getElementById('viewEventLocation').textContent = locationEl ? locationEl.textContent : 'TBD';
+                document.getElementById('viewEventModal').classList.remove('hidden');
+            }
+        }
+
+        function closeViewEventModal() {
+            document.getElementById('viewEventModal').classList.add('hidden');
+            currentViewEvent = null;
+        }
+
+        function deleteEventFromView() {
+            if (currentViewEvent && confirm('Delete this event?')) {
+                const parentCell = currentViewEvent.closest('.schedule-cell');
+                if (parentCell) {
+                    parentCell.innerHTML = '';
+                }
+                closeViewEventModal();
+                showToast('Deleted', 'Event removed from schedule.');
+                updateStats();
+            }
+        }
+
+        // ==================== ADD EVENT ====================
+        function openAddEventModal() {
+            document.getElementById('addEventModal').classList.remove('hidden');
+        }
+        function closeAddEventModal() {
+            document.getElementById('addEventModal').classList.add('hidden');
+            document.getElementById('addEventForm').reset();
+        }
+
+        document.getElementById('addEventForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const title = document.getElementById('eventTitle').value;
+            const day = parseInt(document.getElementById('eventDay').value);
+            const time = document.getElementById('eventTime').value;
+            const location = document.getElementById('eventLocation').value || 'TBD';
+            const type = document.getElementById('eventType').value;
+
+            if (!title) {
+                showToast('Error', 'Please enter an event title.', 'error');
+                return;
+            }
+
+            const grid = document.getElementById('scheduleGrid');
+            const cells = grid.querySelectorAll(`.schedule-cell[data-day="${day}"][data-time="${time}"]`);
+            if (cells.length > 0 && !cells[0].querySelector('.event-card')) {
+                const colors = dayColors[type] || dayColors.core;
+                const eventDiv = document.createElement('div');
+                eventDiv.className = `event-card ${colors.bg} border-l-4 p-2 rounded-md m-1`;
+                eventDiv.style.borderColor = colors.border;
+                eventDiv.draggable = true;
+                eventDiv.dataset.event = title;
+                eventDiv.setAttribute('onclick', `viewEvent('${title}')`);
+                eventDiv.innerHTML = `
+                    <p class="text-[12px] font-bold truncate" style="color:${colors.text}">${title}</p>
+                    <p class="text-[10px] text-[#505f76]">${location}</p>
+                `;
+                cells[0].appendChild(eventDiv);
+                closeAddEventModal();
+                showToast('Added', `${title} added to schedule!`);
+                updateStats();
+            } else {
+                showToast('Error', 'Slot is already occupied or invalid.', 'error');
+            }
+        });
+
+        // ==================== FILTER ====================
+        function filterEvents() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const cards = document.querySelectorAll('.event-card');
+            cards.forEach(card => {
+                const text = card.textContent.toLowerCase();
+                const parent = card.closest('.schedule-cell');
+                if (parent) {
+                    parent.style.display = text.includes(query) ? '' : 'none';
+                }
+            });
+        }
+
+        // ==================== STATS ====================
+        function updateStats() {
+            const cards = document.querySelectorAll('.event-card');
+            const total = cards.length;
+            const today = new Date().getDay();
+            const todayIndex = today === 0 ? 6 : today - 1;
+            const todayCards = document.querySelectorAll(`.schedule-cell[data-day="${todayIndex}"] .event-card`);
+            const weekCards = document.querySelectorAll('.schedule-cell .event-card');
+            const upcoming = document.querySelectorAll('.schedule-cell .event-card:not([data-day])').length;
+
+            document.getElementById('totalEvents').textContent = total;
+            document.getElementById('todayEvents').textContent = todayCards.length;
+            document.getElementById('thisWeekEvents').textContent = weekCards.length;
+            document.getElementById('upcomingEvents').textContent = Math.max(0, total - weekCards.length);
+        }
+
+        // ==================== INIT ====================
+        document.addEventListener('DOMContentLoaded', function() {
+            updateWeekLabel();
+            updateStats();
+            // Close modals on click outside
+            document.getElementById('addEventModal').addEventListener('click', function(e) {
+                if (e.target === this) closeAddEventModal();
+            });
+            document.getElementById('viewEventModal').addEventListener('click', function(e) {
+                if (e.target === this) closeViewEventModal();
+            });
+        });
+    </script>
+</body>
+</html>

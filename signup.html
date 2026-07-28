@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>EduManage - Sign Up</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link rel="icon" type="image/x-icon" href="image/icon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+    <style>
+        * { font-family: 'Inter', sans-serif; }
+        body { background: linear-gradient(135deg, #f9f9ff 0%, #e7eeff 100%); min-height: 100vh; }
+        .signup-card { background: rgba(255,255,255,0.85); backdrop-filter: blur(20px); border: 1px solid rgba(195,198,215,0.3); }
+        .animate-slide-up { animation: slideUp 0.6s ease-out forwards; }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        .input-group input:focus, .input-group select:focus { border-color: #004ac6; box-shadow: 0 0 0 4px rgba(37,99,235,0.1); }
+        .floating-shapes { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+        .shape { position: absolute; border-radius: 50%; opacity: 0.05; animation: float 20s infinite ease-in-out; }
+        .shape:nth-child(1) { width: 300px; height: 300px; background: #004ac6; top: -50px; left: -100px; }
+        .shape:nth-child(2) { width: 400px; height: 400px; background: #2563eb; bottom: -100px; right: -100px; animation-delay: -5s; }
+        @keyframes float { 0%,100% { transform: translate(0,0) scale(1); } 33% { transform: translate(30px,-30px) scale(1.1); } 66% { transform: translate(-20px,20px) scale(0.9); } }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen p-4">
+
+<div class="floating-shapes">
+    <div class="shape"></div>
+    <div class="shape"></div>
+</div>
+
+<div class="w-full max-w-md relative z-10 animate-slide-up">
+    <div class="text-center mb-8">
+        <div class="inline-flex items-center gap-3 bg-white/80 backdrop-blur-sm px-6 py-3 rounded-2xl shadow-sm border border-[rgba(195,198,215,0.3)]">
+            <div class="w-12 h-12 rounded-xl bg-[#2563eb] flex items-center justify-center text-white shadow-lg">
+                <span class="material-symbols-outlined text-[28px]" style="font-variation-settings:'FILL'1;">school</span>
+            </div>
+            <div>
+                <h1 class="text-[24px] font-[700] leading-[32px] text-[#004ac6]">EduManage</h1>
+                <p class="text-[12px] font-[500] leading-[16px] tracking-[0.05em] text-[#505f76]">Create Account</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="signup-card rounded-2xl p-8 shadow-2xl border border-[rgba(195,198,215,0.3)]">
+        <form id="signupForm" class="space-y-4" onsubmit="handleSignup(event)">
+            <div class="input-group">
+                <label class="block text-[12px] font-[500] leading-[16px] tracking-[0.05em] text-[#505f76] mb-1">Full Name</label>
+                <input class="w-full bg-white/70 border border-[#c3c6d7] rounded-xl px-4 py-3 text-[14px] font-[400] leading-[20px] focus:outline-none transition-all" type="text" placeholder="Enter your full name" id="signupName" required />
+            </div>
+
+            <div class="input-group">
+                <label class="block text-[12px] font-[500] leading-[16px] tracking-[0.05em] text-[#505f76] mb-1">Email Address</label>
+                <input class="w-full bg-white/70 border border-[#c3c6d7] rounded-xl px-4 py-3 text-[14px] font-[400] leading-[20px] focus:outline-none transition-all" type="email" placeholder="Enter your email" id="signupEmail" required />
+            </div>
+
+            <div class="input-group">
+                <label class="block text-[12px] font-[500] leading-[16px] tracking-[0.05em] text-[#505f76] mb-1">Password</label>
+                <input class="w-full bg-white/70 border border-[#c3c6d7] rounded-xl px-4 py-3 text-[14px] font-[400] leading-[20px] focus:outline-none transition-all" type="password" placeholder="Create a password (min 6 characters)" id="signupPassword" required minlength="6" />
+                <p class="text-[10px] text-[#505f76] mt-1">Password must be at least 6 characters</p>
+            </div>
+
+            <div class="input-group">
+                <label class="block text-[12px] font-[500] leading-[16px] tracking-[0.05em] text-[#505f76] mb-1">Select Your Role</label>
+                <select class="w-full bg-white/70 border border-[#c3c6d7] rounded-xl px-4 py-3 text-[14px] font-[400] leading-[20px] focus:outline-none transition-all" id="signupRole">
+                    <option value="student">Student</option>
+                    <option value="teacher">Teacher</option>
+                    <option value="school-admin">School Admin</option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <label class="block text-[12px] font-[500] leading-[16px] tracking-[0.05em] text-[#505f76] mb-1">School (Optional)</label>
+                <select class="w-full bg-white/70 border border-[#c3c6d7] rounded-xl px-4 py-3 text-[14px] font-[400] leading-[20px] focus:outline-none transition-all" id="signupSchool">
+                    <option value="">Select a school</option>
+                </select>
+            </div>
+
+            <button type="submit" class="w-full py-3.5 bg-[#004ac6] text-white rounded-xl text-[14px] font-[600] leading-[20px] hover:bg-[#2563eb] transition-all shadow-md hover:shadow-lg active:scale-[0.98] flex items-center justify-center gap-2" id="signupBtn">
+                <span class="material-symbols-outlined text-[20px]">person_add</span>
+                Create Account
+            </button>
+        </form>
+
+        <div class="mt-6 pt-6 border-t border-[rgba(195,198,215,0.3)] text-center">
+            <p class="text-[12px] font-[500] leading-[16px] tracking-[0.05em] text-[#505f76]">
+                Already have an account?
+                <a href="login.html" class="text-[#004ac6] font-bold hover:underline">Sign In</a>
+            </p>
+        </div>
+    </div>
+</div>
+
+<script src="app.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        loadSchools();
+    });
+
+    function loadSchools() {
+        const select = document.getElementById('signupSchool');
+        const schools = SchoolAPI.getAll();
+        select.innerHTML = '<option value="">Select a school</option>';
+        schools.forEach(school => {
+            const option = document.createElement('option');
+            option.value = school.id;
+            option.textContent = school.name;
+            select.appendChild(option);
+        });
+    }
+
+    function handleSignup(e) {
+        e.preventDefault();
+
+        const name = document.getElementById('signupName').value.trim();
+        const email = document.getElementById('signupEmail').value.trim();
+        const password = document.getElementById('signupPassword').value;
+        const role = document.getElementById('signupRole').value;
+        const schoolId = document.getElementById('signupSchool').value;
+
+        if (!name || !email || !password) {
+            UI.showToast('Error', 'Please fill in all required fields.', 'error');
+            return;
+        }
+
+        if (Auth.checkEmailExists(email)) {
+            UI.showToast('Error', 'This email is already registered.', 'error');
+            return;
+        }
+
+        const btn = document.getElementById('signupBtn');
+        btn.innerHTML = '<span class="material-symbols-outlined text-[20px] animate-spin">sync</span> Creating Account...';
+        btn.disabled = true;
+
+        setTimeout(() => {
+            const newUser = Auth.addUser({
+                name: name,
+                email: email,
+                password: password,
+                role: role,
+                schoolId: schoolId || null,
+                avatar: 'https://via.placeholder.com/128'
+            });
+
+            EmailSimulator.sendVerificationEmail(email, name, role);
+
+            btn.innerHTML = '<span class="material-symbols-outlined text-[20px]">check_circle</span> Account Created!';
+            btn.style.backgroundColor = '#006242';
+
+            UI.showToast(
+                'Account Created! 🎉',
+                `A verification email has been sent to ${email}. Please check your inbox.`
+            );
+
+            setTimeout(() => {
+                window.location.href = 'login.html';
+            }, 2000);
+
+        }, 1500);
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>EduManage - Schedule</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link rel="icon" type="image/x-icon" href="../image/icon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f9f9ff;
+        }
+
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+
+        .sidebar-link {
+            transition: all 0.2s ease;
+        }
+
+        .sidebar-link:hover {
+            background-color: #f0f3ff;
+            transform: translateX(4px);
+        }
+
+        .sidebar-link.active {
+            background-color: rgba(37, 99, 235, 0.1);
+            color: #004ac6;
+            border-left: 4px solid #004ac6;
+            font-weight: 700;
+        }
+
+        .card-shadow {
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #e2e8f0;
+            border-radius: 10px;
+        }
+
+        .schedule-grid {
+            display: grid;
+            grid-template-columns: 80px repeat(5, 1fr);
+            grid-auto-rows: minmax(80px, auto);
+        }
+
+        @media (max-width: 768px) {
+            .schedule-grid {
+                display: flex;
+                flex-direction: column;
+            }
+        }
+
+        .schedule-cell {
+            transition: all 0.2s ease;
+        }
+
+        .schedule-cell:hover {
+            background-color: #f0f3ff;
+        }
+
+        .event-card {
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .event-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .animate-fade-in {
+            animation: fadeIn 0.3s ease-out forwards;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-[#f9f9ff] text-[#111c2d]">
+
+    <!-- Sidebar -->
+    <aside
+        class="fixed left-0 top-0 h-full w-[260px] z-50 bg-[#f9f9ff] border-r border-[#c3c6d7] shadow-sm flex flex-col py-4 gap-1">
+        <div class="px-4 mb-6">
+            <div class="flex items-center gap-2">
+                <div class="w-10 h-10 rounded-lg bg-[#2563eb] flex items-center justify-center text-white">
+                    <span class="material-symbols-outlined" style="font-variation-settings:'FILL'1;">school</span>
+                </div>
+                <div>
+                    <h1 class="text-[20px] font-[600] leading-[28px] text-[#004ac6]">EduManage</h1>
+                    <p class="text-[12px] font-[500] leading-[16px] tracking-[0.05em] text-[#505f76] profile-role">
+                        Teacher</p>
+                </div>
+            </div>
+        </div>
+        <nav class="flex-1 px-2 space-y-1 overflow-y-auto custom-scrollbar">
+            <a href="index.html" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-lg text-[#505f76]">
+                <span class="material-symbols-outlined">dashboard</span>
+                <span class="text-[12px] font-[500] leading-[16px] tracking-[0.05em]">Dashboard</span>
+            </a>
+            <a href="courses.html" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-lg text-[#505f76]">
+                <span class="material-symbols-outlined">school</span>
+                <span class="text-[12px] font-[500] leading-[16px] tracking-[0.05em]">My Courses</span>
+            </a>
+            <a href="lessons.html" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-lg text-[#505f76]">
+                <span class="material-symbols-outlined">auto_stories</span>
+                <span class="text-[12px] font-[500] leading-[16px] tracking-[0.05em]">Lessons</span>
+            </a>
+            <a href="assignments.html" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-lg text-[#505f76]">
+                <span class="material-symbols-outlined">assignment</span>
+                <span class="text-[12px] font-[500] leading-[16px] tracking-[0.05em]">Assignments</span>
+            </a>
+            <a href="quiz.html" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-lg text-[#505f76]">
+                <span class="material-symbols-outlined">quiz</span>
+                <span class="text-[12px] font-[500] leading-[16px] tracking-[0.05em]">Quizzes</span>
+            </a>
+            <a href="grades.html" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-lg text-[#505f76]">
+                <span class="material-symbols-outlined">grade</span>
+                <span class="text-[12px] font-[500] leading-[16px] tracking-[0.05em]">Grades</span>
+            </a>
+            <a href="attendance.html" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-lg text-[#505f76]">
+                <span class="material-symbols-outlined">rule</span>
+                <span class="text-[12px] font-[500] leading-[16px] tracking-[0.05em]">Attendance</span>
+            </a>
+            <a href="students.html" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-lg text-[#505f76]">
+                <span class="material-symbols-outlined">group</span>
+                <span class="text-[12px] font-[500] leading-[16px] tracking-[0.05em]">My Students</span>
+            </a>
+            <a href="schedule.html"
+                class="sidebar-link active flex items-center gap-4 px-4 py-3 rounded-lg text-[#004ac6] bg-[rgba(37,99,235,0.1)] border-l-4 border-[#004ac6] font-bold">
+                <span class="material-symbols-outlined" style="font-variation-settings:'FILL'1;">calendar_today</span>
+                <span class="text-[12px] font-[500] leading-[16px] tracking-[0.05em]">Schedule</span>
+            </a>
+            <a href="reports.html" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-lg text-[#505f76]">
+                <span class="material-symbols-outlined">analytics</span>
+                <span class="text-[12px] font-[500] leading-[16px] tracking-[0.05em]">Reports</span>
+            </a>
+            <a href="chat.html" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-lg text-[#505f76]">
+                <span class="material-symbols-outlined">chat</span>
+                <span class="text-[12px] font-[500] leading-[16px] tracking-[0.05em]">Chat</span>
+            </a>
+            <a href="notifications.html"
+                class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-lg text-[#505f76]">
+                <span class="material-symbols-outlined">notifications</span>
+                <span class="text-[12px] font-[500] leading-[16px] tracking-[0.05em]">Notifications</span>
+            </a>
+            <a href="profile.html" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-lg text-[#505f76]">
+                <span class="material-symbols-outlined">person</span>
+                <span class="text-[12px] font-[500] leading-[16px] tracking-[0.05em]">Profile</span>
+            </a>
+            <a href="setting.html" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-lg text-[#505f76]">
+                <span class="material-symbols-outlined">settings</span>
+                <span class="text-[12px] font-[500] leading-[16px] tracking-[0.05em]">Settings</span>
+            </a>
+        </nav>
+        <div class="px-4 mt-auto pt-4 border-t border-[#c3c6d7]">
+            <div class="flex items-center gap-3">
+                <img alt="Profile" class="w-10 h-10 rounded-full border border-[#c3c6d7] object-cover profile-avatar"
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuCbARVzgIb2LWnmGUdLvF3eKWWBy6quFbdP5rjtL1InBz9aAO1HGT-jrmlkWUvxT_DPEy1oIt1mnxTEvelfDNahTg-A_1OjM1OtR95WnUeM-5QQB602TJ1Zw6qSe1XDKGIa_6OE3b2M-dE-rngcyi4WcU-15oaT92vlXOdKuffIXmuXcO184BnJZYRWevEZGqilBA67RdcqyrP3YIvlTH4o6dOm9BtyENGspZquBgU-wSQ6XtrE1GDBBOvyqm7A9EFeaFuOLjFCeXOi" />
+                <div>
+                    <p class="text-[14px] font-[400] leading-[20px] font-bold profile-name text-[#111c2d]">Prof. John
+                        Smith</p>
+                    <p class="text-[12px] font-[500] leading-[16px] tracking-[0.05em] profile-role text-[#505f76]">
+                        Teacher</p>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="ml-[260px] min-h-screen flex flex-col">
+        <header
+            class="sticky top-0 z-40 w-full h-16 bg-[#f9f9ff] border-b border-[#c3c6d7] shadow-sm flex justify-between items-center px-6">
+            <div class="flex items-center gap-4 flex-1">
+                <div class="relative w-full max-w-md">
+                    <span
+                        class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-[#737686]">search</span>
+                    <input
+                        class="w-full bg-[#f0f3ff] border-none rounded-full py-2 pl-10 pr-4 text-[14px] font-[400] leading-[20px] focus:ring-2 focus:ring-[#2563eb] focus:ring-opacity-20 transition-all"
+                        placeholder="Search schedule..." type="text" id="scheduleSearch" />
+                </div>
+            </div>
+            <div class="flex items-center gap-4">
+                <button class="p-2 text-[#505f76] hover:bg-[#f0f3ff] rounded-full transition-colors relative"
+                    onclick="window.location.href='notifications.html'">
+                    <span class="material-symbols-outlined">notifications</span>
+                    <span
+                        class="absolute top-2 right-2 w-2 h-2 bg-[#ba1a1a] rounded-full notification-badge hidden"></span>
+                </button>
+                <div class="flex items-center gap-2 cursor-pointer hover:bg-[#f0f3ff] p-1 rounded-lg transition-colors"
+                    onclick="window.location.href='profile.html'">
+                    <img alt="Avatar" class="w-8 h-8 rounded-full object-cover profile-avatar"
+                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuCbARVzgIb2LWnmGUdLvF3eKWWBy6quFbdP5rjtL1InBz9aAO1HGT-jrmlkWUvxT_DPEy1oIt1mnxTEvelfDNahTg-A_1OjM1OtR95WnUeM-5QQB602TJ1Zw6qSe1XDKGIa_6OE3b2M-dE-rngcyi4WcU-15oaT92vlXOdKuffIXmuXcO184BnJZYRWevEZGqilBA67RdcqyrP3YIvlTH4o6dOm9BtyENGspZquBgU-wSQ6XtrE1GDBBOvyqm7A9EFeaFuOLjFCeXOi" />
+                    <div class="hidden md:block text-left">
+                        <p
+                            class="text-[12px] font-[500] leading-[16px] tracking-[0.05em] font-bold leading-tight profile-name">
+                            Prof. John Smith</p>
+                        <p class="text-[10px] text-[#505f76] profile-role">Teacher</p>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="p-6 space-y-6">
+            <!-- Header -->
+            <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+                <div>
+                    <h2 class="text-[24px] font-[600] leading-[32px] text-[#111c2d]">My Schedule</h2>
+                    <p class="text-[16px] font-[400] leading-[24px] text-[#505f76]">Your weekly class schedule.</p>
+                </div>
+                <button
+                    class="bg-[#004ac6] text-white px-4 py-2 rounded-lg text-[12px] font-[500] leading-[16px] tracking-[0.05em] font-bold hover:bg-[#2563eb] transition-all active:scale-95 flex items-center gap-2"
+                    onclick="openAddEventModal()">
+                    <span class="material-symbols-outlined text-[18px]">add</span>
+                    Add Event
+                </button>
+            </div>
+
+            <!-- Schedule Grid -->
+            <div class="bg-[#f9f9ff] border border-[#c3c6d7] rounded-xl card-shadow overflow-hidden">
+                <div class="flex items-center justify-between px-4 py-3 border-b border-[#c3c6d7] bg-[#f0f3ff]">
+                    <div class="flex items-center gap-3">
+                        <button class="p-1.5 hover:bg-[#f9f9ff] rounded-md transition-colors" onclick="changeWeek(-1)">
+                            <span class="material-symbols-outlined">chevron_left</span>
+                        </button>
+                        <span class="text-[16px] font-[600] leading-[24px] text-[#111c2d]" id="currentWeekLabel">October
+                            21 - 27, 2024</span>
+                        <button class="p-1.5 hover:bg-[#f9f9ff] rounded-md transition-colors" onclick="changeWeek(1)">
+                            <span class="material-symbols-outlined">chevron_right</span>
+                        </button>
+                        <button
+                            class="px-3 py-1 text-[12px] font-[500] leading-[16px] tracking-[0.05em] font-bold text-[#004ac6] hover:bg-[#f9f9ff] rounded-md transition-colors"
+                            onclick="goToToday()">Today</button>
+                    </div>
+                </div>
+
+                <div class="relative overflow-y-auto max-h-[500px] custom-scrollbar">
+                    <div class="schedule-grid border-b border-[#c3c6d7] bg-[rgba(240,243,255,0.5)] sticky top-0 z-10">
+                        <div
+                            class="p-2 text-center text-[12px] font-[500] leading-[16px] tracking-[0.05em] font-bold text-[#505f76] border-r border-[#c3c6d7] bg-[#f0f3ff]">
+                            Time</div>
+                        <div
+                            class="p-2 text-center text-[12px] font-[500] leading-[16px] tracking-[0.05em] font-bold text-[#111c2d] border-r border-[#c3c6d7]">
+                            Monday</div>
+                        <div
+                            class="p-2 text-center text-[12px] font-[500] leading-[16px] tracking-[0.05em] font-bold text-[#111c2d] border-r border-[#c3c6d7]">
+                            Tuesday</div>
+                        <div
+                            class="p-2 text-center text-[12px] font-[500] leading-[16px] tracking-[0.05em] font-bold text-[#111c2d] border-r border-[#c3c6d7]">
+                            Wednesday</div>
+                        <div
+                            class="p-2 text-center text-[12px] font-[500] leading-[16px] tracking-[0.05em] font-bold text-[#111c2d] border-r border-[#c3c6d7]">
+                            Thursday</div>
+                        <div
+                            class="p-2 text-center text-[12px] font-[500] leading-[16px] tracking-[0.05em] font-bold text-[#111c2d]">
+                            Friday</div>
+                    </div>
+
+                    <div id="scheduleGrid">
+                        <!-- 08:00 -->
+                        <div class="schedule-grid border-b border-[rgba(195,198,215,0.3)] group">
+                            <div
+                                class="p-2 text-center text-[12px] font-[500] leading-[16px] tracking-[0.05em] font-medium text-[#505f76] border-r border-[rgba(195,198,215,0.3)] bg-[rgba(240,243,255,0.3)]">
+                                08:00</div>
+                            <div class="p-1 schedule-cell border-r border-[rgba(195,198,215,0.3)]">
+                                <div class="event-card bg-[rgba(37,99,235,0.1)] border-l-4 border-[#004ac6] p-2 rounded-md h-full"
+                                    onclick="viewEvent('Advanced Mathematics')">
+                                    <p
+                                        class="text-[12px] font-[500] leading-[16px] tracking-[0.05em] font-bold text-[#004ac6] truncate">
+                                        Advanced Math</p>
+                                    <p class="text-[10px] text-[#505f76]">Room 302</p>
+                                    <p class="text-[10px] text-[#505f76]">08:00 - 09:30</p>
+                                </div>
+                            </div>
+                            <div class="p-1 schedule-cell border-r border-[rgba(195,198,215,0.3)]"></div>
+                            <div class="p-1 schedule-cell border-r border-[rgba(195,198,215,0.3)]">
+                                <div class="event-card bg-[rgba(37,99,235,0.1)] border-l-4 border-[#004ac6] p-2 rounded-md h-full"
+                                    onclick="viewEvent('Advanced Mathematics')">
+                                    <p
+                                        class="text-[12px] font-[500] leading-[16px] tracking-[0.05em] font-bold text-[#004ac6] truncate">
+                                        Advanced Math</p>
+                                    <p class="text-[10px] text-[#505f76]">Room 302</p>
+                                    <p class="text-[10px] text-[#505f76]">08:00 - 09:30</p>
+                                </div>
+                            </div>
+                            <div class="p-1 schedule-cell border-r border-[rgba(195,198,215,0.3)]"></div>
+                            <div class="p-1 schedule-cell"></div>
+                        </div>
+
+                        <!-- 10:00 -->
+                        <div class="schedule-grid border-b border-[rgba(195,198,215,0.3)] group">
+                            <div
+                                class="p-2 text-center text-[12px] font-[500] leading-[16px] tracking-[0.05em] font-medium text-[#505f76] border-r border-[rgba(195,198,215,0.3)] bg-[rgba(240,243,255,0.3)]">
+                                10:00</div>
+                            <div class="p-1 schedule-cell border-r border-[rgba(195,198,215,0.3)]"></div>
+                            <div class="p-1 schedule-cell border-r border-[rgba(195,198,215,0.3)]">
+                                <div class="event-card bg-[rgba(0,98,66,0.1)] border-l-4 border-[#006242] p-2 rounded-md h-full"
+                                    onclick="viewEvent('Physics Lab')">
+                                    <p
+                                        class="text-[12px] font-[500] leading-[16px] tracking-[0.05em] font-bold text-[#006242] truncate">
+                                        Physics Lab</p>
+                                    <p class="text-[10px] text-[#505f76]">Lab 4B</p>
+                                    <p class="text-[10px] text-[#505f76]">10:00 - 12:00</p>
+                                </div>
+                            </div>
+                            <div class="p-1 schedule-cell border-r border-[rgba(195,198,215,0.3)]"></div>
+                            <div class="p-1 schedule-cell border-r border-[rgba(195,198,215,0.3)]">
+                                <div class="event-card bg-[rgba(0,98,66,0.1)] border-l-4 border-[#006242] p-2 rounded-md h-full"
+                                    onclick="viewEvent('Physics Lab')">
+                                    <p
+                                        class="text-[12px] font-[500] leading-[16px] tracking-[0.05em] font-bold text-[#006242] truncate">
+                                        Physics Lab</p>
+                                    <p class="text-[10px] text-[#505f76]">Lab 4B</p>
+                                    <p class="text-[10px] text-[#505f76]">10:00 - 12:00</p>
+                                </div>
+                            </div>
+                            <div class="p-1 schedule-cell"></div>
+                        </div>
+
+                        <!-- 12:00 Lunch -->
+                        <div class="schedule-grid border-b border-[rgba(195,198,215,0.3)] bg-[rgba(240,243,255,0.3)]">
+                            <div
+                                class="p-2 text-center text-[12px] font-[500] leading-[16px] tracking-[0.05em] font-medium text-[#505f76] border-r border-[rgba(195,198,215,0.3)]">
+                                12:00</div>
+                            <div class="p-2 text-center text-[12px] font-[500] leading-[16px] tracking-[0.05em] font-bold italic text-[#505f76]/60 flex items-center justify-center gap-2"
+                                colspan="5">
+                                <span class="material-symbols-outlined text-sm">restaurant</span>
+                                Lunch Break
+                            </div>
+                        </div>
+
+                        <!-- 13:00 -->
+                        <div class="schedule-grid border-b border-[rgba(195,198,215,0.3)] group">
+                            <div
+                                class="p-2 text-center text-[12px] font-[500] leading-[16px] tracking-[0.05em] font-medium text-[#505f76] border-r border-[rgba(195,198,215,0.3)] bg-[rgba(240,243,255,0.3)]">
+                                13:00</div>
+                            <div class="p-1 schedule-cell border-r border-[rgba(195,198,215,0.3)]">
+                                <div class="event-card bg-[rgba(56,72,93,0.1)] border-l-4 border-[#38485d] p-2 rounded-md h-full"
+                                    onclick="viewEvent('English Literature')">
+                                    <p
+                                        class="text-[12px] font-[500] leading-[16px] tracking-[0.05em] font-bold text-[#38485d] truncate">
+                                        English Lit.</p>
+                                    <p class="text-[10px] text-[#505f76]">Room 201</p>
+                                    <p class="text-[10px] text-[#505f76]">13:00 - 14:30</p>
+                                </div>
+                            </div>
+                            <div class="p-1 schedule-cell border-r border-[rgba(195,198,215,0.3)]">
+                                <div class="event-card bg-[rgba(56,72,93,0.1)] border-l-4 border-[#38485d] p-2 rounded-md h-full"
+                                    onclick="viewEvent('English Literature')">
+                                    <p
+                                        class="text-[12px] font-[500] leading-[16px] tracking-[0.05em] font-bold text-[#38485d] truncate">
+                                        English Lit.</p>
+                                    <p class="text-[10px] text-[#505f76]">Room 201</p>
+                                    <p class="text-[10px] text-[#505f76]">13:00 - 14:30</p>
+                                </div>
+                            </div>
+                            <div class="p-1 schedule-cell border-r border-[rgba(195,198,215,0.3)]">
+                                <div class="event-card bg-[rgba(56,72,93,0.1)] border-l-4 border-[#38485d] p-2 rounded-md h-full"
+                                    onclick="viewEvent('English Literature')">
+                                    <p
+                                        class="text-[12px] font-[500] leading-[16px] tracking-[0.05em] font-bold text-[#38485d] truncate">
+                                        English Lit.</p>
+                                    <p class="text-[10px] text-[#505f76]">Room 201</p>
+                                    <p class="text-[10px] text-[#505f76]">13:00 - 14:30</p>
+                                </div>
+                            </div>
+                            <div class="p-1 schedule-cell border-r border-[rgba(195,198,215,0.3)]">
+                                <div class="event-card bg-[rgba(56,72,93,0.1)] border-l-4 border-[#38485d] p-2 rounded-md h-full"
+                                    onclick="viewEvent('English Literature')">
+                                    <p
+                                        class="text-[12px] font-[500] leading-[16px] tracking-[0.05em] font-bold text-[#38485d] truncate">
+                                        English Lit.</p>
+                                    <p class="text-[10px] text-[#505f76]">Room 201</p>
+                                    <p class="text-[10px] text-[#505f76]">13:00 - 14:30</p>
+                                </div>
+                            </div>
+                            <div class="p-1 schedule-cell"></div>
+                        </div>
+
+                        <!-- 15:00 -->
+                        <div class="schedule-grid border-b border-[rgba(195,198,215,0.3)] group">
+                            <div
+                                class="p-2 text-center text-[12px] font-[500] leading-[16px] tracking-[0.05em] font-medium text-[#505f76] border-r border-[rgba(195,198,215,0.3)] bg-[rgba(240,243,255,0.3)]">
+                                15:00</div>
+                            <div class="p-1 schedule-cell border-r border-[rgba(195,198,215,0.3)]"></div>
+                            <div class="p-1 schedule-cell border-r border-[rgba(195,198,215,0.3)]"></div>
+                            <div class="p-1 schedule-cell border-r border-[rgba(195,198,215,0.3)]">
+                                <div class="event-card bg-[rgba(37,99,235,0.1)] border-l-4 border-[#004ac6] p-2 rounded-md h-full"
+                                    onclick="viewEvent('Computer Science')">
+                                    <p
+                                        class="text-[12px] font-[500] leading-[16px] tracking-[0.05em] font-bold text-[#004ac6] truncate">
+                                        Computer Science</p>
+                                    <p class="text-[10px] text-[#505f76]">Room 105</p>
+                                    <p class="text-[10px] text-[#505f76]">15:00 - 16:30</p>
+                                </div>
+                            </div>
+                            <div class="p-1 schedule-cell border-r border-[rgba(195,198,215,0.3)]"></div>
+                            <div class="p-1 schedule-cell"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Legend -->
+                <div
+                    class="p-3 bg-[#f0f3ff] border-t border-[#c3c6d7] flex flex-wrap justify-between items-center gap-2">
+                    <div class="flex items-center gap-4">
+                        <span class="flex items-center gap-1 text-[10px] text-[#505f76]">
+                            <span class="w-3 h-3 rounded-full bg-[#004ac6]"></span> Mathematics
+                        </span>
+                        <span class="flex items-center gap-1 text-[10px] text-[#505f76]">
+                            <span class="w-3 h-3 rounded-full bg-[#006242]"></span> Science
+                        </span>
+                        <span class="flex items-center gap-1 text-[10px] text-[#505f76]">
+                            <span class="w-3 h-3 rounded-full bg-[#38485d]"></span> Humanities
+                        </span>
+                        <span class="flex items-center gap-1 text-[10px] text-[#505f76]">
+                            <span class="w-3 h-3 rounded-full bg-[#ba1a1a]"></span> Other
+                        </span>
+                    </div>
+                    <button
+                        class="text-[12px] font-[500] leading-[16px] tracking-[0.05em] font-bold text-[#004ac6] hover:underline transition-all"
+                        onclick="exportSchedule()">Export Schedule</button>
+                </div>
+            </div>
+        </div>
+
+        <footer class="mt-auto py-4 px-6 border-t border-[#c3c6d7] bg-[#f9f9ff]">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-[12px] font-[500] leading-[16px] tracking-[0.05em] text-[#505f76]">© 2024 EduManage. All
+                    rights reserved.</p>
+                <div class="flex gap-6">
+                    <a class="text-[12px] font-[500] leading-[16px] tracking-[0.05em] text-[#505f76] hover:text-[#004ac6] transition-colors"
+                        href="#">Help Center</a>
+                    <a class="text-[12px] font-[500] leading-[16px] tracking-[0.05em] text-[#505f76] hover:text-[#004ac6] transition-colors"
+                        href="#">Privacy Policy</a>
+                    <a class="text-[12px] font-[500] leading-[16px] tracking-[0.05em] text-[#505f76] hover:text-[#004ac6] transition-colors"
+                        href="#">Terms of Service</a>
+                </div>
+            </div>
+        </footer>
+    </main>
+
+    <!-- Add Event Modal -->
+    <div id="addEventModal"
+        class="fixed inset-0 z-50 hidden flex items-center justify-center bg-black/50 backdrop-blur-sm">
+        <div class="bg-[#f9f9ff] rounded-xl max-w-lg w-full mx-4 p-6 shadow-2xl">
+            <div class="flex items-center justify-between mb-4">
+                <h3 class="text-[18px] font-[600] leading-[24px] text-[#111c2d]">Add Event</h3>
+                <button class="p-1 hover:bg-[#f0f3ff] rounded-lg transition-colors" onclick="closeAddEventModal()">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+            </div>
+            <form id="addEventForm" class="space-y-4">
+                <div>
+                    <label
+                        class="block text-[12px] font-[500] leading-[16px] tracking-[0.05em] text-[#505f76] mb-1">Event
+                        Title</label>
+                    <input
+                        class="w-full bg-[#f9f9ff] border border-[#c3c6d7] rounded-lg p-2.5 text-[14px] font-[400] leading-[20px] focus:ring-2 focus:ring-[#004ac6] focus:border-[#004ac6] outline-none transition-all"
+                        placeholder="e.g., Office Hours" type="text" id="eventTitle" required />
+                </div>
+                <div>
+                    <label
+                        class="block text-[12px] font-[500] leading-[16px] tracking-[0.05em] text-[#505f76] mb-1">Day</label>
+                    <select
+                        class="w-full bg-[#f9f9ff] border border-[#c3c6d7] rounded-lg p-2.5 text-[14px] font-[400] leading-[20px] focus:ring-2 focus:ring-[#004ac6] focus:border-[#004ac6] outline-none transition-all"
+                        id="eventDay">
+                        <option value="Monday">Monday</option>
+                        <option value="Tuesday">Tuesday</option>
+                        <option value="Wednesday">Wednesday</option>
+                        <option value="Thursday">Thursday</option>
+                        <option value="Friday">Friday</option>
+                    </select>
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label
+                            class="block text-[12px] font-[500] leading-[16px] tracking-[0.05em] text-[#505f76] mb-1">Start
+                            Time</label>
+                        <input
+                            class="w-full bg-[#f9f9ff] border border-[#c3c6d7] rounded-lg p-2.5 text-[14px] font-[400] leading-[20px] focus:ring-2 focus:ring-[#004ac6] focus:border-[#004ac6] outline-none transition-all"
+                            type="time" id="eventStart" value="09:00" />
+                    </div>
+                    <div>
+                        <label
+                            class="block text-[12px] font-[500] leading-[16px] tracking-[0.05em] text-[#505f76] mb-1">End
+                            Time</label>
+                        <input
+                            class="w-full bg-[#f9f9ff] border border-[#c3c6d7] rounded-lg p-2.5 text-[14px] font-[400] leading-[20px] focus:ring-2 focus:ring-[#004ac6] focus:border-[#004ac6] outline-none transition-all"
+                            type="time" id="eventEnd" value="10:30" />
+                    </div>
+                </div>
+                <div>
+                    <label
+                        class="block text-[12px] font-[500] leading-[16px] tracking-[0.05em] text-[#505f76] mb-1">Location</label>
+                    <input
+                        class="w-full bg-[#f9f9ff] border border-[#c3c6d7] rounded-lg p-2.5 text-[14px] font-[400] leading-[20px] focus:ring-2 focus:ring-[#004ac6] focus:border-[#004ac6] outline-none transition-all"
+                        placeholder="Room 302" type="text" id="eventLocation" />
+                </div>
+                <div class="flex gap-3 pt-2">
+                    <button type="button"
+                        class="flex-1 py-2.5 bg-[#f0f3ff] text-[#505f76] rounded-lg text-[12px] font-[500] leading-[16px] tracking-[0.05em] font-bold hover:bg-[#dee8ff] transition-colors"
+                        onclick="closeAddEventModal()">Cancel</button>
+                    <button type="submit"
+                        class="flex-1 py-2.5 bg-[#004ac6] text-white rounded-lg text-[12px] font-[500] leading-[16px] tracking-[0.05em] font-bold hover:bg-[#2563eb] transition-all">Add
+                        Event</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- View Event Modal -->
+    <div id="viewEventModal"
+        class="fixed inset-0 z-50 hidden flex items-center justify-center bg-black/50 backdrop-blur-sm">
+        <div class="bg-[#f9f9ff] rounded-xl max-w-md w-full mx-4 p-6 shadow-2xl">
+            <div class="flex items-center justify-between mb-4">
+                <h3 class="text-[18px] font-[600] leading-[24px] text-[#111c2d]" id="viewEventTitle">Event Details</h3>
+                <button class="p-1 hover:bg-[#f0f3ff] rounded-lg transition-colors" onclick="closeViewEventModal()">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+            </div>
+            <div id="viewEventContent" class="space-y-4">
+                <div class="p-4 bg-[#f0f3ff] rounded-lg">
+                    <p class="text-[12px] font-[500] leading-[16px] tracking-[0.05em] text-[#505f76]">Event</p>
+                    <p class="text-[16px] font-[600] leading-[24px] text-[#111c2d]" id="viewEventName">Advanced
+                        Mathematics</p>
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="p-3 bg-[#f9f9ff] border border-[#c3c6d7] rounded-lg">
+                        <p class="text-[10px] font-[500] leading-[16px] tracking-[0.05em] text-[#505f76]">Day</p>
+                        <p class="text-[14px] font-[400] leading-[20px] font-bold" id="viewEventDay">Monday</p>
+                    </div>
+                    <div class="p-3 bg-[#f9f9ff] border border-[#c3c6d7] rounded-lg">
+                        <p class="text-[10px] font-[500] leading-[16px] tracking-[0.05em] text-[#505f76]">Time</p>
+                        <p class="text-[14px] font-[400] leading-[20px] font-bold" id="viewEventTime">08:00 - 09:30</p>
+                    </div>
+                </div>
+                <div class="p-3 bg-[#f9f9ff] border border-[#c3c6d7] rounded-lg">
+                    <p class="text-[10px] font-[500] leading-[16px] tracking-[0.05em] text-[#505f76]">Location</p>
+                    <p class="text-[14px] font-[400] leading-[20px]" id="viewEventLocation">Room 302</p>
+                </div>
+                <div class="flex gap-3 pt-2">
+                    <button
+                        class="flex-1 py-2.5 bg-[#004ac6] text-white rounded-lg text-[12px] font-[500] leading-[16px] tracking-[0.05em] font-bold hover:bg-[#2563eb] transition-all"
+                        onclick="closeViewEventModal()">Close</button>
+                    <button
+                        class="flex-1 py-2.5 bg-[#f0f3ff] text-[#505f76] rounded-lg text-[12px] font-[500] leading-[16px] tracking-[0.05em] font-bold hover:bg-[#dee8ff] transition-colors"
+                        onclick="editEvent()">Edit</button>
+                    <button
+                        class="flex-1 py-2.5 bg-[rgba(186,26,26,0.1)] text-[#ba1a1a] rounded-lg text-[12px] font-[500] leading-[16px] tracking-[0.05em] font-bold hover:bg-[rgba(186,26,26,0.2)] transition-colors"
+                        onclick="deleteEvent()">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../app.js"></script>
+    <script>
+        let currentWeekOffset = 0;
+        let currentEventName = '';
+
+        document.addEventListener('DOMContentLoaded', function () {
+            if (!Permissions.check('teacher')) return;
+            UI.loadUserProfile();
+            UI.updateAllBadges();
+        });
+
+        function changeWeek(offset) {
+            currentWeekOffset += offset;
+            const now = new Date();
+            const currentDay = now.getDay();
+            const mondayOffset = currentDay === 0 ? -6 : 1 - currentDay;
+            const monday = new Date(now);
+            monday.setDate(now.getDate() + mondayOffset + (currentWeekOffset * 7));
+            const weekEnd = new Date(monday);
+            weekEnd.setDate(weekEnd.getDate() + 4);
+            document.getElementById('currentWeekLabel').textContent =
+                monday.toLocaleDateString('en-US', { month: 'long', day: 'numeric' }) + ' - ' +
+                weekEnd.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+        }
+
+        function goToToday() {
+            currentWeekOffset = 0;
+            changeWeek(0);
+        }
+
+        function openAddEventModal() {
+            document.getElementById('addEventModal').classList.remove('hidden');
+        }
+
+        function closeAddEventModal() {
+            document.getElementById('addEventModal').classList.add('hidden');
+        }
+
+        document.getElementById('addEventModal').addEventListener('click', function (e) {
+            if (e.target === this) closeAddEventModal();
+        });
+
+        document.getElementById('addEventForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const title = document.getElementById('eventTitle').value;
+            const day = document.getElementById('eventDay').value;
+            const start = document.getElementById('eventStart').value;
+            const end = document.getElementById('eventEnd').value;
+            const location = document.getElementById('eventLocation').value || 'TBD';
+
+            if (!title) {
+                UI.showToast('Error', 'Please enter an event title.', 'error');
+                return;
+            }
+
+            const btn = this.querySelector('button[type="submit"]');
+            btn.textContent = 'Adding...';
+            btn.disabled = true;
+
+            setTimeout(() => {
+                UI.showToast('Success', 'Event added successfully!');
+                closeAddEventModal();
+                this.reset();
+                btn.textContent = 'Add Event';
+                btn.disabled = false;
+            }, 1000);
+        });
+
+        function viewEvent(name) {
+            currentEventName = name;
+            document.getElementById('viewEventTitle').textContent = name;
+            document.getElementById('viewEventName').textContent = name;
+            document.getElementById('viewEventDay').textContent = 'Monday';
+            document.getElementById('viewEventTime').textContent = '08:00 - 09:30';
+            document.getElementById('viewEventLocation').textContent = 'Room 302';
+            document.getElementById('viewEventModal').classList.remove('hidden');
+        }
+
+        function closeViewEventModal() {
+            document.getElementById('viewEventModal').classList.add('hidden');
+        }
+
+        document.getElementById('viewEventModal').addEventListener('click', function (e) {
+            if (e.target === this) closeViewEventModal();
+        });
+
+        function editEvent() {
+            closeViewEventModal();
+            openAddEventModal();
+            document.getElementById('eventTitle').value = currentEventName;
+        }
+
+        function deleteEvent() {
+            if (confirm('Delete this event?')) {
+                closeViewEventModal();
+                UI.showToast('Deleted', 'Event deleted successfully.');
+            }
+        }
+
+        function exportSchedule() {
+            UI.showToast('Exporting', 'Exporting schedule...');
+            setTimeout(() => {
+                UI.showToast('Export Complete', 'Schedule exported successfully.');
+            }, 1500);
+        }
+
+        document.getElementById('scheduleSearch').addEventListener('input', function () {
+            const query = this.value.toLowerCase();
+            document.querySelectorAll('.event-card').forEach(card => {
+                const cell = card.closest('.schedule-cell');
+                if (cell) {
+                    cell.style.display = card.textContent.toLowerCase().includes(query) ? '' : 'none';
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

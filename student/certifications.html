@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Certifications | Student</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries">
+    </script>
+    <link rel="icon" type="image/x-icon" href="../image/icon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+    <style>
+        * { font-family: 'Inter', sans-serif; }
+        body { background-color: #f9f9ff; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .sidebar-link { transition: all 0.2s ease; }
+        .sidebar-link:hover { background-color: #f0f3ff; transform: translateX(4px); }
+        .sidebar-link.active { background-color: rgba(37, 99, 235, 0.1); color: #004ac6; border-left: 4px solid #004ac6; font-weight: 700; }
+        .card-shadow { box-shadow: 0 1px 3px 0 rgba(0,0,0,0.1), 0 1px 2px -1px rgba(0,0,0,0.1); }
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #e2e8f0; border-radius: 10px; }
+        .animate-fade-in { animation: fadeIn 0.3s ease-out forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .cert-card { transition: all 0.3s ease; }
+        .cert-card:hover { transform: translateY(-4px); box-shadow: 0 12px 24px rgba(0,0,0,0.08); }
+        .badge-pulse { animation: pulse 2s infinite; }
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.2); } 100% { transform: scale(1); } }
+        .ribbon {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #f59e0b;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 10px;
+            font-weight: bold;
+            transform: rotate(15deg);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        }
+        .cert-badge {
+            transition: all 0.3s ease;
+        }
+        .cert-badge:hover {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ==================== SIDEBAR ==================== -->
+    <aside class="fixed left-0 top-0 h-full w-[260px] z-50 bg-[#f9f9ff] border-r border-[#c3c6d7] shadow-sm flex flex-col py-4 gap-1">
+        <div class="px-4 mb-6">
+            <div class="flex items-center gap-2">
+                <div class="w-10 h-10 rounded-lg bg-[#2563eb] flex items-center justify-center text-white">
+                    <span class="material-symbols-outlined" style="font-variation-settings:'FILL'1;">school</span>
+                </div>
+                <div>
+                    <h1 class="text-[20px] font-[600] leading-[28px] text-[#004ac6]">EduManage</h1>
+                    <p class="text-[12px] font-[500] leading-[16px] tracking-[0.05em] text-[#505f76]">Student</p>
+                </div>
+            </div>
+        </div>
+        <nav class="flex-1 px-2 space-y-1 overflow-y-auto custom-scrollbar">
+            <a href="index.html" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-lg text-[#505f76]">
+                <span class="material-symbols-outlined">dashboard</span>
+                <span class="text-[12px] font-[500] leading-[16px] tracking-[0.05em]">Dashboard</span>
+            </a>
+            <a href="courses.html" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-lg text-[#505f76]">
+                <span class="material-symbols-outlined">school</span>
+                <span class="text-[12px] font-[500] leading-[16px] tracking-[0.05em]">My Courses</span>
+            </a>
+            <a href="assignments.html" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-lg text-[#505f76]">
+                <span class="material-symbols-outlined">assignment</span>
+                <span class="text-[12px] font-[500] leading-[16px] tracking-[0.05em]">Assignments</span>
+            </a>
+            <a href="quizzes.html" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-lg text-[#505f76]">
+                <span class="material-symbols-outlined">quiz</span>
+                <span class="text-[12px] font-[500] leading-[16px] tracking-[0.05em]">Quizzes</span>
+            </a>
+            <a href="grades.html" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-lg text-[#505f76]">
+                <span class="material-symbols-outlined">grade</span>
+                <span class="text-[12px] font-[500] leading-[16px] tracking-[0.05em]">Grades</span>
+            </a>
+            <a href="attendance.html" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-lg text-[#505f76]">
+                <span class="material-symbols-outlined">rule</span>
+                <span class="text-[12px] font-[500] leading-[16px] tracking-[0.05em]">Attendance</span>
+            </a>
+            <a href="schedule.html" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-lg text-[#505f76]">
+                <span class="material-symbols-outlined">calendar_today</span>
+                <span class="text-[12px] font-[500] leading-[16px] tracking-[0.05em]">Schedule</span>
+            </a>
+            <a href="lessons.html" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-lg text-[#505f76]">
+                <span class="material-symbols-outlined">auto_stories</span>
+                <span class="text-[12px] font-[500] leading-[16px] tracking-[0.05em]">Lessons</span>
+            </a>
+            <a href="progress.html" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-lg text-[#505f76]">
+                <span class="material-symbols-outlined">trending_up</span>
+                <span class="text-[12px] font-[500] leading-[16px] tracking-[0.05em]">Progress</span>
+            </a>
+            <a href="reports.html" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-lg text-[#505f76]">
+                <span class="material-symbols-outlined">analytics</span>
+                <span class="text-[12px] font-[500] leading-[16px] tracking-[0.05em]">Results</span>
+            </a>
+            <a href="certifications.html" class="sidebar-link active flex items-center gap-4 px-4 py-3 rounded-lg text-[#004ac6] bg-[rgba(37,99,235,0.1)] border-l-4 border-[#004ac6] font-bold">
+                <span class="material-symbols-outlined">verified</span>
+                <span class="text-[12px] font-[500] leading-[16px] tracking-[0.05em]">Certifications</span>
+            </a>
+            <a href="discussion.html" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-lg text-[#505f76]">
+                <span class="material-symbols-outlined">forum</span>
+                <span class="text-[12px] font-[500] leading-[16px] tracking-[0.05em]">Discussion</span>
+            </a>
+            <a href="chat.html" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-lg text-[#505f76]">
+                <span class="material-symbols-outlined">chat</span>
+                <span class="text-[12px] font-[500] leading-[16px] tracking-[0.05em]">Community</span>
+            </a>
+            <a href="notifications.html" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-lg text-[#505f76]">
+                <span class="material-symbols-outlined">notifications</span>
+                <span class="text-[12px] font-[500] leading-[16px] tracking-[0.05em]">Notifications</span>
+            </a>
+            <a href="profile.html" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-lg text-[#505f76]">
+                <span class="material-symbols-outlined">person</span>
+                <span class="text-[12px] font-[500] leading-[16px] tracking-[0.05em]">Profile</span>
+            </a>
+            <a href="setting.html" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-lg text-[#505f76]">
+                <span class="material-symbols-outlined">settings</span>
+                <span class="text-[12px] font-[500] leading-[16px] tracking-[0.05em]">Settings</span>
+            </a>
+        </nav>
+        <div class="px-4 mt-auto pt-4 border-t border-[#c3c6d7]">
+            <div class="flex items-center gap-3">
+                <img alt="Profile" class="w-10 h-10 rounded-full border border-[#c3c6d7] object-cover"
+                src="https://ui-avatars.com/api/?name=Ahmed+Mohamed&background=137fec&color=fff&size=128" />
+                <div>
+                    <p class="text-[14px] font-[400] leading-[20px] font-bold text-[#111c2d]">Ahmed Mohamed</p>
+                    <p class="text-[12px] font-[500] leading-[16px] tracking-[0.05em] text-[#505f76]">Student</p>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- ==================== MAIN CONTENT ==================== -->
+    <main class="ml-[260px] min-h-screen flex flex-col">
+
+        <!-- ==================== TOP NAV BAR ==================== -->
+        <header class="sticky top-0 z-40 w-full h-16 bg-[#f9f9ff] border-b border-[#c3c6d7] shadow-sm flex justify-between items-center px-6">
+            <div class="flex items-center gap-4 flex-1">
+                <div class="relative w-full max-w-md">
+                    <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-[#737686]">search</span>
+                    <input class="w-full bg-[#f0f3ff] border-none rounded-full py-2 pl-10 pr-4 text-[14px] font-[400] leading-[20px] focus:ring-2 focus:ring-[#2563eb] focus:ring-opacity-20 transition-all"
+                    placeholder="Search certifications..." type="text" id="searchInput" oninput="filterCertifications()" />
+                </div>
+            </div>
+            <div class="flex items-center gap-4">
+                <button class="p-2 text-[#505f76] hover:bg-[#f0f3ff] rounded-full transition-colors relative" onclick="toggleNotifications()" id="notifBtn">
+                    <span class="material-symbols-outlined">notifications</span>
+                    <span class="absolute -top-1 -right-1 min-w-[18px] h-[18px] bg-[#ba1a1a] text-white text-[10px] font-bold rounded-full flex items-center justify-center px-1 badge-pulse" id="notifBadge">0</span>
+                </button>
+                <div class="flex items-center gap-2 cursor-pointer hover:bg-[#f0f3ff] p-1 rounded-lg transition-colors" onclick="window.location.href='profile.html'">
+                    <img alt="Avatar" class="w-8 h-8 rounded-full object-cover"
+                    src="https://ui-avatars.com/api/?name=Ahmed+Mohamed&background=137fec&color=fff&size=128" />
+                    <div class="hidden md:block text-left">
+                        <p class="text-[12px] font-[500] leading-[16px] tracking-[0.05em] font-bold leading-tight">Ahmed Mohamed</p>
+                        <p class="text-[10px] text-[#505f76]">Student</p>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- ==================== NOTIFICATION DROPDOWN ==================== -->
+        <div id="notifDropdown" class="fixed top-16 right-6 z-50 bg-white rounded-xl border border-[#c3c6d7] shadow-2xl max-w-sm w-full transform scale-95 opacity-0 transition-all duration-200 pointer-events-none">
+            <div class="p-4 border-b border-[#c3c6d7] flex justify-between items-center">
+                <h3 class="text-[16px] font-bold text-[#111c2d]">Notifications</h3>
+                <span class="text-[12px] text-[#004ac6] font-bold cursor-pointer hover:underline" onclick="markAllRead()">Mark all read</span>
+            </div>
+            <div class="max-h-80 overflow-y-auto custom-scrollbar" id="notifDropdownList">
+                <div class="p-3 border-b border-[rgba(195,198,215,0.3)] hover:bg-[#f0f3ff] transition-all cursor-pointer unread">
+                    <p class="text-[14px] font-semibold text-[#111c2d]">New certification earned</p>
+                    <p class="text-[12px] text-[#505f76]">You earned a new certification</p>
+                    <p class="text-[10px] text-[#737686] mt-1">5 mins ago</p>
+                </div>
+                <div class="p-3 border-b border-[rgba(195,198,215,0.3)] hover:bg-[#f0f3ff] transition-all cursor-pointer unread">
+                    <p class="text-[14px] font-semibold text-[#111c2d]">Certification verified</p>
+                    <p class="text-[12px] text-[#505f76]">Your certification has been verified</p>
+                    <p class="text-[10px] text-[#737686] mt-1">1 hour ago</p>
+                </div>
+                <div class="p-3 hover:bg-[#f0f3ff] transition-all cursor-pointer">
+                    <p class="text-[14px] font-semibold text-[#111c2d]">New badge unlocked</p>
+                    <p class="text-[12px] text-[#505f76]">You unlocked a new achievement badge</p>
+                    <p class="text-[10px] text-[#737686] mt-1">2 days ago</p>
+                </div>
+            </div>
+            <div class="p-3 border-t border-[#c3c6d7] text-center">
+                <button class="text-[12px] text-[#004ac6] font-bold hover:underline" onclick="window.location.href='notifications.html'">View all →</button>
+            </div>
+        </div>
+
+        <!-- ==================== PAGE CONTENT ==================== -->
+        <div class="p-6 space-y-6">
+
+            <!-- Header -->
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                <div>
+                    <h2 class="text-[24px] font-[600] leading-[32px] text-[#111c2d]">My Certifications</h2>
+                    <p class="text-[16px] font-[400] leading-[24px] text-[#505f76]">View and manage your academic certifications and achievements.</p>
+                </div>
+                <div class="flex gap-3">
+                    <span class="px-4 py-2 bg-[rgba(37,99,235,0.1)] text-[#004ac6] rounded-lg text-[14px] font-bold" id="certCount">0 certifications</span>
+                    <button onclick="exportCertificates()" class="flex items-center gap-2 bg-[#f0f3ff] text-[#505f76] px-4 py-2 rounded-lg text-[12px] font-bold border border-[#c3c6d7] hover:bg-[#dee8ff]">
+                        <span class="material-symbols-outlined text-[18px]">download</span>
+                        Export
+                    </button>
+                </div>
+            </div>
+
+            <!-- Stats -->
+            <div class="grid grid-cols-1 sm:grid-cols-4 gap-6">
+                <div class="bg-white rounded-xl border p-4 text-center card-shadow">
+                    <p class="text-2xl font-bold text-[#004ac6]" id="totalCerts">0</p>
+                    <p class="text-sm text-gray-500">Total Certifications</p>
+                </div>
+                <div class="bg-white rounded-xl border p-4 text-center card-shadow">
+                    <p class="text-2xl font-bold text-green-600" id="earnedCerts">0</p>
+                    <p class="text-sm text-gray-500">Earned</p>
+                </div>
+                <div class="bg-white rounded-xl border p-4 text-center card-shadow">
+                    <p class="text-2xl font-bold text-purple-600" id="inProgressCerts">0</p>
+                    <p class="text-sm text-gray-500">In Progress</p>
+                </div>
+                <div class="bg-white rounded-xl border p-4 text-center card-shadow">
+                    <p class="text-2xl font-bold text-orange-500" id="badgesCount">0</p>
+                    <p class="text-sm text-gray-500">Badges Earned</p>
+                </div>
+            </div>
+
+            <!-- Certifications Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="certsGrid">
+                <!-- Cards will be populated by JavaScript -->
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="mt-auto py-4 px-6 border-t border-[#c3c6d7] bg-[#f9f9ff]">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-[12px] font-[500] text-[#505f76]">© 2024 EduManage. All rights reserved.</p>
+                <div class="flex gap-6">
+                    <a class="text-[12px] text-[#505f76] hover:text-[#004ac6]" href="#">Help Center</a>
+                    <a class="text-[12px] text-[#505f76] hover:text-[#004ac6]" href="#">Privacy Policy</a>
+                    <a class="text-[12px] text-[#505f76] hover:text-[#004ac6]" href="#">Terms of Service</a>
+                </div>
+            </div>
+        </footer>
+    </main>
+
+    <!-- ==================== VIEW CERTIFICATE MODAL ==================== -->
+    <div id="viewCertModal" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-black/50 backdrop-blur-sm">
+        <div class="bg-white rounded-xl max-w-lg w-full mx-4 p-6 shadow-2xl max-h-[90vh] overflow-y-auto animate-fade-in">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-[18px] font-[600] text-[#111c2d]" id="certModalTitle">Certificate Details</h3>
+                <button onclick="closeViewCertModal()" class="p-1 hover:bg-[#f0f3ff] rounded-lg">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+            </div>
+            <div id="certModalContent" class="space-y-4">
+                <div class="p-6 bg-gradient-to-r from-[#004ac6] to-[#2563eb] rounded-xl text-white text-center">
+                    <span class="material-symbols-outlined text-[64px]">verified</span>
+                    <h4 class="text-[24px] font-bold mt-2" id="certModalName">Certificate of Excellence</h4>
+                    <p class="text-white/80" id="certModalCourse">Advanced Mathematics</p>
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="p-3 bg-[#f0f3ff] rounded-lg text-center">
+                        <p class="text-[10px] text-[#505f76]">Date Issued</p>
+                        <p class="text-[14px] font-bold" id="certModalDate">June 15, 2024</p>
+                    </div>
+                    <div class="p-3 bg-[#f0f3ff] rounded-lg text-center">
+                        <p class="text-[10px] text-[#505f76]">Certificate ID</p>
+                        <p class="text-[14px] font-bold" id="certModalId">CERT-2024-001</p>
+                    </div>
+                </div>
+                <div class="p-3 bg-[#f0f3ff] rounded-lg">
+                    <p class="text-[10px] text-[#505f76]">Status</p>
+                    <p class="text-[14px] font-bold text-green-600" id="certModalStatus">✓ Verified</p>
+                </div>
+                <div class="flex gap-3 pt-2">
+                    <button onclick="downloadCertificate()" class="flex-1 py-2 bg-[#004ac6] text-white rounded-lg font-bold hover:bg-[#2563eb] transition-all flex items-center justify-center gap-2">
+                        <span class="material-symbols-outlined text-[18px]">download</span>
+                        Download
+                    </button>
+                    <button onclick="shareCertificate()" class="flex-1 py-2 bg-[#f0f3ff] text-[#505f76] rounded-lg font-bold hover:bg-[#dee8ff] transition-all flex items-center justify-center gap-2">
+                        <span class="material-symbols-outlined text-[18px]">share</span>
+                        Share
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== TOAST ==================== -->
+    <div id="toast" class="fixed bottom-6 right-6 z-50 bg-[#111c2d] text-white rounded-xl p-4 shadow-2xl max-w-sm transform translate-y-full opacity-0 transition-all duration-500">
+        <div class="flex items-start gap-3">
+            <span class="material-symbols-outlined text-[#6ffbbe]" id="toastIcon">check_circle</span>
+            <div>
+                <p class="text-[14px] font-bold" id="toastTitle">Success</p>
+                <p class="text-[12px] text-[#b7c8e1]" id="toastMessage">Action completed!</p>
+            </div>
+            <button onclick="closeToast()" class="text-[#b7c8e1] hover:text-white">
+                <span class="material-symbols-outlined text-[16px]">close</span>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // ==================== DATA ====================
+        let certifications = [
+            {
+                id: 1,
+                name: "Certificate of Excellence",
+                course: "Advanced Mathematics",
+                date: "2024-06-15",
+                status: "earned",
+                badge: "🏆",
+                color: "#004ac6",
+                description: "Outstanding performance in Advanced Mathematics with a grade of 95%"
+            },
+            {
+                id: 2,
+                name: "Science Achievement Award",
+                course: "Physics II",
+                date: "2024-06-10",
+                status: "earned",
+                badge: "🔬",
+                color: "#006242",
+                description: "Excellent work in Physics II with a grade of 92%"
+            },
+            {
+                id: 3,
+                name: "Programming Certificate",
+                course: "Computer Science",
+                date: "2024-06-05",
+                status: "earned",
+                badge: "💻",
+                color: "#8b5cf6",
+                description: "Proficient in Python programming and data structures"
+            },
+            {
+                id: 4,
+                name: "Literature Honors",
+                course: "English Literature",
+                date: "2024-05-28",
+                status: "earned",
+                badge: "📚",
+                color: "#f59e0b",
+                description: "Excellent analysis and writing skills in English Literature"
+            },
+            {
+                id: 5,
+                name: "Art History Certificate",
+                course: "History of Art",
+                date: "2024-05-20",
+                status: "in-progress",
+                badge: "🎨",
+                color: "#ec4899",
+                description: "75% completed - Exploring Renaissance art and architecture"
+            },
+            {
+                id: 6,
+                name: "Data Science Fundamentals",
+                course: "Data Science",
+                date: "2024-07-01",
+                status: "in-progress",
+                badge: "📊",
+                color: "#06b6d4",
+                description: "60% completed - Learning data analysis and visualization"
+            }
+        ];
+
+        let badges = [
+            { name: "Top Performer", icon: "⭐", color: "#f59e0b" },
+            { name: "Perfect Attendance", icon: "🎯", color: "#004ac6" },
+            { name: "Assignment Master", icon: "📝", color: "#006242" },
+            { name: "Quiz Champion", icon: "🏅", color: "#8b5cf6" }
+        ];
+
+        let notifOpen = false;
+
+        // ==================== TOAST ====================
+        function showToast(title, message, icon = 'check_circle') {
+            document.getElementById('toastTitle').textContent = title;
+            document.getElementById('toastMessage').textContent = message;
+            document.getElementById('toastIcon').textContent = icon;
+            const toast = document.getElementById('toast');
+            toast.classList.remove('translate-y-full', 'opacity-0');
+            toast.classList.add('translate-y-0', 'opacity-100');
+            setTimeout(closeToast, 4000);
+        }
+        function closeToast() {
+            const toast = document.getElementById('toast');
+            toast.classList.add('translate-y-full', 'opacity-0');
+            toast.classList.remove('translate-y-0', 'opacity-100');
+        }
+
+        // ==================== NOTIFICATIONS ====================
+        function toggleNotifications() {
+            const dropdown = document.getElementById('notifDropdown');
+            notifOpen = !notifOpen;
+            if (notifOpen) {
+                dropdown.classList.remove('scale-95', 'opacity-0', 'pointer-events-none');
+                dropdown.classList.add('scale-100', 'opacity-100', 'pointer-events-auto');
+                document.getElementById('notifBadge').style.display = 'none';
+            } else {
+                dropdown.classList.add('scale-95', 'opacity-0', 'pointer-events-none');
+                dropdown.classList.remove('scale-100', 'opacity-100', 'pointer-events-auto');
+            }
+        }
+        document.addEventListener('click', function(e) {
+            const dropdown = document.getElementById('notifDropdown');
+            const btn = document.getElementById('notifBtn');
+            if (notifOpen && !dropdown.contains(e.target) && !btn.contains(e.target)) {
+                toggleNotifications();
+            }
+        });
+
+        function markAllRead() {
+            document.querySelectorAll('#notifDropdownList .unread').forEach(el => {
+                el.classList.remove('unread');
+                el.style.borderLeft = 'none';
+            });
+            document.getElementById('notifBadge').style.display = 'none';
+            showToast('All Read', 'Notifications marked as read.');
+        }
+
+        // ==================== RENDER ====================
+        function renderCertifications() {
+            const grid = document.getElementById('certsGrid');
+            const total = certifications.length;
+            const earned = certifications.filter(c => c.status === 'earned').length;
+            const inProgress = certifications.filter(c => c.status === 'in-progress').length;
+
+            document.getElementById('totalCerts').textContent = total;
+            document.getElementById('earnedCerts').textContent = earned;
+            document.getElementById('inProgressCerts').textContent = inProgress;
+            document.getElementById('badgesCount').textContent = badges.length;
+            document.getElementById('certCount').textContent = `${total} certifications`;
+
+            if (certifications.length === 0) {
+                grid.innerHTML = `
+                    <div class="col-span-full flex items-center justify-center p-12 text-[#505f76]">
+                        <div class="text-center">
+                            <span class="material-symbols-outlined text-[64px]">verified</span>
+                            <p class="mt-4 text-[18px] font-bold">No certifications yet</p>
+                            <p class="text-[14px]">Complete courses to earn certifications!</p>
+                        </div>
+                    </div>
+                `;
+                return;
+            }
+
+            const statusColors = {
+                earned: 'bg-green-100 text-green-600',
+                'in-progress': 'bg-orange-100 text-orange-600'
+            };
+            const statusLabels = {
+                earned: '✓ Earned',
+                'in-progress': '⏳ In Progress'
+            };
+
+            grid.innerHTML = certifications.map(c => `
+                <div class="bg-white rounded-xl border p-4 card-shadow cert-card animate-fade-in cursor-pointer" onclick="viewCertificate(${c.id})">
+                    <div class="flex items-start justify-between mb-3">
+                        <div class="w-14 h-14 rounded-xl flex items-center justify-center text-3xl" style="background: ${c.color}20; color: ${c.color}">
+                            ${c.badge || '📜'}
+                        </div>
+                        <span class="px-2.5 py-1 ${statusColors[c.status]} rounded-full text-[12px] font-bold">${statusLabels[c.status]}</span>
+                    </div>
+                    <h3 class="text-[16px] font-bold text-[#111c2d]">${c.name}</h3>
+                    <p class="text-[14px] text-[#505f76] mt-1">${c.course}</p>
+                    <p class="text-[12px] text-[#737686] mt-2">${c.status === 'earned' ? 'Issued: ' + new Date(c.date).toLocaleDateString() : 'In progress...'}</p>
+                    ${c.status === 'in-progress' ? `
+                        <div class="mt-3">
+                            <div class="flex justify-between text-[12px] text-[#505f76] mb-1">
+                                <span>Progress</span>
+                                <span>${Math.floor(Math.random() * 40) + 60}%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-1.5">
+                                <div class="bg-[#f59e0b] h-1.5 rounded-full" style="width: ${Math.floor(Math.random() * 40) + 60}%"></div>
+                            </div>
+                        </div>
+                    ` : `
+                        <div class="mt-3 flex items-center gap-2 text-[12px] text-green-600">
+                            <span class="material-symbols-outlined text-[16px]">check_circle</span>
+                            Verified
+                        </div>
+                    `}
+                    <button class="w-full mt-3 py-1.5 bg-[#f0f3ff] text-[#004ac6] rounded-lg text-[12px] font-bold hover:bg-[#dee8ff] transition-all">
+                        View Details
+                    </button>
+                </div>
+            `).join('');
+        }
+
+        // ==================== VIEW CERTIFICATE ====================
+        let currentCertId = null;
+
+        function viewCertificate(id) {
+            const cert = certifications.find(c => c.id === id);
+            if (cert) {
+                currentCertId = id;
+                document.getElementById('certModalTitle').textContent = cert.name;
+                document.getElementById('certModalName').textContent = cert.name;
+                document.getElementById('certModalCourse').textContent = cert.course;
+                document.getElementById('certModalDate').textContent = new Date(cert.date).toLocaleDateString();
+                document.getElementById('certModalId').textContent = `CERT-2024-${String(id).padStart(3, '0')}`;
+                document.getElementById('certModalStatus').textContent = cert.status === 'earned' ? '✓ Verified' : '⏳ In Progress';
+                document.getElementById('certModalStatus').className = `text-[14px] font-bold ${cert.status === 'earned' ? 'text-green-600' : 'text-orange-600'}`;
+                document.getElementById('viewCertModal').classList.remove('hidden');
+            }
+        }
+
+        function closeViewCertModal() {
+            document.getElementById('viewCertModal').classList.add('hidden');
+            currentCertId = null;
+        }
+
+        document.getElementById('viewCertModal').addEventListener('click', function(e) {
+            if (e.target === this) closeViewCertModal();
+        });
+
+        // ==================== DOWNLOAD CERTIFICATE ====================
+        function downloadCertificate() {
+            showToast('Downloading', 'Your certificate is being downloaded...');
+            setTimeout(() => showToast('Complete', 'Certificate downloaded successfully!'), 1500);
+        }
+
+        // ==================== SHARE CERTIFICATE ====================
+        function shareCertificate() {
+            showToast('Share', 'Share link copied to clipboard!');
+        }
+
+        // ==================== EXPORT ====================
+        function exportCertificates() {
+            let data = 'Certification,Course,Date,Status\n';
+            certifications.forEach(c => {
+                data += `"${c.name}","${c.course}","${new Date(c.date).toLocaleDateString()}","${c.status}"\n`;
+            });
+            const blob = new Blob([data], { type: 'text/csv' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'certifications_export.csv';
+            a.click();
+            URL.revokeObjectURL(url);
+            showToast('Exported', 'Certifications exported successfully!');
+        }
+
+        // ==================== FILTER ====================
+        function filterCertifications() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const cards = document.querySelectorAll('.cert-card');
+            cards.forEach(card => {
+                card.style.display = card.textContent.toLowerCase().includes(query) ? '' : 'none';
+            });
+        }
+
+        // ==================== INIT ====================
+        document.addEventListener('DOMContentLoaded', function() {
+            renderCertifications();
+            const unread = document.querySelectorAll('#notifDropdownList .unread').length;
+            const badge = document.getElementById('notifBadge');
+            if (unread > 0) {
+                badge.textContent = unread;
+                badge.style.display = 'flex';
+            } else {
+                badge.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>

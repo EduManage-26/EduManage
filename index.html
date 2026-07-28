@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>EduManage - Smart Learning Management System</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link rel="icon" type="image/x-icon" href="image/icon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+    <style>
+        * { font-family: 'Inter', sans-serif; }
+        html { scroll-behavior: smooth; }
+        .gradient-bg { background: linear-gradient(135deg, #f9f9ff 0%, #e7eeff 50%, #dbe1ff 100%); }
+        .hero-gradient { background: linear-gradient(135deg, #004ac6 0%, #2563eb 50%, #4f8cf7 100%); }
+        .feature-card { transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .feature-card:hover { transform: translateY(-8px) scale(1.02); box-shadow: 0 20px 60px rgba(0,74,198,0.15); }
+        .floating-shape { position: absolute; border-radius: 50%; opacity: 0.05; animation: float 25s infinite ease-in-out; }
+        @keyframes float { 0%,100% { transform: translate(0,0) scale(1); } 33% { transform: translate(40px,-40px) scale(1.1); } 66% { transform: translate(-30px,30px) scale(0.9); } }
+        .animate-slide-up { animation: slideUp 0.8s ease-out forwards; }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+        .btn-primary { background: linear-gradient(135deg, #004ac6, #2563eb); transition: all 0.3s ease; }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,74,198,0.35); }
+        .gradient-text { background: linear-gradient(135deg, #004ac6, #2563eb, #4f8cf7); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-[rgba(195,198,215,0.3)]">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-16">
+            <a href="#" class="flex items-center gap-2 group">
+                <div class="w-10 h-10 rounded-xl bg-[#2563eb] flex items-center justify-center text-white shadow-lg group-hover:shadow-xl transition-all">
+                    <span class="material-symbols-outlined text-[24px]" style="font-variation-settings:'FILL'1;">school</span>
+                </div>
+                <div>
+                    <span class="text-[20px] font-[800] text-[#004ac6]">EduManage</span>
+                    <span class="block text-[8px] font-[600] tracking-[0.2em] text-[#505f76] uppercase">LMS</span>
+                </div>
+            </a>
+            <div class="hidden md:flex items-center gap-8">
+                <a href="#features" class="text-[14px] font-[500] text-[#505f76] hover:text-[#004ac6] transition-colors">Features</a>
+                <a href="#about" class="text-[14px] font-[500] text-[#505f76] hover:text-[#004ac6] transition-colors">About</a>
+                <a href="support.html" class="text-[14px] font-[500] text-[#505f76] hover:text-[#004ac6] transition-colors">Support</a>
+                <a href="login.html" class="px-6 py-2.5 bg-[#004ac6] text-white rounded-xl text-[14px] font-[600] hover:bg-[#2563eb] transition-all shadow-md hover:shadow-lg">Get Started</a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<!-- Hero Section -->
+<section class="relative pt-32 pb-20 overflow-hidden gradient-bg">
+    <div class="floating-shape w-[400px] h-[400px] bg-[#004ac6] -top-20 -left-20"></div>
+    <div class="floating-shape w-[500px] h-[500px] bg-[#2563eb] -bottom-40 -right-20"></div>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div class="animate-slide-up">
+                <h1 class="text-[40px] sm:text-[52px] lg:text-[64px] font-[900] leading-[1.1] text-[#111c2d] mb-4">
+                    Smart Learning
+                    <span class="gradient-text">Management</span>
+                    System
+                </h1>
+                <p class="text-[18px] sm:text-[20px] text-[#505f76] leading-[1.6] mb-8 max-w-lg">
+                    Empower your educational institution with a complete, modern, and intuitive platform.
+                </p>
+                <div class="flex flex-wrap gap-4">
+                    <a href="login.html" class="btn-primary px-8 py-4 text-white rounded-xl text-[16px] font-[600] flex items-center gap-2 shadow-lg">
+                        Get Started Free
+                        <span class="material-symbols-outlined text-[20px]">arrow_forward</span>
+                    </a>
+                    <a href="#features" class="border-2 border-[#004ac6] text-[#004ac6] px-8 py-4 rounded-xl text-[16px] font-[600] flex items-center gap-2 hover:bg-[#004ac6] hover:text-white transition-all">
+                        <span class="material-symbols-outlined text-[20px]">play_circle</span>
+                        See Features
+                    </a>
+                </div>
+            </div>
+            <div class="relative animate-fade-in">
+                <div class="bg-white rounded-2xl shadow-2xl p-6 border border-[rgba(195,198,215,0.2)]">
+                    <div class="bg-[#f0f3ff] rounded-xl p-4">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="w-10 h-10 rounded-full bg-[#004ac6] flex items-center justify-center text-white">
+                                <span class="material-symbols-outlined">dashboard</span>
+                            </div>
+                            <div>
+                                <p class="text-[14px] font-bold text-[#111c2d]">Dashboard Overview</p>
+                                <p class="text-[10px] text-[#505f76]">EduManage Platform</p>
+                            </div>
+                            <span class="ml-auto text-[10px] text-[#006242] font-bold bg-[rgba(0,98,66,0.1)] px-2 py-1 rounded">Live</span>
+                        </div>
+                        <div class="grid grid-cols-2 gap-3 mb-4">
+                            <div class="bg-white rounded-lg p-3 text-center shadow-sm">
+                                <p class="text-[20px] font-bold text-[#004ac6]" id="heroStudents">0</p>
+                                <p class="text-[10px] text-[#505f76]">Students</p>
+                            </div>
+                            <div class="bg-white rounded-lg p-3 text-center shadow-sm">
+                                <p class="text-[20px] font-bold text-[#006242]" id="heroTeachers">0</p>
+                                <p class="text-[10px] text-[#505f76]">Teachers</p>
+                            </div>
+                        </div>
+                        <div class="bg-white rounded-lg p-3 shadow-sm">
+                            <div class="flex justify-between text-[12px] text-[#505f76] mb-1">
+                                <span>Platform Status</span>
+                                <span class="font-bold text-[#004ac6]">Active</span>
+                            </div>
+                            <div class="w-full h-2 bg-[#dee8ff] rounded-full overflow-hidden">
+                                <div class="h-full bg-[#004ac6] rounded-full" style="width: 100%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex justify-between mt-4 text-[12px] text-[#505f76]">
+                        <span class="flex items-center gap-1"><span class="material-symbols-outlined text-[16px] text-[#006242]">check_circle</span> Real-time updates</span>
+                        <span class="flex items-center gap-1"><span class="material-symbols-outlined text-[16px] text-[#006242]">check_circle</span> Secure platform</span>
+                        <span class="flex items-center gap-1"><span class="material-symbols-outlined text-[16px] text-[#006242]">check_circle</span> 24/7 support</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Features -->
+<section id="features" class="py-20 gradient-bg">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <span class="text-[12px] font-[600] text-[#004ac6] uppercase tracking-[0.2em]">Features</span>
+            <h2 class="text-[36px] sm:text-[44px] font-[800] text-[#111c2d] mt-2">
+                Everything You Need for
+                <span class="gradient-text">Modern Education</span>
+            </h2>
+            <p class="text-[16px] sm:text-[18px] text-[#505f76] mt-4 max-w-2xl mx-auto">
+                A complete ecosystem designed to streamline teaching, learning, and administration.
+            </p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div class="feature-card bg-white rounded-2xl p-8 shadow-sm border border-[rgba(195,198,215,0.1)]">
+                <div class="w-14 h-14 rounded-xl bg-[rgba(37,99,235,0.1)] flex items-center justify-center text-[#004ac6] mb-4">
+                    <span class="material-symbols-outlined text-[32px]">dashboard</span>
+                </div>
+                <h3 class="text-[18px] font-[700] text-[#111c2d] mb-2">Smart Dashboard</h3>
+                <p class="text-[14px] text-[#505f76] leading-relaxed">Real-time insights into student performance, attendance, and engagement across all classes.</p>
+            </div>
+            <div class="feature-card bg-white rounded-2xl p-8 shadow-sm border border-[rgba(195,198,215,0.1)]">
+                <div class="w-14 h-14 rounded-xl bg-[rgba(0,98,66,0.1)] flex items-center justify-center text-[#006242] mb-4">
+                    <span class="material-symbols-outlined text-[32px]">group</span>
+                </div>
+                <h3 class="text-[18px] font-[700] text-[#111c2d] mb-2">User Management</h3>
+                <p class="text-[14px] text-[#505f76] leading-relaxed">Seamlessly manage students, teachers, parents, and administrators with role-based access.</p>
+            </div>
+            <div class="feature-card bg-white rounded-2xl p-8 shadow-sm border border-[rgba(195,198,215,0.1)]">
+                <div class="w-14 h-14 rounded-xl bg-[rgba(56,72,93,0.1)] flex items-center justify-center text-[#38485d] mb-4">
+                    <span class="material-symbols-outlined text-[32px]">calendar_today</span>
+                </div>
+                <h3 class="text-[18px] font-[700] text-[#111c2d] mb-2">Schedule Management</h3>
+                <p class="text-[14px] text-[#505f76] leading-relaxed">Create and manage class schedules, events, and appointments with an intuitive calendar.</p>
+            </div>
+            <div class="feature-card bg-white rounded-2xl p-8 shadow-sm border border-[rgba(195,198,215,0.1)]">
+                <div class="w-14 h-14 rounded-xl bg-[rgba(186,26,26,0.1)] flex items-center justify-center text-[#ba1a1a] mb-4">
+                    <span class="material-symbols-outlined text-[32px]">assignment</span>
+                </div>
+                <h3 class="text-[18px] font-[700] text-[#111c2d] mb-2">Assignments & Quizzes</h3>
+                <p class="text-[14px] text-[#505f76] leading-relaxed">Create, distribute, and grade assignments and quizzes with automated feedback.</p>
+            </div>
+            <div class="feature-card bg-white rounded-2xl p-8 shadow-sm border border-[rgba(195,198,215,0.1)]">
+                <div class="w-14 h-14 rounded-xl bg-[rgba(37,99,235,0.1)] flex items-center justify-center text-[#004ac6] mb-4">
+                    <span class="material-symbols-outlined text-[32px]">analytics</span>
+                </div>
+                <h3 class="text-[18px] font-[700] text-[#111c2d] mb-2">Reports & Analytics</h3>
+                <p class="text-[14px] text-[#505f76] leading-relaxed">Generate detailed reports on student progress, attendance, and academic performance.</p>
+            </div>
+            <div class="feature-card bg-white rounded-2xl p-8 shadow-sm border border-[rgba(195,198,215,0.1)]">
+                <div class="w-14 h-14 rounded-xl bg-[rgba(0,98,66,0.1)] flex items-center justify-center text-[#006242] mb-4">
+                    <span class="material-symbols-outlined text-[32px]">chat</span>
+                </div>
+                <h3 class="text-[18px] font-[700] text-[#111c2d] mb-2">Real-time Chat</h3>
+                <p class="text-[14px] text-[#505f76] leading-relaxed">Instant messaging between teachers, students, and administrators with file sharing.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA / About -->
+<section id="about" class="py-20 hero-gradient relative overflow-hidden">
+    <div class="absolute inset-0 opacity-10">
+        <div class="absolute top-0 left-0 w-64 h-64 bg-white rounded-full blur-3xl"></div>
+        <div class="absolute bottom-0 right-0 w-96 h-96 bg-white rounded-full blur-3xl"></div>
+    </div>
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+        <h2 class="text-[36px] sm:text-[48px] font-[800] text-white mb-4">Ready to Transform Your School?</h2>
+        <p class="text-[18px] sm:text-[20px] text-white/80 mb-8 max-w-2xl mx-auto">
+            Join thousands of educators and students who are already using EduManage.
+        </p>
+        <div class="flex flex-wrap gap-4 justify-center">
+            <a href="login.html" class="bg-white text-[#004ac6] px-8 py-4 rounded-xl text-[16px] font-[600] hover:shadow-xl transition-all flex items-center gap-2">
+                Get Started Now
+                <span class="material-symbols-outlined text-[20px]">arrow_forward</span>
+            </a>
+            <a href="support.html" class="bg-white/20 text-white px-8 py-4 rounded-xl text-[16px] font-[600] border border-white/30 hover:bg-white/30 transition-all flex items-center gap-2">
+                <span class="material-symbols-outlined text-[20px]">help</span>
+                Contact Support
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="bg-[#111c2d] text-white pt-16 pb-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
+            <div>
+                <div class="flex items-center gap-2 mb-4">
+                    <div class="w-10 h-10 rounded-xl bg-[#2563eb] flex items-center justify-center text-white">
+                        <span class="material-symbols-outlined text-[24px]" style="font-variation-settings:'FILL'1;">school</span>
+                    </div>
+                    <span class="text-[20px] font-[800] text-white">EduManage</span>
+                </div>
+                <p class="text-[14px] text-[#b7c8e1] leading-relaxed">A complete Learning Management System for modern education.</p>
+            </div>
+            <div>
+                <h4 class="text-[14px] font-[600] mb-4">Product</h4>
+                <ul class="space-y-2 text-[14px] text-[#b7c8e1]">
+                    <li><a href="#features" class="hover:text-white transition-colors block">Features</a></li>
+                    <li><a href="support.html" class="hover:text-white transition-colors block">Support</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-[14px] font-[600] mb-4">Company</h4>
+                <ul class="space-y-2 text-[14px] text-[#b7c8e1]">
+                    <li><a href="#" class="hover:text-white transition-colors block">About Us</a></li>
+                    <li><a href="#" class="hover:text-white transition-colors block">Contact</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-[14px] font-[600] mb-4">Legal</h4>
+                <ul class="space-y-2 text-[14px] text-[#b7c8e1]">
+                    <li><a href="#" class="hover:text-white transition-colors block">Privacy Policy</a></li>
+                    <li><a href="#" class="hover:text-white transition-colors block">Terms of Service</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="border-t border-[rgba(255,255,255,0.1)] pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+            <p class="text-[12px] text-[#b7c8e1]">© 2024 EduManage. All rights reserved.</p>
+            <div class="flex gap-6 text-[12px] text-[#b7c8e1]">
+                <a href="#" class="hover:text-white transition-colors">Privacy</a>
+                <a href="#" class="hover:text-white transition-colors">Terms</a>
+                <a href="support.html" class="hover:text-white transition-colors">Support</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script src="app.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const students = Auth.getUsersByRole('student').length;
+        const teachers = Auth.getUsersByRole('teacher').length;
+        document.getElementById('heroStudents').textContent = students || 0;
+        document.getElementById('heroTeachers').textContent = teachers || 0;
+        console.log('✅ Landing page loaded');
+    });
+</script>
+</body>
+</html>

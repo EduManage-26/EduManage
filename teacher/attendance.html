@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Attendance | Teacher</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries">
+    </script>
+    <link rel="icon" type="image/x-icon" href="../image/icon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js">
+    </script>
+    <style>
+        * { font-family: 'Inter', sans-serif; }
+        body { background-color: #f9f9ff; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .sidebar-link { transition: all 0.2s ease; }
+        .sidebar-link:hover { background-color: #f0f3ff; transform: translateX(4px); }
+        .sidebar-link.active { background-color: rgba(37, 99, 235, 0.1); color: #004ac6; border-left: 4px solid #004ac6; font-weight: 700; }
+        .card-shadow { box-shadow: 0 1px 3px 0 rgba(0,0,0,0.1), 0 1px 2px -1px rgba(0,0,0,0.1); }
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #e2e8f0; border-radius: 10px; }
+        .animate-fade-in { animation: fadeIn 0.3s ease-out forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .attendance-row { transition: all 0.2s ease; }
+        .attendance-row:hover { background-color: #f0f3ff; }
+        .chart-container { position: relative; height: 200px; width: 100%; }
+        .badge-pulse { animation: pulse 2s infinite; }
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.2); } 100% { transform: scale(1); } }
+    </style>
+</head>
+<body>
+
+    <!-- ==================== SIDEBAR (مختصر) ==================== -->
+    <aside class="fixed left-0 top-0 h-full w-[260px] z-50 bg-[#f9f9ff] border-r border-[#c3c6d7] shadow-sm flex flex-col py-4 gap-1">
+        <div class="px-4 mb-6">
+            <div class="flex items-center gap-2">
+                <div class="w-10 h-10 rounded-lg bg-[#2563eb] flex items-center justify-center text-white">
+                    <span class="material-symbols-outlined" style="font-variation-settings:'FILL'1;">school</span>
+                </div>
+                <div>
+                    <h1 class="text-[20px] font-[600] leading-[28px] text-[#004ac6]">EduManage</h1>
+                    <p class="text-[12px] font-[500] leading-[16px] tracking-[0.05em] text-[#505f76]">Teacher</p>
+                </div>
+            </div>
+        </div>
+        <nav class="flex-1 px-2 space-y-1 overflow-y-auto custom-scrollbar">
+            <a href="index.html" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-lg text-[#505f76]">
+                <span class="material-symbols-outlined">dashboard</span>
+                <span class="text-[12px] font-[500] leading-[16px] tracking-[0.05em]">Dashboard</span>
+            </a>
+            <a href="courses.html" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-lg text-[#505f76]">
+                <span class="material-symbols-outlined">school</span>
+                <span class="text-[12px] font-[500] leading-[16px] tracking-[0.05em]">My Courses</span>
+            </a>
+            <a href="lessons.html" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-lg text-[#505f76]">
+                <span class="material-symbols-outlined">auto_stories</span>
+                <span class="text-[12px] font-[500] leading-[16px] tracking-[0.05em]">Lessons</span>
+            </a>
+            <a href="assignments.html" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-lg text-[#505f76]">
+                <span class="material-symbols-outlined">assignment</span>
+                <span class="text-[12px] font-[500] leading-[16px] tracking-[0.05em]">Assignments</span>
+            </a>
+            <a href="quizzes.html" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-lg text-[#505f76]">
+                <span class="material-symbols-outlined">quiz</span>
+                <span class="text-[12px] font-[500] leading-[16px] tracking-[0.05em]">Quizzes</span>
+            </a>
+            <a href="grades.html" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-lg text-[#505f76]">
+                <span class="material-symbols-outlined">grade</span>
+                <span class="text-[12px] font-[500] leading-[16px] tracking-[0.05em]">Grades</span>
+            </a>
+            <a href="attendance.html" class="sidebar-link active flex items-center gap-4 px-4 py-3 rounded-lg text-[#004ac6] bg-[rgba(37,99,235,0.1)] border-l-4 border-[#004ac6] font-bold">
+                <span class="material-symbols-outlined">rule</span>
+                <span class="text-[12px] font-[500] leading-[16px] tracking-[0.05em]">Attendance</span>
+            </a>
+            <a href="students.html" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-lg text-[#505f76]">
+                <span class="material-symbols-outlined">group</span>
+                <span class="text-[12px] font-[500] leading-[16px] tracking-[0.05em]">My Students</span>
+            </a>
+            <a href="schedule.html" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-lg text-[#505f76]">
+                <span class="material-symbols-outlined">calendar_today</span>
+                <span class="text-[12px] font-[500] leading-[16px] tracking-[0.05em]">Schedule</span>
+            </a>
+            <a href="reports.html" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-lg text-[#505f76]">
+                <span class="material-symbols-outlined">analytics</span>
+                <span class="text-[12px] font-[500] leading-[16px] tracking-[0.05em]">Reports</span>
+            </a>
+            <a href="chat.html" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-lg text-[#505f76]">
+                <span class="material-symbols-outlined">chat</span>
+                <span class="text-[12px] font-[500] leading-[16px] tracking-[0.05em]">Chat</span>
+            </a>
+            <a href="notifications.html" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-lg text-[#505f76]">
+                <span class="material-symbols-outlined">notifications</span>
+                <span class="text-[12px] font-[500] leading-[16px] tracking-[0.05em]">Notifications</span>
+            </a>
+            <a href="profile.html" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-lg text-[#505f76]">
+                <span class="material-symbols-outlined">person</span>
+                <span class="text-[12px] font-[500] leading-[16px] tracking-[0.05em]">Profile</span>
+            </a>
+            <a href="setting.html" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-lg text-[#505f76]">
+                <span class="material-symbols-outlined">settings</span>
+                <span class="text-[12px] font-[500] leading-[16px] tracking-[0.05em]">Settings</span>
+            </a>
+        </nav>
+        <div class="px-4 mt-auto pt-4 border-t border-[#c3c6d7]">
+            <div class="flex items-center gap-3">
+                <img alt="Profile" class="w-10 h-10 rounded-full border border-[#c3c6d7] object-cover"
+                src="https://ui-avatars.com/api/?name=Prof.+John+Smith&background=137fec&color=fff&size=128" />
+                <div>
+                    <p class="text-[14px] font-[400] leading-[20px] font-bold text-[#111c2d]">Prof. John Smith</p>
+                    <p class="text-[12px] font-[500] leading-[16px] tracking-[0.05em] text-[#505f76]">Teacher</p>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- ==================== MAIN CONTENT ==================== -->
+    <main class="ml-[260px] min-h-screen flex flex-col">
+
+        <!-- ==================== TOP NAV BAR ==================== -->
+        <header class="sticky top-0 z-40 w-full h-16 bg-[#f9f9ff] border-b border-[#c3c6d7] shadow-sm flex justify-between items-center px-6">
+            <div class="flex items-center gap-4 flex-1">
+                <div class="relative w-full max-w-md">
+                    <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-[#737686]">search</span>
+                    <input class="w-full bg-[#f0f3ff] border-none rounded-full py-2 pl-10 pr-4 text-[14px] font-[400] leading-[20px] focus:ring-2 focus:ring-[#2563eb] focus:ring-opacity-20 transition-all"
+                    placeholder="Search attendance..." type="text" id="searchInput" oninput="filterAttendance()" />
+                </div>
+            </div>
+            <div class="flex items-center gap-4">
+                <button class="p-2 text-[#505f76] hover:bg-[#f0f3ff] rounded-full transition-colors relative" onclick="toggleNotifications()" id="notifBtn">
+                    <span class="material-symbols-outlined">notifications</span>
+                    <span class="absolute -top-1 -right-1 min-w-[18px] h-[18px] bg-[#ba1a1a] text-white text-[10px] font-bold rounded-full flex items-center justify-center px-1 badge-pulse" id="notifBadge">0</span>
+                </button>
+                <div class="flex items-center gap-2 cursor-pointer hover:bg-[#f0f3ff] p-1 rounded-lg transition-colors" onclick="window.location.href='profile.html'">
+                    <img alt="Avatar" class="w-8 h-8 rounded-full object-cover"
+                    src="https://ui-avatars.com/api/?name=Prof.+John+Smith&background=137fec&color=fff&size=128" />
+                    <div class="hidden md:block text-left">
+                        <p class="text-[12px] font-[500] leading-[16px] tracking-[0.05em] font-bold leading-tight">Prof. John Smith</p>
+                        <p class="text-[10px] text-[#505f76]">Teacher</p>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- ==================== NOTIFICATION DROPDOWN ==================== -->
+        <div id="notifDropdown" class="fixed top-16 right-6 z-50 bg-white rounded-xl border border-[#c3c6d7] shadow-2xl max-w-sm w-full transform scale-95 opacity-0 transition-all duration-200 pointer-events-none">
+            <div class="p-4 border-b border-[#c3c6d7] flex justify-between items-center">
+                <h3 class="text-[16px] font-bold text-[#111c2d]">Notifications</h3>
+                <span class="text-[12px] text-[#004ac6] font-bold cursor-pointer hover:underline" onclick="markAllRead()">Mark all read</span>
+            </div>
+            <div class="max-h-80 overflow-y-auto custom-scrollbar" id="notifDropdownList">
+                <div class="p-3 border-b border-[rgba(195,198,215,0.3)] hover:bg-[#f0f3ff] transition-all cursor-pointer unread">
+                    <p class="text-[14px] font-semibold text-[#111c2d]">Absent student</p>
+                    <p class="text-[12px] text-[#505f76]">3 students absent today</p>
+                    <p class="text-[10px] text-[#737686] mt-1">10 mins ago</p>
+                </div>
+                <div class="p-3 border-b border-[rgba(195,198,215,0.3)] hover:bg-[#f0f3ff] transition-all cursor-pointer unread">
+                    <p class="text-[14px] font-semibold text-[#111c2d]">Attendance saved</p>
+                    <p class="text-[12px] text-[#505f76]">Attendance for today saved</p>
+                    <p class="text-[10px] text-[#737686] mt-1">1 hour ago</p>
+                </div>
+                <div class="p-3 hover:bg-[#f0f3ff] transition-all cursor-pointer">
+                    <p class="text-[14px] font-semibold text-[#111c2d]">Weekly report</p>
+                    <p class="text-[12px] text-[#505f76]">Weekly attendance report ready</p>
+                    <p class="text-[10px] text-[#737686] mt-1">2 days ago</p>
+                </div>
+            </div>
+            <div class="p-3 border-t border-[#c3c6d7] text-center">
+                <button class="text-[12px] text-[#004ac6] font-bold hover:underline" onclick="window.location.href='notifications.html'">View all →</button>
+            </div>
+        </div>
+
+        <!-- ==================== PAGE CONTENT ==================== -->
+        <div class="p-6 space-y-6">
+
+            <!-- Header -->
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                <div>
+                    <h2 class="text-[24px] font-[600] leading-[32px] text-[#111c2d]">Attendance Tracking</h2>
+                    <p class="text-[16px] font-[400] leading-[24px] text-[#505f76]">Track student attendance for your courses.</p>
+                </div>
+                <div class="flex gap-3">
+                    <select class="px-4 py-2 border rounded-lg text-[14px] focus:ring-2 focus:ring-[#004ac6] outline-none" id="courseFilter" onchange="loadAttendance()">
+                        <option value="all">All Courses</option>
+                        <option value="Advanced Mathematics">Advanced Math</option>
+                        <option value="Physics II">Physics II</option>
+                        <option value="Computer Science">Computer Science</option>
+                    </select>
+                    <input type="date" id="attendanceDate" class="px-4 py-2 border rounded-lg focus:ring-2 focus:ring-[#004ac6] outline-none" />
+                </div>
+            </div>
+
+            <!-- Stats -->
+            <div class="grid grid-cols-1 sm:grid-cols-4 gap-6">
+                <div class="bg-white rounded-xl border p-4 text-center card-shadow">
+                    <p class="text-2xl font-bold text-[#004ac6]" id="totalStudents">0</p>
+                    <p class="text-sm text-gray-500">Total Students</p>
+                </div>
+                <div class="bg-white rounded-xl border p-4 text-center card-shadow">
+                    <p class="text-2xl font-bold text-green-600" id="presentCount">0</p>
+                    <p class="text-sm text-gray-500">Present</p>
+                </div>
+                <div class="bg-white rounded-xl border p-4 text-center card-shadow">
+                    <p class="text-2xl font-bold text-red-600" id="absentCount">0</p>
+                    <p class="text-sm text-gray-500">Absent</p>
+                </div>
+                <div class="bg-white rounded-xl border p-4 text-center card-shadow">
+                    <p class="text-2xl font-bold text-purple-600" id="todayAttendance">0%</p>
+                    <p class="text-sm text-gray-500">Today's Attendance</p>
+                </div>
+            </div>
+
+            <!-- Attendance Chart -->
+            <div class="bg-white rounded-xl border card-shadow p-4">
+                <h3 class="text-[18px] font-bold text-[#111c2d] mb-4">Weekly Attendance</h3>
+                <div class="chart-container">
+                    <canvas id="attendanceChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Attendance Table -->
+            <div class="bg-white rounded-xl border card-shadow overflow-hidden">
+                <div class="px-4 py-3 border-b bg-[#f0f3ff] flex justify-between items-center">
+                    <h3 class="text-[18px] font-bold text-[#111c2d]">Student Attendance</h3>
+                    <div class="flex gap-2">
+                        <button onclick="markAll('present')" class="px-3 py-1 text-[12px] font-bold text-[#004ac6] bg-[rgba(37,99,235,0.1)] rounded-lg hover:bg-[rgba(37,99,235,0.2)]">Mark All Present</button>
+                        <button onclick="markAll('absent')" class="px-3 py-1 text-[12px] font-bold text-[#ba1a1a] bg-[rgba(186,26,26,0.1)] rounded-lg hover:bg-[rgba(186,26,26,0.2)]">Mark All Absent</button>
+                    </div>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left">
+                        <thead class="bg-[rgba(240,243,255,0.5)]">
+                            <tr>
+                                <th class="px-4 py-3 text-[12px] font-bold text-[#505f76]">Student</th>
+                                <th class="px-4 py-3 text-[12px] font-bold text-[#505f76]">Course</th>
+                                <th class="px-4 py-3 text-[12px] font-bold text-[#505f76]">Status</th>
+                                <th class="px-4 py-3 text-[12px] font-bold text-[#505f76] text-right">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-[rgba(195,198,215,0.3)]" id="attendanceTableBody">
+                            <tr>
+                                <td colspan="4" class="px-4 py-8 text-center text-[#505f76]">
+                                    <span class="material-symbols-outlined text-[48px]">rule</span>
+                                    <p class="mt-2">No attendance records yet</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="px-4 py-3 bg-[#f0f3ff] border-t flex justify-between items-center">
+                    <span class="text-[12px] text-[#505f76]" id="studentCount">0 students</span>
+                    <button onclick="saveAttendance()" class="px-4 py-2 bg-[#004ac6] text-white rounded-lg text-[12px] font-bold hover:bg-[#2563eb] transition-all flex items-center gap-2">
+                        <span class="material-symbols-outlined text-[18px]">save</span>
+                        Save Attendance
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="mt-auto py-4 px-6 border-t border-[#c3c6d7] bg-[#f9f9ff]">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-[12px] font-[500] text-[#505f76]">© 2024 EduManage. All rights reserved.</p>
+                <div class="flex gap-6">
+                    <a class="text-[12px] text-[#505f76] hover:text-[#004ac6]" href="#">Help Center</a>
+                    <a class="text-[12px] text-[#505f76] hover:text-[#004ac6]" href="#">Privacy Policy</a>
+                    <a class="text-[12px] text-[#505f76] hover:text-[#004ac6]" href="#">Terms of Service</a>
+                </div>
+            </div>
+        </footer>
+    </main>
+
+    <!-- ==================== TOAST ==================== -->
+    <div id="toast" class="fixed bottom-6 right-6 z-50 bg-[#111c2d] text-white rounded-xl p-4 shadow-2xl max-w-sm transform translate-y-full opacity-0 transition-all duration-500">
+        <div class="flex items-start gap-3">
+            <span class="material-symbols-outlined text-[#6ffbbe]" id="toastIcon">check_circle</span>
+            <div>
+                <p class="text-[14px] font-bold" id="toastTitle">Success</p>
+                <p class="text-[12px] text-[#b7c8e1]" id="toastMessage">Action completed!</p>
+            </div>
+            <button onclick="closeToast()" class="text-[#b7c8e1] hover:text-white">
+                <span class="material-symbols-outlined text-[16px]">close</span>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // ==================== DATA (وهمية) ====================
+        let attendanceRecords = [
+            { id: 1, student: "Alex Rivera", course: "Advanced Mathematics", status: "present" },
+            { id: 2, student: "Emma Watson", course: "Advanced Mathematics", status: "present" },
+            { id: 3, student: "David Chen", course: "Physics II", status: "absent" },
+            { id: 4, student: "Sophia Williams", course: "Computer Science", status: "present" },
+            { id: 5, student: "James Brown", course: "Physics II", status: "absent" },
+            { id: 6, student: "Olivia Martinez", course: "Advanced Mathematics", status: "present" },
+            { id: 7, student: "William Lee", course: "Computer Science", status: "present" },
+            { id: 8, student: "Isabella Garcia", course: "Physics II", status: "present" },
+            { id: 9, student: "Mia Johnson", course: "Advanced Mathematics", status: "present" },
+            { id: 10, student: "Liam Brown", course: "Physics II", status: "absent" }
+        ];
+
+        let attendanceChart = null;
+        let notifOpen = false;
+
+        // ==================== TOAST ====================
+        function showToast(title, message, icon = 'check_circle') {
+            document.getElementById('toastTitle').textContent = title;
+            document.getElementById('toastMessage').textContent = message;
+            document.getElementById('toastIcon').textContent = icon;
+            const toast = document.getElementById('toast');
+            toast.classList.remove('translate-y-full', 'opacity-0');
+            toast.classList.add('translate-y-0', 'opacity-100');
+            setTimeout(closeToast, 4000);
+        }
+        function closeToast() {
+            const toast = document.getElementById('toast');
+            toast.classList.add('translate-y-full', 'opacity-0');
+            toast.classList.remove('translate-y-0', 'opacity-100');
+        }
+
+        // ==================== NOTIFICATIONS ====================
+        function toggleNotifications() {
+            const dropdown = document.getElementById('notifDropdown');
+            notifOpen = !notifOpen;
+            if (notifOpen) {
+                dropdown.classList.remove('scale-95', 'opacity-0', 'pointer-events-none');
+                dropdown.classList.add('scale-100', 'opacity-100', 'pointer-events-auto');
+                document.getElementById('notifBadge').style.display = 'none';
+            } else {
+                dropdown.classList.add('scale-95', 'opacity-0', 'pointer-events-none');
+                dropdown.classList.remove('scale-100', 'opacity-100', 'pointer-events-auto');
+            }
+        }
+        document.addEventListener('click', function(e) {
+            const dropdown = document.getElementById('notifDropdown');
+            const btn = document.getElementById('notifBtn');
+            if (notifOpen && !dropdown.contains(e.target) && !btn.contains(e.target)) {
+                toggleNotifications();
+            }
+        });
+
+        function markAllRead() {
+            document.querySelectorAll('#notifDropdownList .unread').forEach(el => {
+                el.classList.remove('unread');
+                el.style.borderLeft = 'none';
+            });
+            document.getElementById('notifBadge').style.display = 'none';
+            showToast('All Read', 'Notifications marked as read.');
+        }
+
+        // ==================== LOAD ATTENDANCE ====================
+        function loadAttendance() {
+            const tbody = document.getElementById('attendanceTableBody');
+            const courseFilter = document.getElementById('courseFilter').value;
+            const date = document.getElementById('attendanceDate').value || new Date().toISOString().split('T')[0];
+
+            let filtered = attendanceRecords;
+            if (courseFilter !== 'all') {
+                filtered = attendanceRecords.filter(r => r.course === courseFilter);
+            }
+
+            const total = filtered.length;
+            const present = filtered.filter(r => r.status === 'present').length;
+            const absent = filtered.filter(r => r.status === 'absent').length;
+            const rate = total > 0 ? Math.round((present / total) * 100) : 0;
+
+            document.getElementById('totalStudents').textContent = total;
+            document.getElementById('presentCount').textContent = present;
+            document.getElementById('absentCount').textContent = absent;
+            document.getElementById('todayAttendance').textContent = rate + '%';
+            document.getElementById('studentCount').textContent = `${total} students`;
+
+            if (filtered.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="4" class="px-4 py-8 text-center text-[#505f76]">
+                            <span class="material-symbols-outlined text-[48px]">rule</span>
+                            <p class="mt-2">No attendance records</p>
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            const statusColors = {
+                present: 'bg-green-100 text-green-600',
+                absent: 'bg-red-100 text-red-600'
+            };
+
+            tbody.innerHTML = filtered.map(r => `
+                <tr class="attendance-row animate-fade-in">
+                    <td class="px-4 py-3">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-full bg-[rgba(37,99,235,0.1)] flex items-center justify-center text-[#004ac6] font-bold text-[14px]">
+                                ${r.student.split(' ').map(n => n[0]).join('')}
+                            </div>
+                            <div>
+                                <p class="text-[14px] font-bold text-[#111c2d]">${r.student}</p>
+                                <p class="text-[12px] text-[#505f76]">${r.course}</p>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="px-4 py-3 text-[14px]">${r.course}</td>
+                    <td class="px-4 py-3">
+                        <div class="flex gap-4">
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input ${r.status === 'present' ? 'checked' : ''} class="w-4 h-4 text-[#004ac6] border-[#c3c6d7] focus:ring-[#004ac6] rounded-full" name="att_${r.id}" type="radio" value="present" onchange="updateStatus(${r.id}, 'present')" />
+                                <span class="text-[12px] font-bold ${r.status === 'present' ? 'text-[#006242]' : 'text-[#505f76]'}">Present</span>
+                            </label>
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input ${r.status === 'absent' ? 'checked' : ''} class="w-4 h-4 text-[#ba1a1a] border-[#c3c6d7] focus:ring-[#ba1a1a] rounded-full" name="att_${r.id}" type="radio" value="absent" onchange="updateStatus(${r.id}, 'absent')" />
+                                <span class="text-[12px] font-bold ${r.status === 'absent' ? 'text-[#ba1a1a]' : 'text-[#505f76]'}">Absent</span>
+                            </label>
+                        </div>
+                    </td>
+                    <td class="px-4 py-3 text-right">
+                        <button class="p-1.5 text-[#737686] hover:text-[#004ac6] transition-colors" title="Note">
+                            <span class="material-symbols-outlined">note</span>
+                        </button>
+                    </td>
+                </tr>
+            `).join('');
+
+            updateChart(filtered);
+        }
+
+        // ==================== UPDATE STATUS ====================
+        function updateStatus(id, status) {
+            const record = attendanceRecords.find(r => r.id === id);
+            if (record) {
+                record.status = status;
+                loadAttendance();
+            }
+        }
+
+        // ==================== MARK ALL ====================
+        function markAll(status) {
+            const courseFilter = document.getElementById('courseFilter').value;
+            let filtered = attendanceRecords;
+            if (courseFilter !== 'all') {
+                filtered = attendanceRecords.filter(r => r.course === courseFilter);
+            }
+            filtered.forEach(r => r.status = status);
+            loadAttendance();
+            showToast('Applied', `All students marked as ${status}`);
+        }
+
+        // ==================== SAVE ATTENDANCE ====================
+        function saveAttendance() {
+            const btn = event.currentTarget;
+            const originalHtml = btn.innerHTML;
+            btn.innerHTML = '<span class="material-symbols-outlined text-[18px] animate-spin">sync</span> Saving...';
+            btn.disabled = true;
+
+            setTimeout(() => {
+                btn.innerHTML = '<span class="material-symbols-outlined text-[18px]">check_circle</span> Saved!';
+                btn.style.backgroundColor = '#006242';
+                setTimeout(() => {
+                    btn.innerHTML = originalHtml;
+                    btn.style.backgroundColor = '';
+                    btn.disabled = false;
+                    showToast('Saved', 'Attendance has been saved successfully.');
+                }, 1500);
+            }, 1500);
+        }
+
+        // ==================== CHART ====================
+        function updateChart(records) {
+            const ctx = document.getElementById('attendanceChart').getContext('2d');
+            if (attendanceChart) attendanceChart.destroy();
+
+            const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
+            const data = days.map(() => Math.round(80 + Math.random() * 18));
+
+            attendanceChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: days,
+                    datasets: [{
+                        label: 'Present %',
+                        data: data,
+                        backgroundColor: ['#004ac6', '#2563eb', '#006242', '#f1c40f', '#004ac6'],
+                        borderRadius: 6,
+                        barThickness: 40
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        y: { beginAtZero: true, max: 100, grid: { color: '#f1f5f9' } },
+                        x: { grid: { display: false } }
+                    }
+                }
+            });
+        }
+
+        // ==================== FILTER ====================
+        function filterAttendance() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const rows = document.querySelectorAll('#attendanceTableBody .attendance-row');
+            let visible = 0;
+            rows.forEach(row => {
+                const text = row.textContent.toLowerCase();
+                const show = text.includes(query);
+                row.style.display = show ? '' : 'none';
+                if (show) visible++;
+            });
+            document.getElementById('studentCount').textContent = `${visible} students`;
+        }
+
+        // ==================== INIT ====================
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('attendanceDate').value = new Date().toISOString().split('T')[0];
+            loadAttendance();
+            const unread = document.querySelectorAll('#notifDropdownList .unread').length;
+            const badge = document.getElementById('notifBadge');
+            if (unread > 0) {
+                badge.textContent = unread;
+                badge.style.display = 'flex';
+            } else {
+                badge.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>EduManage - School Details</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link rel="icon" type="image/x-icon" href="../image/icon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f9f9ff;
+        }
+
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+
+        .sidebar-link {
+            transition: all 0.2s ease;
+        }
+
+        .sidebar-link:hover {
+            background-color: #f0f3ff;
+            transform: translateX(4px);
+        }
+
+        .sidebar-link.active {
+            background-color: rgba(37, 99, 235, 0.1);
+            color: #004ac6;
+            border-left: 4px solid #004ac6;
+            font-weight: 700;
+        }
+
+        .card-shadow {
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #e2e8f0;
+            border-radius: 10px;
+        }
+
+        .stat-card {
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
+        }
+
+        .chart-container {
+            position: relative;
+            height: 200px;
+            width: 100%;
+        }
+
+        .tab-btn.active {
+            border-bottom: 3px solid #004ac6;
+            color: #004ac6;
+            font-weight: 600;
+        }
+    </style>
+</head>
+
+<body class="bg-[#f9f9ff] text-[#111c2d]">
+
+    <!-- Sidebar -->
+    <aside
+        class="fixed left-0 top-0 h-full w-[260px] z-50 bg-[#f9f9ff] border-r border-[#c3c6d7] shadow-sm flex flex-col py-4 gap-1">
+        <div class="px-4 mb-6">
+            <div class="flex items-center gap-2">
+                <div class="w-10 h-10 rounded-lg bg-[#2563eb] flex items-center justify-center text-white">
+                    <span class="material-symbols-outlined"
+                        style="font-variation-settings:'FILL'1;">admin_panel_settings</span>
+                </div>
+                <div>
+                    <h1 class="text-[20px] font-[600] leading-[28px] text-[#004ac6]">EduManage</h1>
+                    <p class="text-[12px] font-[500] leading-[16px] tracking-[0.05em] text-[#505f76]">Super Admin</p>
+                </div>
+            </div>
+        </div>
+        <nav class="flex-1 px-2 space-y-1 overflow-y-auto custom-scrollbar">
+            <a href="index.html" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-lg text-[#505f76]">
+                <span class="material-symbols-outlined">dashboard</span>
+                <span class="text-[12px] font-[500] leading-[16px] tracking-[0.05em]">Dashboard</span>
+            </a>
+            <a href="schools.html" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-lg text-[#505f76]">
+                <span class="material-symbols-outlined">school</span>
+                <span class="text-[12px] font-[500] leading-[16px] tracking-[0.05em]">Schools</span>
+            </a>
+            <a href="admins.html" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-lg text-[#505f76]">
+                <span class="material-symbols-outlined">admin_panel_settings</span>
+                <span class="text-[12px] font-[500] leading-[16px] tracking-[0.05em]">Admins</span>
+            </a>
+            <a href="profile.html" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-lg text-[#505f76]">
+                <span class="material-symbols-outlined">person</span>
+                <span class="text-[12px] font-[500] leading-[16px] tracking-[0.05em]">Profile</span>
+            </a>
+        </nav>
+        <div class="px-4 mt-auto pt-4 border-t border-[#c3c6d7]">
+            <div class="flex items-center gap-3">
+                <img alt="Admin profile"
+                    class="w-10 h-10 rounded-full border border-[#c3c6d7] object-cover profile-avatar"
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuDpZHWKxbg_7mVa3e9uLpwwsQRoLG7UXaf3vdohxrtMTsb_b9Kmb6GAWDrKHmjBfHxkvn8j-NRaOw6HOcVpOCGvnldzCZ4UXZqk3dIfOgN4aZhuzyXLv5sS5MfFMVtzYxWI4S5fbGJ4KvljKoJ_SUOX4S46VNYZor1Xjf128MB00HS9_h75_I1kYsMGzz88U_okp_P-xJyD8c3od0IVDBQadb8kXJvGuF_i_q0of6_B3nzxd_T30AfYjUmeRqdovAzgm8ufFBt7VNpB" />
+                <div>
+                    <p class="text-[14px] font-[400] leading-[20px] font-bold profile-name text-[#111c2d]">Dr. Ahmed
+                        Mansour</p>
+                    <p class="text-[12px] font-[500] leading-[16px] tracking-[0.05em] profile-role text-[#505f76]">Super
+                        Admin</p>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="ml-[260px] min-h-screen flex flex-col">
+        <header
+            class="sticky top-0 z-40 w-full h-16 bg-[#f9f9ff] border-b border-[#c3c6d7] shadow-sm flex justify-between items-center px-6">
+            <div class="flex items-center gap-4 flex-1">
+                <button class="p-2 text-[#505f76] hover:bg-[#f0f3ff] rounded-full transition-colors"
+                    onclick="history.back()">
+                    <span class="material-symbols-outlined">arrow_back</span>
+                </button>
+                <div class="relative w-full max-w-md">
+                    <span
+                        class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-[#737686]">search</span>
+                    <input
+                        class="w-full bg-[#f0f3ff] border-none rounded-full py-2 pl-10 pr-4 text-[14px] font-[400] leading-[20px] focus:ring-2 focus:ring-[#2563eb] focus:ring-opacity-20 transition-all"
+                        placeholder="Search..." type="text" id="schoolSearch" />
+                </div>
+            </div>
+            <div class="flex items-center gap-4">
+                <button class="p-2 text-[#505f76] hover:bg-[#f0f3ff] rounded-full transition-colors relative"
+                    onclick="window.location.href='notifications.html'">
+                    <span class="material-symbols-outlined">notifications</span>
+                    <span
+                        class="absolute top-2 right-2 w-2 h-2 bg-[#ba1a1a] rounded-full notification-badge hidden"></span>
+                </button>
+                <div class="flex items-center gap-2 cursor-pointer hover:bg-[#f0f3ff] p-1 rounded-lg transition-colors"
+                    onclick="window.location.href='profile.html'">
+                    <img alt="Admin avatar" class="w-8 h-8 rounded-full object-cover profile-avatar"
+                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuDpZHWKxbg_7mVa3e9uLpwwsQRoLG7UXaf3vdohxrtMTsb_b9Kmb6GAWDrKHmjBfHxkvn8j-NRaOw6HOcVpOCGvnldzCZ4UXZqk3dIfOgN4aZhuzyXLv5sS5MfFMVtzYxWI4S5fbGJ4KvljKoJ_SUOX4S46VNYZor1Xjf128MB00HS9_h75_I1kYsMGzz88U_okp_P-xJyD8c3od0IVDBQadb8kXJvGuF_i_q0of6_B3nzxd_T30AfYjUmeRqdovAzgm8ufFBt7VNpB" />
+                    <div class="hidden md:block text-left">
+                        <p
+                            class="text-[12px] font-[500] leading-[16px] tracking-[0.05em] font-bold leading-tight profile-name">
+                            Dr. Ahmed Mansour</p>
+                        <p class="text-[10px] text-[#505f76] profile-role">Super Admin</p>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="p-6 space-y-6">
+            <!-- Breadcrumb -->
+            <nav class="flex items-center gap-2 text-[12px] font-[500] leading-[16px] tracking-[0.05em] text-[#505f76]">
+                <a href="schools.html" class="hover:text-[#004ac6] transition-colors">Schools</a>
+                <span class="material-symbols-outlined text-sm">chevron_right</span>
+                <span class="text-[#004ac6] font-bold" id="schoolName">School Details</span>
+            </nav>
+
+            <!-- School Header -->
+            <div class="bg-[#f9f9ff] rounded-xl border border-[#c3c6d7] card-shadow overflow-hidden">
+                <div
+                    class="h-48 relative overflow-hidden bg-gradient-to-r from-[#004ac6] to-[#2563eb] flex items-center justify-center">
+                    <span class="text-[80px] text-white/20">🏫</span>
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-6">
+                        <div class="text-white">
+                            <div class="flex items-center gap-3 mb-2">
+                                <span
+                                    class="px-3 py-1 bg-[rgba(0,98,66,0.9)] rounded-full text-[12px] font-[500] leading-[16px] tracking-[0.05em] font-bold"
+                                    id="schoolStatus">Active</span>
+                                <span class="text-[12px] font-[500] leading-[16px] tracking-[0.05em]"
+                                    id="schoolCreated">Est. 2024</span>
+                            </div>
+                            <h1 class="text-[28px] font-[600] leading-[36px] font-bold" id="schoolTitle">School Name
+                            </h1>
+                            <p class="text-[16px] font-[400] leading-[24px] opacity-90" id="schoolLocation">Location</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- School Stats -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6" id="schoolStats">
+                <div class="bg-[#f9f9ff] p-4 rounded-xl border border-[#c3c6d7] card-shadow text-center">
+                    <p class="text-[12px] font-[500] leading-[16px] tracking-[0.05em] text-[#505f76]">Students</p>
+                    <p class="text-[24px] font-[600] leading-[32px] text-[#004ac6]" id="statStudents">0</p>
+                </div>
+                <div class="bg-[#f9f9ff] p-4 rounded-xl border border-[#c3c6d7] card-shadow text-center">
+                    <p class="text-[12px] font-[500] leading-[16px] tracking-[0.05em] text-[#505f76]">Teachers</p>
+                    <p class="text-[24px] font-[600] leading-[32px] text-[#006242]" id="statTeachers">0</p>
+                </div>
+                <div class="bg-[#f9f9ff] p-4 rounded-xl border border-[#c3c6d7] card-shadow text-center">
+                    <p class="text-[12px] font-[500] leading-[16px] tracking-[0.05em] text-[#505f76]">Courses</p>
+                    <p class="text-[24px] font-[600] leading-[32px] text-[#38485d]" id="statCourses">0</p>
+                </div>
+                <div class="bg-[#f9f9ff] p-4 rounded-xl border border-[#c3c6d7] card-shadow text-center">
+                    <p class="text-[12px] font-[500] leading-[16px] tracking-[0.05em] text-[#505f76]">Attendance</p>
+                    <p class="text-[24px] font-[600] leading-[32px] text-[#004ac6]" id="statAttendance">0%</p>
+                </div>
+            </div>
+
+            <!-- Tabs -->
+            <div class="bg-[#f9f9ff] rounded-xl border border-[#c3c6d7] card-shadow overflow-hidden">
+                <div class="border-b border-[#c3c6d7] px-4 flex gap-6 overflow-x-auto">
+                    <button class="py-3 text-[14px] font-[500] leading-[20px] tab-btn active"
+                        onclick="switchSchoolTab('overview')" id="tab-overview">Overview</button>
+                    <button
+                        class="py-3 text-[14px] font-[500] leading-[20px] text-[#505f76] hover:text-[#111c2d] transition-colors"
+                        onclick="switchSchoolTab('teachers')" id="tab-teachers">Teachers</button>
+                    <button
+                        class="py-3 text-[14px] font-[500] leading-[20px] text-[#505f76] hover:text-[#111c2d] transition-colors"
+                        onclick="switchSchoolTab('students')" id="tab-students">Students</button>
+                    <button
+                        class="py-3 text-[14px] font-[500] leading-[20px] text-[#505f76] hover:text-[#111c2d] transition-colors"
+                        onclick="switchSchoolTab('courses')" id="tab-courses">Courses</button>
+                    <button
+                        class="py-3 text-[14px] font-[500] leading-[20px] text-[#505f76] hover:text-[#111c2d] transition-colors"
+                        onclick="switchSchoolTab('admins')" id="tab-admins">Admins</button>
+                </div>
+
+                <!-- Tab Content -->
+                <div class="p-4">
+                    <!-- Overview -->
+                    <div id="content-overview" class="space-y-4">
+                        <div>
+                            <h3 class="text-[18px] font-[600] leading-[24px] text-[#111c2d] mb-2">School Information
+                            </h3>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="schoolInfo">
+                                <div class="p-3 bg-[#f0f3ff] rounded-lg">
+                                    <p class="text-[12px] font-[500] leading-[16px] tracking-[0.05em] text-[#505f76]">
+                                        School Name</p>
+                                    <p class="text-[14px] font-[400] leading-[20px] font-bold text-[#111c2d]"
+                                        id="infoName">-</p>
+                                </div>
+                                <div class="p-3 bg-[#f0f3ff] rounded-lg">
+                                    <p class="text-[12px] font-[500] leading-[16px] tracking-[0.05em] text-[#505f76]">
+                                        Location</p>
+                                    <p class="text-[14px] font-[400] leading-[20px]" id="infoLocation">-</p>
+                                </div>
+                                <div class="p-3 bg-[#f0f3ff] rounded-lg">
+                                    <p class="text-[12px] font-[500] leading-[16px] tracking-[0.05em] text-[#505f76]">
+                                        Status</p>
+                                    <p class="text-[14px] font-[400] leading-[20px] font-bold" id="infoStatus">-</p>
+                                </div>
+                                <div class="p-3 bg-[#f0f3ff] rounded-lg">
+                                    <p class="text-[12px] font-[500] leading-[16px] tracking-[0.05em] text-[#505f76]">
+                                        Created</p>
+                                    <p class="text-[14px] font-[400] leading-[20px]" id="infoCreated">-</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Teachers -->
+                    <div id="content-teachers" class="hidden">
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left border-collapse">
+                                <thead class="bg-[rgba(240,243,255,0.5)] border-b border-[#c3c6d7]">
+                                    <tr>
+                                        <th
+                                            class="px-4 py-2 text-[12px] font-[500] leading-[16px] tracking-[0.05em] font-bold text-[#505f76] uppercase">
+                                            Name</th>
+                                        <th
+                                            class="px-4 py-2 text-[12px] font-[500] leading-[16px] tracking-[0.05em] font-bold text-[#505f76] uppercase">
+                                            Email</th>
+                                        <th
+                                            class="px-4 py-2 text-[12px] font-[500] leading-[16px] tracking-[0.05em] font-bold text-[#505f76] uppercase">
+                                            Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-[rgba(195,198,215,0.3)]" id="teachersTable">
+                                    <tr>
+                                        <td colspan="3" class="px-4 py-4 text-center text-[#505f76]">No teachers yet
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Students -->
+                    <div id="content-students" class="hidden">
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left border-collapse">
+                                <thead class="bg-[rgba(240,243,255,0.5)] border-b border-[#c3c6d7]">
+                                    <tr>
+                                        <th
+                                            class="px-4 py-2 text-[12px] font-[500] leading-[16px] tracking-[0.05em] font-bold text-[#505f76] uppercase">
+                                            Name</th>
+                                        <th
+                                            class="px-4 py-2 text-[12px] font-[500] leading-[16px] tracking-[0.05em] font-bold text-[#505f76] uppercase">
+                                            Email</th>
+                                        <th
+                                            class="px-4 py-2 text-[12px] font-[500] leading-[16px] tracking-[0.05em] font-bold text-[#505f76] uppercase">
+                                            Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-[rgba(195,198,215,0.3)]" id="studentsTable">
+                                    <tr>
+                                        <td colspan="3" class="px-4 py-4 text-center text-[#505f76]">No students yet
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Courses -->
+                    <div id="content-courses" class="hidden">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="coursesGrid">
+                            <div class="p-4 bg-[#f0f3ff] rounded-lg border border-[#c3c6d7] text-center text-[#505f76]">
+                                No courses yet</div>
+                        </div>
+                    </div>
+
+                    <!-- Admins -->
+                    <div id="content-admins" class="hidden">
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left border-collapse">
+                                <thead class="bg-[rgba(240,243,255,0.5)] border-b border-[#c3c6d7]">
+                                    <tr>
+                                        <th
+                                            class="px-4 py-2 text-[12px] font-[500] leading-[16px] tracking-[0.05em] font-bold text-[#505f76] uppercase">
+                                            Name</th>
+                                        <th
+                                            class="px-4 py-2 text-[12px] font-[500] leading-[16px] tracking-[0.05em] font-bold text-[#505f76] uppercase">
+                                            Email</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-[rgba(195,198,215,0.3)]" id="adminsTable">
+                                    <tr>
+                                        <td colspan="2" class="px-4 py-4 text-center text-[#505f76]">No admins yet</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer class="mt-auto py-4 px-6 border-t border-[#c3c6d7] bg-[#f9f9ff]">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-[12px] font-[500] leading-[16px] tracking-[0.05em] text-[#505f76]">© 2024 EduManage. All
+                    rights reserved.</p>
+                <div class="flex gap-6">
+                    <a class="text-[12px] font-[500] leading-[16px] tracking-[0.05em] text-[#505f76] hover:text-[#004ac6] transition-colors"
+                        href="#">Help Center</a>
+                    <a class="text-[12px] font-[500] leading-[16px] tracking-[0.05em] text-[#505f76] hover:text-[#004ac6] transition-colors"
+                        href="#">Privacy Policy</a>
+                    <a class="text-[12px] font-[500] leading-[16px] tracking-[0.05em] text-[#505f76] hover:text-[#004ac6] transition-colors"
+                        href="#">Terms of Service</a>
+                </div>
+            </div>
+        </footer>
+    </main>
+
+    <script src="../app.js"></script>
+    <script>
+        let schoolId = null;
+
+        document.addEventListener('DOMContentLoaded', function () {
+            if (!Permissions.check('super-admin')) return;
+            UI.loadUserProfile();
+
+            // Get school ID from URL
+            const params = new URLSearchParams(window.location.search);
+            schoolId = params.get('id');
+
+            if (!schoolId) {
+                window.location.href = 'schools.html';
+                return;
+            }
+
+            loadSchoolDetails(schoolId);
+            UI.updateAllBadges();
+        });
+
+        function loadSchoolDetails(id) {
+            const school = SchoolAPI.getById(id);
+            if (!school) {
+                window.location.href = 'schools.html';
+                return;
+            }
+
+            // Update header
+            document.getElementById('schoolName').textContent = school.name;
+            document.getElementById('schoolTitle').textContent = school.name;
+            document.getElementById('schoolLocation').textContent = school.location || 'N/A';
+            document.getElementById('schoolStatus').textContent = school.status.charAt(0).toUpperCase() + school.status.slice(1);
+            document.getElementById('schoolStatus').className = `px-3 py-1 rounded-full text-[12px] font-[500] leading-[16px] tracking-[0.05em] font-bold ${school.status === 'active' ? 'bg-[rgba(0,98,66,0.9)]' : 'bg-[rgba(186,26,26,0.9)]'} text-white`;
+            document.getElementById('schoolCreated').textContent = `Est. ${new Date(school.createdAt).getFullYear()}`;
+
+            // Update info
+            document.getElementById('infoName').textContent = school.name;
+            document.getElementById('infoLocation').textContent = school.location || 'N/A';
+            document.getElementById('infoStatus').textContent = school.status.charAt(0).toUpperCase() + school.status.slice(1);
+            document.getElementById('infoStatus').className = `text-[14px] font-[400] leading-[20px] font-bold ${school.status === 'active' ? 'text-[#006242]' : 'text-[#ba1a1a]'}`;
+            document.getElementById('infoCreated').textContent = UI.formatDate(school.createdAt);
+
+            // Load stats
+            const users = Auth.getUsersBySchool(id);
+            const students = users.filter(u => u.role === 'student');
+            const teachers = users.filter(u => u.role === 'teacher');
+            const admins = users.filter(u => u.role === 'school-admin');
+            const courses = CourseAPI.getBySchool(id);
+
+            document.getElementById('statStudents').textContent = students.length;
+            document.getElementById('statTeachers').textContent = teachers.length;
+            document.getElementById('statCourses').textContent = courses.length;
+
+            // Calculate attendance (simulated)
+            const attendance = students.length > 0 ? Math.round(85 + Math.random() * 14) : 0;
+            document.getElementById('statAttendance').textContent = `${attendance}%`;
+
+            // Load teachers table
+            const teachersTable = document.getElementById('teachersTable');
+            if (teachers.length === 0) {
+                teachersTable.innerHTML = `<tr><td colspan="3" class="px-4 py-4 text-center text-[#505f76]">No teachers yet</td></tr>`;
+            } else {
+                teachersTable.innerHTML = '';
+                teachers.forEach(t => {
+                    const tr = document.createElement('tr');
+                    tr.className = 'hover:bg-[#f0f3ff] transition-colors';
+                    tr.innerHTML = `
+                        <td class="px-4 py-2 text-[14px] font-[400] leading-[20px] font-bold">${t.name}</td>
+                        <td class="px-4 py-2 text-[14px] font-[400] leading-[20px]">${t.email}</td>
+                        <td class="px-4 py-2"><span class="px-2.5 py-1 bg-[rgba(0,98,66,0.1)] text-[#006242] rounded-full text-[12px] font-[500] leading-[16px] tracking-[0.05em] font-bold">Active</span></td>
+                    `;
+                    teachersTable.appendChild(tr);
+                });
+            }
+
+            // Load students table
+            const studentsTable = document.getElementById('studentsTable');
+            if (students.length === 0) {
+                studentsTable.innerHTML = `<tr><td colspan="3" class="px-4 py-4 text-center text-[#505f76]">No students yet</td></tr>`;
+            } else {
+                studentsTable.innerHTML = '';
+                students.forEach(s => {
+                    const tr = document.createElement('tr');
+                    tr.className = 'hover:bg-[#f0f3ff] transition-colors';
+                    tr.innerHTML = `
+                        <td class="px-4 py-2 text-[14px] font-[400] leading-[20px] font-bold">${s.name}</td>
+                        <td class="px-4 py-2 text-[14px] font-[400] leading-[20px]">${s.email}</td>
+                        <td class="px-4 py-2"><span class="px-2.5 py-1 bg-[rgba(0,98,66,0.1)] text-[#006242] rounded-full text-[12px] font-[500] leading-[16px] tracking-[0.05em] font-bold">Active</span></td>
+                    `;
+                    studentsTable.appendChild(tr);
+                });
+            }
+
+            // Load courses grid
+            const coursesGrid = document.getElementById('coursesGrid');
+            if (courses.length === 0) {
+                coursesGrid.innerHTML = `<div class="p-4 bg-[#f0f3ff] rounded-lg border border-[#c3c6d7] text-center text-[#505f76] col-span-2">No courses yet</div>`;
+            } else {
+                coursesGrid.innerHTML = '';
+                courses.forEach(c => {
+                    const div = document.createElement('div');
+                    div.className = 'p-4 bg-[#f0f3ff] rounded-lg border border-[#c3c6d7]';
+                    div.innerHTML = `
+                        <h4 class="text-[16px] font-[600] leading-[24px] text-[#111c2d]">${c.name}</h4>
+                        <p class="text-[14px] font-[400] leading-[20px] text-[#505f76]">${c.description || 'No description'}</p>
+                        <p class="text-[12px] text-[#505f76] mt-2">${c.teacherId ? 'Teacher assigned' : 'No teacher assigned'}</p>
+                    `;
+                    coursesGrid.appendChild(div);
+                });
+            }
+
+            // Load admins table
+            const adminsTable = document.getElementById('adminsTable');
+            if (admins.length === 0) {
+                adminsTable.innerHTML = `<tr><td colspan="2" class="px-4 py-4 text-center text-[#505f76]">No admins yet</td></tr>`;
+            } else {
+                adminsTable.innerHTML = '';
+                admins.forEach(a => {
+                    const tr = document.createElement('tr');
+                    tr.className = 'hover:bg-[#f0f3ff] transition-colors';
+                    tr.innerHTML = `
+                        <td class="px-4 py-2 text-[14px] font-[400] leading-[20px] font-bold">${a.name}</td>
+                        <td class="px-4 py-2 text-[14px] font-[400] leading-[20px]">${a.email}</td>
+                    `;
+                    adminsTable.appendChild(tr);
+                });
+            }
+        }
+
+        function switchSchoolTab(tabName) {
+            const tabs = ['overview', 'teachers', 'students', 'courses', 'admins'];
+            tabs.forEach(t => {
+                document.getElementById(`content-${t}`).classList.add('hidden');
+                document.getElementById(`tab-${t}`).classList.remove('active', 'text-[#004ac6]');
+                document.getElementById(`tab-${t}`).classList.add('text-[#505f76]');
+            });
+            document.getElementById(`content-${tabName}`).classList.remove('hidden');
+            document.getElementById(`tab-${tabName}`).classList.add('active', 'text-[#004ac6]');
+            document.getElementById(`tab-${tabName}`).classList.remove('text-[#505f76]');
+        }
+
+        document.getElementById('schoolSearch').addEventListener('input', function () {
+            const query = this.value.toLowerCase();
+            document.querySelectorAll('td, .p-4').forEach(el => {
+                const parent = el.closest('tr, div');
+                if (parent) {
+                    parent.style.display = parent.textContent.toLowerCase().includes(query) ? '' : 'none';
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

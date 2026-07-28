@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>EduManage - Login</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link rel="icon" type="image/x-icon" href="image/icon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+    <style>
+        * { font-family: 'Inter', sans-serif; }
+        body { background: linear-gradient(135deg, #f9f9ff 0%, #e7eeff 100%); min-height: 100vh; }
+        .login-card { background: rgba(255,255,255,0.85); backdrop-filter: blur(20px); border: 1px solid rgba(195,198,215,0.3); }
+        .role-btn { transition: all 0.3s ease; border: 2px solid transparent; cursor: pointer; }
+        .role-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
+        .role-btn.active { border-color: #004ac6; background-color: rgba(37,99,235,0.05); }
+        .role-btn.active .material-symbols-outlined { color: #004ac6; }
+        .role-btn .material-symbols-outlined { color: #505f76; }
+        .floating-shapes { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+        .shape { position: absolute; border-radius: 50%; opacity: 0.05; animation: float 20s infinite ease-in-out; }
+        .shape:nth-child(1) { width: 300px; height: 300px; background: #004ac6; top: -50px; left: -100px; }
+        .shape:nth-child(2) { width: 400px; height: 400px; background: #2563eb; bottom: -100px; right: -100px; animation-delay: -5s; }
+        .shape:nth-child(3) { width: 200px; height: 200px; background: #006242; top: 50%; left: 50%; animation-delay: -10s; }
+        @keyframes float { 0%,100% { transform: translate(0,0) scale(1); } 33% { transform: translate(30px,-30px) scale(1.1); } 66% { transform: translate(-20px,20px) scale(0.9); } }
+        .animate-slide-up { animation: slideUp 0.6s ease-out forwards; }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        .input-group input:focus { border-color: #004ac6; box-shadow: 0 0 0 4px rgba(37,99,235,0.1); }
+        .demo-cred-btn { transition: all 0.2s ease; cursor: pointer; }
+        .demo-cred-btn:hover { background: rgba(255,255,255,0.9); transform: scale(1.02); }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen p-4">
+
+<div class="floating-shapes">
+    <div class="shape"></div>
+    <div class="shape"></div>
+    <div class="shape"></div>
+</div>
+
+<div class="w-full max-w-md relative z-10 animate-slide-up">
+    <!-- Logo -->
+    <div class="text-center mb-8">
+        <div class="inline-flex items-center gap-3 bg-white/80 backdrop-blur-sm px-6 py-3 rounded-2xl shadow-sm border border-[rgba(195,198,215,0.3)]">
+            <div class="w-12 h-12 rounded-xl bg-[#2563eb] flex items-center justify-center text-white shadow-lg">
+                <span class="material-symbols-outlined text-[28px]" style="font-variation-settings:'FILL'1;">school</span>
+            </div>
+            <div class="text-left">
+                <h1 class="text-[24px] font-[700] leading-[32px] text-[#004ac6]">EduManage</h1>
+                <p class="text-[12px] font-[500] leading-[16px] tracking-[0.05em] text-[#505f76]">Learning Management System</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Login Card -->
+    <div class="login-card rounded-2xl p-8 shadow-2xl border border-[rgba(195,198,215,0.3)]">
+        <!-- Role Selection -->
+        <div class="mb-6">
+            <label class="block text-[12px] font-[500] leading-[16px] tracking-[0.05em] text-[#505f76] mb-3">Select Your Role</label>
+            <div class="grid grid-cols-4 gap-2">
+                <button class="role-btn active flex flex-col items-center justify-center p-3 rounded-xl bg-white/50 hover:bg-white transition-all" data-role="super-admin" onclick="selectRole('super-admin')">
+                    <span class="material-symbols-outlined text-[28px]">admin_panel_settings</span>
+                    <span class="text-[10px] font-bold mt-1 text-[#111c2d]">Super Admin</span>
+                </button>
+                <button class="role-btn flex flex-col items-center justify-center p-3 rounded-xl bg-white/50 hover:bg-white transition-all" data-role="school-admin" onclick="selectRole('school-admin')">
+                    <span class="material-symbols-outlined text-[28px]">school</span>
+                    <span class="text-[10px] font-bold mt-1 text-[#111c2d]">School Admin</span>
+                </button>
+                <button class="role-btn flex flex-col items-center justify-center p-3 rounded-xl bg-white/50 hover:bg-white transition-all" data-role="teacher" onclick="selectRole('teacher')">
+                    <span class="material-symbols-outlined text-[28px]">person</span>
+                    <span class="text-[10px] font-bold mt-1 text-[#111c2d]">Teacher</span>
+                </button>
+                <button class="role-btn flex flex-col items-center justify-center p-3 rounded-xl bg-white/50 hover:bg-white transition-all" data-role="student" onclick="selectRole('student')">
+                    <span class="material-symbols-outlined text-[28px]">group</span>
+                    <span class="text-[10px] font-bold mt-1 text-[#111c2d]">Student</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Login Form -->
+        <form id="loginForm" class="space-y-4" onsubmit="handleLogin(event)">
+            <div class="input-group">
+                <label class="block text-[12px] font-[500] leading-[16px] tracking-[0.05em] text-[#505f76] mb-1">Email Address</label>
+                <div class="relative">
+                    <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-[#737686] text-[20px]">person</span>
+                    <input class="w-full bg-white/70 border border-[#c3c6d7] rounded-xl pl-10 pr-4 py-3 text-[14px] font-[400] leading-[20px] focus:outline-none transition-all" type="email" placeholder="Enter your email" id="emailInput" required />
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label class="block text-[12px] font-[500] leading-[16px] tracking-[0.05em] text-[#505f76] mb-1">Password</label>
+                <div class="relative">
+                    <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-[#737686] text-[20px]">lock</span>
+                    <input class="w-full bg-white/70 border border-[#c3c6d7] rounded-xl pl-10 pr-12 py-3 text-[14px] font-[400] leading-[20px] focus:outline-none transition-all" type="password" placeholder="Enter your password" id="passwordInput" required />
+                    <button type="button" class="absolute right-3 top-1/2 -translate-y-1/2 text-[#737686] hover:text-[#004ac6] transition-colors" onclick="togglePassword()">
+                        <span class="material-symbols-outlined text-[20px]" id="passwordIcon">visibility_off</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="flex items-center justify-between">
+                <label class="flex items-center gap-2 cursor-pointer">
+                    <input class="w-4 h-4 rounded border-[#c3c6d7] text-[#004ac6] focus:ring-[#004ac6]" type="checkbox" checked />
+                    <span class="text-[12px] font-[500] leading-[16px] tracking-[0.05em] text-[#505f76]">Remember me</span>
+                </label>
+                <button type="button" class="text-[12px] font-[500] leading-[16px] tracking-[0.05em] text-[#004ac6] hover:underline" onclick="openForgotPassword()">Forgot Password?</button>
+            </div>
+
+            <button type="submit" class="w-full py-3.5 bg-[#004ac6] text-white rounded-xl text-[14px] font-[600] leading-[20px] hover:bg-[#2563eb] transition-all shadow-md hover:shadow-lg active:scale-[0.98] flex items-center justify-center gap-2" id="loginBtn">
+                <span class="material-symbols-outlined text-[20px]">login</span>
+                Sign In
+            </button>
+        </form>
+
+        <!-- Sign Up Link -->
+        <div class="mt-4 text-center">
+            <p class="text-[12px] font-[500] leading-[16px] tracking-[0.05em] text-[#505f76]">
+                Don't have an account?
+                <a href="signup.html" class="text-[#004ac6] font-bold hover:underline">Create Account</a>
+            </p>
+        </div>
+
+        <!-- Demo Credentials -->
+        <div class="mt-6 pt-6 border-t border-[rgba(195,198,215,0.3)]">
+            <p class="text-[11px] font-[500] leading-[16px] tracking-[0.05em] text-[#737686] text-center mb-3">Demo Credentials (Click to auto-fill)</p>
+            <div class="grid grid-cols-2 gap-2 text-[10px] font-[500] leading-[14px] text-[#505f76]">
+                <div class="demo-cred-btn p-2 bg-white/50 rounded-lg text-center" onclick="fillCredentials('admin@edumanage.com', 'password', 'super-admin')">
+                    <span class="font-bold text-[#004ac6]">Super Admin</span>
+                    <br />admin@edumanage.com
+                </div>
+                <div class="demo-cred-btn p-2 bg-white/50 rounded-lg text-center" onclick="fillCredentials('school@edumanage.com', 'password', 'school-admin')">
+                    <span class="font-bold text-[#006242]">School Admin</span>
+                    <br />school@edumanage.com
+                </div>
+                <div class="demo-cred-btn p-2 bg-white/50 rounded-lg text-center" onclick="fillCredentials('teacher@edumanage.com', 'password', 'teacher')">
+                    <span class="font-bold text-[#38485d]">Teacher</span>
+                    <br />teacher@edumanage.com
+                </div>
+                <div class="demo-cred-btn p-2 bg-white/50 rounded-lg text-center" onclick="fillCredentials('student@edumanage.com', 'password', 'student')">
+                    <span class="font-bold text-[#004ac6]">Student</span>
+                    <br />student@edumanage.com
+                </div>
+            </div>
+        </div>
+
+        <!-- Support Link -->
+        <div class="mt-4 text-center">
+            <a href="support.html" class="text-[12px] font-[500] leading-[16px] tracking-[0.05em] text-[#505f76] hover:text-[#004ac6] transition-colors flex items-center justify-center gap-1">
+                <span class="material-symbols-outlined text-[16px]">help</span>
+                Need help? Contact Support
+            </a>
+        </div>
+    </div>
+
+    <p class="text-center mt-6 text-[11px] font-[500] leading-[16px] tracking-[0.05em] text-[#737686]">© 2024 EduManage. All rights reserved.</p>
+</div>
+
+<script src="app.js"></script>
+<script>
+    let selectedRole = 'super-admin';
+
+    // ============================================================
+    // Role Selection
+    // ============================================================
+    function selectRole(role) {
+        selectedRole = role;
+        document.querySelectorAll('.role-btn').forEach(btn => {
+            btn.classList.remove('active');
+            const icon = btn.querySelector('.material-symbols-outlined');
+            if (btn.dataset.role === role) {
+                btn.classList.add('active');
+                icon.style.color = '#004ac6';
+            } else {
+                icon.style.color = '#505f76';
+            }
+        });
+    }
+
+    // ============================================================
+    // Password Toggle
+    // ============================================================
+    function togglePassword() {
+        const input = document.getElementById('passwordInput');
+        const icon = document.getElementById('passwordIcon');
+        if (input.type === 'password') {
+            input.type = 'text';
+            icon.textContent = 'visibility';
+        } else {
+            input.type = 'password';
+            icon.textContent = 'visibility_off';
+        }
+    }
+
+    // ============================================================
+    // Fill Demo Credentials
+    // ============================================================
+    function fillCredentials(email, password, role) {
+        document.getElementById('emailInput').value = email;
+        document.getElementById('passwordInput').value = password;
+        selectRole(role);
+        setTimeout(() => {
+            document.getElementById('loginForm').dispatchEvent(new Event('submit'));
+        }, 300);
+    }
+
+    // ============================================================
+    // Forgot Password
+    // ============================================================
+    function openForgotPassword() {
+        const email = prompt('Enter your email address to reset password:');
+        if (email) {
+            const user = Auth.getUserByEmail(email);
+            if (user) {
+                UI.showToast('Email Sent', `Password reset link sent to ${email}`);
+            } else {
+                UI.showToast('Error', 'Email not found in our system.', 'error');
+            }
+        }
+    }
+
+    // ============================================================
+    // Login Handler
+    // ============================================================
+    function handleLogin(e) {
+        e.preventDefault();
+
+        const email = document.getElementById('emailInput').value.trim();
+        const password = document.getElementById('passwordInput').value.trim();
+        const btn = document.getElementById('loginBtn');
+
+        if (!email || !password) {
+            UI.showToast('Error', 'Please fill in all fields.', 'error');
+            return;
+        }
+
+        if (!email.includes('@')) {
+            UI.showToast('Error', 'Please enter a valid email address.', 'error');
+            return;
+        }
+
+        btn.innerHTML = '<span class="material-symbols-outlined text-[20px] animate-spin">sync</span> Signing In...';
+        btn.disabled = true;
+
+        setTimeout(() => {
+            try {
+                // 1. التحقق من وجود المستخدم
+                const userExists = Auth.getUserByEmail(email);
+                
+                if (!userExists) {
+                    btn.innerHTML = '<span class="material-symbols-outlined text-[20px]">login</span> Sign In';
+                    btn.disabled = false;
+                    UI.showToast('Error', 'Account not found. Please sign up first.', 'error');
+                    return;
+                }
+
+                console.log('👤 User found:', userExists.role, userExists.email);
+                console.log('🎯 Selected role:', selectedRole);
+
+                // 2. التحقق من تطابق الـ Role
+                if (userExists.role !== selectedRole) {
+                    btn.innerHTML = '<span class="material-symbols-outlined text-[20px]">login</span> Sign In';
+                    btn.disabled = false;
+                    
+                    const roleMap = {
+                        'super-admin': 'Super Admin',
+                        'school-admin': 'School Admin',
+                        'teacher': 'Teacher',
+                        'student': 'Student'
+                    };
+                    
+                    UI.showToast(
+                        'Error', 
+                        `This account is registered as "${roleMap[userExists.role] || userExists.role}". Please select the correct role.`,
+                        'error'
+                    );
+                    return;
+                }
+
+                // 3. التحقق من كلمة المرور
+                if (userExists.password !== password) {
+                    btn.innerHTML = '<span class="material-symbols-outlined text-[20px]">login</span> Sign In';
+                    btn.disabled = false;
+                    UI.showToast('Error', 'Invalid password. Please try again.', 'error');
+                    return;
+                }
+
+                // 4. تسجيل الدخول
+                const result = Auth.login(email, password);
+
+                if (result.success) {
+                    btn.innerHTML = '<span class="material-symbols-outlined text-[20px]">check_circle</span> Welcome!';
+                    btn.style.backgroundColor = '#006242';
+
+                    setTimeout(() => {
+                        window.location.href = Auth.getRedirectPath(result.user.role);
+                    }, 1000);
+
+                } else {
+                    btn.innerHTML = '<span class="material-symbols-outlined text-[20px]">login</span> Sign In';
+                    btn.disabled = false;
+                    UI.showToast('Error', result.message, 'error');
+                }
+            } catch (error) {
+                console.error('Login error:', error);
+                btn.innerHTML = '<span class="material-symbols-outlined text-[20px]">login</span> Sign In';
+                btn.disabled = false;
+                UI.showToast('Error', 'Something went wrong. Please try again.', 'error');
+            }
+        }, 1500);
+    }
+
+    // ============================================================
+    // Enter Key Support
+    // ============================================================
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') {
+            const form = document.getElementById('loginForm');
+            if (form) {
+                form.dispatchEvent(new Event('submit'));
+            }
+        }
+    });
+
+    // ============================================================
+    // Init - التأكد من البيانات عند تحميل الصفحة
+    // ============================================================
+    document.addEventListener('DOMContentLoaded', function() {
+        // التأكد من وجود بيانات
+        const users = DB.get('users');
+        if (users.length === 0) {
+            resetAndSeed();
+        }
+
+        // التأكد من صحة الـ Admin
+        const admin = DB.get('users').find(u => u.email === 'admin@edumanage.com');
+        if (admin && admin.role !== 'super-admin') {
+            console.warn('⚠️ Fixing admin role on login page...');
+            admin.role = 'super-admin';
+            admin.emailVerified = true;
+            DB.set('users', DB.get('users'));
+        }
+
+        selectRole('super-admin');
+        console.log('✅ Login page loaded');
+        console.log('📊 Users:', DB.get('users').map(u => u.role + ': ' + u.email));
+        
+        // لو في مشكلة، أظهر رسالة في الـ Console
+        const adminCheck = DB.get('users').find(u => u.email === 'admin@edumanage.com');
+        if (adminCheck) {
+            console.log('✅ Admin role:', adminCheck.role);
+        } else {
+            console.warn('⚠️ Admin not found!');
+        }
+    });
+</script>
+</body>
+</html>

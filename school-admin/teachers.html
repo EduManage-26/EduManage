@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Teachers | School Admin</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries">
+    </script>
+    <link rel="icon" type="image/x-icon" href="../image/icon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+    <style>
+        * { font-family: 'Inter', sans-serif; }
+        body { background-color: #f9f9ff; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .sidebar-link { transition: all 0.2s ease; }
+        .sidebar-link:hover { background-color: #f0f3ff; transform: translateX(4px); }
+        .sidebar-link.active { background-color: rgba(37, 99, 235, 0.1); color: #004ac6; border-left: 4px solid #004ac6; font-weight: 700; }
+        .card-shadow { box-shadow: 0 1px 3px 0 rgba(0,0,0,0.1), 0 1px 2px -1px rgba(0,0,0,0.1); }
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #e2e8f0; border-radius: 10px; }
+        .animate-fade-in { animation: fadeIn 0.3s ease-out forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .admin-row:hover { background-color: #f0f3ff; }
+    </style>
+</head>
+<body>
+    <!-- ==================== SIDEBAR ==================== -->
+    <aside class="fixed left-0 top-0 h-full w-[260px] z-50 bg-[#f9f9ff] border-r border-[#c3c6d7] shadow-sm flex flex-col py-4 gap-1">
+        <div class="px-4 mb-6">
+            <div class="flex items-center gap-2">
+                <div class="w-10 h-10 rounded-lg bg-[#2563eb] flex items-center justify-center text-white">
+                    <span class="material-symbols-outlined" style="font-variation-settings:'FILL'1;">school</span>
+                </div>
+                <div>
+                    <h1 class="text-[20px] font-[600] leading-[28px] text-[#004ac6]">EduManage</h1>
+                    <p class="text-[12px] font-[500] leading-[16px] tracking-[0.05em] text-[#505f76]">School Admin</p>
+                </div>
+            </div>
+        </div>
+        <nav class="flex-1 px-2 space-y-1 overflow-y-auto custom-scrollbar">
+            <a href="index.html" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-lg text-[#505f76]">
+                <span class="material-symbols-outlined">dashboard</span>
+                <span class="text-[12px] font-[500] leading-[16px] tracking-[0.05em]">Dashboard</span>
+            </a>
+            <a href="teachers.html" class="sidebar-link active flex items-center gap-4 px-4 py-3 rounded-lg text-[#004ac6] bg-[rgba(37,99,235,0.1)] border-l-4 border-[#004ac6] font-bold">
+                <span class="material-symbols-outlined">person</span>
+                <span class="text-[12px] font-[500] leading-[16px] tracking-[0.05em]">Teachers</span>
+            </a>
+            <a href="students.html" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-lg text-[#505f76]">
+                <span class="material-symbols-outlined">groups</span>
+                <span class="text-[12px] font-[500] leading-[16px] tracking-[0.05em]">Students</span>
+            </a>
+            <a href="parents.html" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-lg text-[#505f76]">
+                <span class="material-symbols-outlined">family_restroom</span>
+                <span class="text-[12px] font-[500] leading-[16px] tracking-[0.05em]">Parents</span>
+            </a>
+            <a href="classes.html" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-lg text-[#505f76]">
+                <span class="material-symbols-outlined">class</span>
+                <span class="text-[12px] font-[500] leading-[16px] tracking-[0.05em]">Classes</span>
+            </a>
+            <a href="subjects.html" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-lg text-[#505f76]">
+                <span class="material-symbols-outlined">menu_book</span>
+                <span class="text-[12px] font-[500] leading-[16px] tracking-[0.05em]">Subjects</span>
+            </a>
+            <a href="schedule.html" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-lg text-[#505f76]">
+                <span class="material-symbols-outlined">calendar_month</span>
+                <span class="text-[12px] font-[500] leading-[16px] tracking-[0.05em]">Schedule</span>
+            </a>
+            <a href="attendance.html" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-lg text-[#505f76]">
+                <span class="material-symbols-outlined">fact_check</span>
+                <span class="text-[12px] font-[500] leading-[16px] tracking-[0.05em]">Attendance</span>
+            </a>
+            <a href="analytics.html" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-lg text-[#505f76]">
+                <span class="material-symbols-outlined">analytics</span>
+                <span class="text-[12px] font-[500] leading-[16px] tracking-[0.05em]">Analytics</span>
+            </a>
+            <a href="reports.html" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-lg text-[#505f76]">
+                <span class="material-symbols-outlined">description</span>
+                <span class="text-[12px] font-[500] leading-[16px] tracking-[0.05em]">Reports</span>
+            </a>
+            <a href="notifications.html" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-lg text-[#505f76]">
+                <span class="material-symbols-outlined">notifications</span>
+                <span class="text-[12px] font-[500] leading-[16px] tracking-[0.05em]">Notifications</span>
+            </a>
+            <a href="settings.html" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-lg text-[#505f76]">
+                <span class="material-symbols-outlined">settings</span>
+                <span class="text-[12px] font-[500] leading-[16px] tracking-[0.05em]">Settings</span>
+            </a>
+            <a href="profile.html" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-lg text-[#505f76]">
+                <span class="material-symbols-outlined">person</span>
+                <span class="text-[12px] font-[500] leading-[16px] tracking-[0.05em]">Profile</span>
+            </a>
+        </nav>
+        <div class="px-4 mt-auto pt-4 border-t border-[#c3c6d7]">
+            <div class="flex items-center gap-3">
+                <img alt="Admin profile" class="w-10 h-10 rounded-full border border-[#c3c6d7] object-cover"
+                src="https://ui-avatars.com/api/?name=John+Doe&background=137fec&color=fff&size=128" />
+                <div>
+                    <p class="text-[14px] font-[400] leading-[20px] font-bold text-[#111c2d]">John Doe</p>
+                    <p class="text-[12px] font-[500] leading-[16px] tracking-[0.05em] text-[#505f76]">School Admin</p>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- ==================== MAIN CONTENT ==================== -->
+    <main class="ml-[260px] min-h-screen flex flex-col">
+        <header class="sticky top-0 z-40 w-full h-16 bg-[#f9f9ff] border-b border-[#c3c6d7] shadow-sm flex justify-between items-center px-6">
+            <div class="flex items-center gap-4 flex-1">
+                <div class="relative w-full max-w-md">
+                    <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-[#737686]">search</span>
+                    <input class="w-full bg-[#f0f3ff] border-none rounded-full py-2 pl-10 pr-4 text-[14px] font-[400] leading-[20px] focus:ring-2 focus:ring-[#2563eb] focus:ring-opacity-20 transition-all"
+                    placeholder="Search teachers..." type="text" id="searchInput" oninput="renderTeachers()" />
+                </div>
+            </div>
+            <div class="flex items-center gap-4">
+                <button class="p-2 text-[#505f76] hover:bg-[#f0f3ff] rounded-full transition-colors relative" onclick="showToast('Notifications', 'You have 3 new notifications')">
+                    <span class="material-symbols-outlined">notifications</span>
+                    <span class="absolute top-2 right-2 w-2 h-2 bg-[#ba1a1a] rounded-full"></span>
+                </button>
+                <div class="flex items-center gap-2 cursor-pointer hover:bg-[#f0f3ff] p-1 rounded-lg transition-colors">
+                    <img alt="Admin avatar" class="w-8 h-8 rounded-full object-cover"
+                    src="https://ui-avatars.com/api/?name=John+Doe&background=137fec&color=fff&size=128" />
+                    <div class="hidden md:block text-left">
+                        <p class="text-[12px] font-[500] leading-[16px] tracking-[0.05em] font-bold leading-tight">John Doe</p>
+                        <p class="text-[10px] text-[#505f76]">School Admin</p>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="p-6 space-y-6">
+            <div class="flex justify-between items-center">
+                <div>
+                    <h2 class="text-[24px] font-[600] leading-[32px] text-[#111c2d]">Teachers Management</h2>
+                    <p class="text-[16px] font-[400] leading-[24px] text-[#505f76]">Manage all teachers at Greenwood Academy</p>
+                </div>
+                <button onclick="openAddTeacherModal()" class="bg-[#004ac6] text-white px-4 py-2.5 rounded-lg text-[12px] font-bold hover:bg-[#2563eb] transition-all flex items-center gap-2">
+                    <span class="material-symbols-outlined text-[18px]">add</span>
+                    Add Teacher
+                </button>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-4 gap-6">
+                <div class="bg-white rounded-xl border p-4 text-center card-shadow">
+                    <p class="text-2xl font-bold text-[#004ac6]" id="totalTeachers">0</p>
+                    <p class="text-sm text-gray-500">Total Teachers</p>
+                </div>
+                <div class="bg-white rounded-xl border p-4 text-center card-shadow">
+                    <p class="text-2xl font-bold text-green-600" id="activeTeachers">0</p>
+                    <p class="text-sm text-gray-500">Active</p>
+                </div>
+                <div class="bg-white rounded-xl border p-4 text-center card-shadow">
+                    <p class="text-2xl font-bold text-orange-600" id="onLeaveTeachers">0</p>
+                    <p class="text-sm text-gray-500">On Leave</p>
+                </div>
+                <div class="bg-white rounded-xl border p-4 text-center card-shadow">
+                    <p class="text-2xl font-bold text-purple-600" id="avgExperience">0</p>
+                    <p class="text-sm text-gray-500">Avg. Experience (yrs)</p>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl border card-shadow overflow-hidden">
+                <div class="px-4 py-3 border-b bg-[#f0f3ff] flex justify-between items-center">
+                    <h3 class="text-[18px] font-[600] text-[#111c2d]">All Teachers</h3>
+                    <div class="flex gap-2">
+                        <select id="deptFilter" class="px-3 py-1.5 bg-white border rounded-lg text-[12px]" onchange="renderTeachers()">
+                            <option value="all">All Departments</option>
+                            <option value="Science">Science</option>
+                            <option value="Mathematics">Mathematics</option>
+                            <option value="English">English</option>
+                            <option value="History">History</option>
+                            <option value="Arts">Arts</option>
+                        </select>
+                        <select id="statusFilter" class="px-3 py-1.5 bg-white border rounded-lg text-[12px]" onchange="renderTeachers()">
+                            <option value="all">All Status</option>
+                            <option value="Active">Active</option>
+                            <option value="On Leave">On Leave</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left">
+                        <thead class="bg-[rgba(240,243,255,0.5)]">
+                            <tr>
+                                <th class="px-4 py-3 text-[12px] font-bold text-[#505f76]">Teacher</th>
+                                <th class="px-4 py-3 text-[12px] font-bold text-[#505f76]">Department</th>
+                                <th class="px-4 py-3 text-[12px] font-bold text-[#505f76]">Classes</th>
+                                <th class="px-4 py-3 text-[12px] font-bold text-[#505f76]">Students</th>
+                                <th class="px-4 py-3 text-[12px] font-bold text-[#505f76]">Status</th>
+                                <th class="px-4 py-3 text-[12px] font-bold text-[#505f76] text-right">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-[rgba(195,198,215,0.3)]" id="teachersTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <footer class="mt-auto py-4 px-6 border-t border-[#c3c6d7] bg-[#f9f9ff]">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-[12px] font-[500] text-[#505f76]">© 2024 EduManage Solutions. All rights reserved.</p>
+                <div class="flex gap-6">
+                    <a class="text-[12px] text-[#505f76] hover:text-[#004ac6]" href="#">Help Center</a>
+                    <a class="text-[12px] text-[#505f76] hover:text-[#004ac6]" href="#">Privacy Policy</a>
+                    <a class="text-[12px] text-[#505f76] hover:text-[#004ac6]" href="#">Terms of Service</a>
+                </div>
+            </div>
+        </footer>
+    </main>
+
+    <!-- ==================== ADD TEACHER MODAL ==================== -->
+    <div id="addTeacherModal" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-black/50 backdrop-blur-sm">
+        <div class="bg-white rounded-xl max-w-md w-full mx-4 p-6 shadow-2xl">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-[18px] font-[600] text-[#111c2d]">Add New Teacher</h3>
+                <button onclick="closeAddTeacherModal()" class="p-1 hover:bg-[#f0f3ff] rounded-lg">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+            </div>
+            <form id="addTeacherForm" class="space-y-4">
+                <input type="text" id="teacherName" placeholder="Full Name" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-[#004ac6] outline-none" required>
+                <input type="email" id="teacherEmail" placeholder="Email" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-[#004ac6] outline-none" required>
+                <select id="teacherDept" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-[#004ac6] outline-none">
+                    <option value="Science">Science</option>
+                    <option value="Mathematics">Mathematics</option>
+                    <option value="English">English</option>
+                    <option value="History">History</option>
+                    <option value="Arts">Arts</option>
+                </select>
+                <input type="number" id="teacherExperience" placeholder="Years of Experience" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-[#004ac6] outline-none">
+                <div class="flex gap-3 pt-2">
+                    <button type="button" onclick="closeAddTeacherModal()" class="flex-1 py-2 bg-[#f0f3ff] text-[#505f76] rounded-lg font-bold hover:bg-[#dee8ff]">Cancel</button>
+                    <button type="submit" class="flex-1 py-2 bg-[#004ac6] text-white rounded-lg font-bold hover:bg-[#2563eb]">Add Teacher</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ==================== TOAST ==================== -->
+    <div id="toast" class="fixed bottom-6 right-6 z-50 bg-[#111c2d] text-white rounded-xl p-4 shadow-2xl max-w-sm transform translate-y-full opacity-0 transition-all duration-500">
+        <div class="flex items-start gap-3">
+            <span class="material-symbols-outlined text-[#6ffbbe]">check_circle</span>
+            <div>
+                <p class="text-[14px] font-bold" id="toastTitle">Success</p>
+                <p class="text-[12px] text-[#b7c8e1]" id="toastMessage">Action completed!</p>
+            </div>
+            <button onclick="closeToast()" class="text-[#b7c8e1] hover:text-white">
+                <span class="material-symbols-outlined text-[16px]">close</span>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        let teachers = [
+            { id: 1, name: "Sarah Jenkins", email: "sarah@greenwood.edu", department: "Science", classes: 4, students: 96, status: "Active", experience: 5 },
+            { id: 2, name: "Michael Brown", email: "michael@greenwood.edu", department: "Mathematics", classes: 5, students: 120, status: "Active", experience: 8 },
+            { id: 3, name: "Linda White", email: "linda@greenwood.edu", department: "English", classes: 3, students: 72, status: "Active", experience: 12 },
+            { id: 4, name: "Robert Chen", email: "robert@greenwood.edu", department: "History", classes: 4, students: 88, status: "On Leave", experience: 3 },
+            { id: 5, name: "Emily Davis", email: "emily@greenwood.edu", department: "Arts", classes: 2, students: 48, status: "Active", experience: 4 }
+        ];
+
+        function showToast(title, message) {
+            document.getElementById('toastTitle').textContent = title;
+            document.getElementById('toastMessage').textContent = message;
+            const toast = document.getElementById('toast');
+            toast.classList.remove('translate-y-full', 'opacity-0');
+            toast.classList.add('translate-y-0', 'opacity-100');
+            setTimeout(closeToast, 4000);
+        }
+        function closeToast() {
+            const toast = document.getElementById('toast');
+            toast.classList.add('translate-y-full', 'opacity-0');
+            toast.classList.remove('translate-y-0', 'opacity-100');
+        }
+
+        function renderTeachers() {
+            const searchTerm = document.getElementById('searchInput')?.value.toLowerCase() || '';
+            const deptFilter = document.getElementById('deptFilter')?.value || 'all';
+            const statusFilter = document.getElementById('statusFilter')?.value || 'all';
+
+            let filtered = teachers.filter(t =>
+                (t.name.toLowerCase().includes(searchTerm) || t.email.toLowerCase().includes(searchTerm)) &&
+                (deptFilter === 'all' || t.department === deptFilter) &&
+                (statusFilter === 'all' || t.status === statusFilter)
+            );
+
+            const total = filtered.length;
+            const active = filtered.filter(t => t.status === 'Active').length;
+            const onLeave = filtered.filter(t => t.status === 'On Leave').length;
+            const avgExp = total > 0 ? (filtered.reduce((sum, t) => sum + t.experience, 0) / total).toFixed(1) : 0;
+
+            document.getElementById('totalTeachers').textContent = total;
+            document.getElementById('activeTeachers').textContent = active;
+            document.getElementById('onLeaveTeachers').textContent = onLeave;
+            document.getElementById('avgExperience').textContent = avgExp;
+
+            const tbody = document.getElementById('teachersTableBody');
+            tbody.innerHTML = filtered.map(t => `
+                <tr class="admin-row animate-fade-in">
+                    <td class="px-4 py-3 flex items-center gap-3">
+                        <img src="https://ui-avatars.com/api/?name=${t.name.split(' ')[0]}+${t.name.split(' ')[1]}&background=137fec&color=fff&size=32" class="w-8 h-8 rounded-full">
+                        <div>
+                            <p class="font-semibold">${t.name}</p>
+                            <p class="text-xs text-gray-500">${t.email}</p>
+                        </div>
+                    </td>
+                    <td class="px-4 py-3"><span class="px-2 py-1 bg-blue-100 text-blue-600 rounded-full text-xs font-semibold">${t.department}</span></td>
+                    <td class="px-4 py-3 font-semibold">${t.classes}</td>
+                    <td class="px-4 py-3">${t.students}</td>
+                    <td class="px-4 py-3"><span class="px-2 py-1 ${t.status === 'Active' ? 'bg-green-100 text-green-600' : 'bg-orange-100 text-orange-600'} rounded-full text-xs font-semibold">${t.status}</span></td>
+                    <td class="px-4 py-3 text-right">
+                        <button onclick="deleteTeacher(${t.id})" class="text-[#737686] hover:text-[#ba1a1a] transition-colors">
+                            <span class="material-symbols-outlined text-[18px]">delete</span>
+                        </button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function openAddTeacherModal() {
+            document.getElementById('addTeacherModal').classList.remove('hidden');
+        }
+        function closeAddTeacherModal() {
+            document.getElementById('addTeacherModal').classList.add('hidden');
+            document.getElementById('addTeacherForm').reset();
+        }
+
+        document.getElementById('addTeacherForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const name = document.getElementById('teacherName').value;
+            const email = document.getElementById('teacherEmail').value;
+            const department = document.getElementById('teacherDept').value;
+            const experience = parseInt(document.getElementById('teacherExperience').value) || 0;
+
+            const newTeacher = {
+                id: teachers.length + 1,
+                name,
+                email,
+                department,
+                classes: 0,
+                students: 0,
+                status: "Active",
+                experience
+            };
+            teachers.push(newTeacher);
+            renderTeachers();
+            closeAddTeacherModal();
+            showToast('Teacher Added', `${name} has been added successfully!`);
+        });
+
+        function deleteTeacher(id) {
+            if (confirm('Delete this teacher?')) {
+                teachers = teachers.filter(t => t.id !== id);
+                renderTeachers();
+                showToast('Deleted', 'Teacher removed successfully.');
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', renderTeachers);
+    </script>
+</body>
+</html>

@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>EduManage - Settings</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link rel="icon" type="image/x-icon" href="../image/icon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f9f9ff;
+        }
+
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+
+        .sidebar-link {
+            transition: all 0.2s ease;
+        }
+
+        .sidebar-link:hover {
+            background-color: #f0f3ff;
+            transform: translateX(4px);
+        }
+
+        .sidebar-link.active {
+            background-color: rgba(37, 99, 235, 0.1);
+            color: #004ac6;
+            border-left: 4px solid #004ac6;
+            font-weight: 700;
+        }
+
+        .card-shadow {
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #e2e8f0;
+            border-radius: 10px;
+        }
+
+        .setting-group {
+            transition: all 0.2s ease;
+        }
+
+        .setting-group:hover {
+            background-color: #f0f3ff;
+        }
+
+        .switch {
+            transition: all 0.3s ease;
+        }
+
+        .switch.active {
+            background-color: #004ac6;
+        }
+
+        .switch.inactive {
+            background-color: #c3c6d7;
+        }
+    </style>
+</head>
+
+<body class="bg-[#f9f9ff] text-[#111c2d]">
+
+    <!-- Sidebar -->
+    <aside
+        class="fixed left-0 top-0 h-full w-[260px] z-50 bg-[#f9f9ff] border-r border-[#c3c6d7] shadow-sm flex flex-col py-4 gap-1">
+        <div class="px-4 mb-6">
+            <div class="flex items-center gap-2">
+                <div class="w-10 h-10 rounded-lg bg-[#2563eb] flex items-center justify-center text-white">
+                    <span class="material-symbols-outlined"
+                        style="font-variation-settings:'FILL'1;">admin_panel_settings</span>
+                </div>
+                <div>
+                    <h1 class="text-[20px] font-[600] leading-[28px] text-[#004ac6]">EduManage</h1>
+                    <p class="text-[12px] font-[500] leading-[16px] tracking-[0.05em] text-[#505f76]">Super Admin</p>
+                </div>
+            </div>
+        </div>
+        <nav class="flex-1 px-2 space-y-1 overflow-y-auto custom-scrollbar">
+            <a href="index.html" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-lg text-[#505f76]">
+                <span class="material-symbols-outlined">dashboard</span>
+                <span class="text-[12px] font-[500] leading-[16px] tracking-[0.05em]">Dashboard</span>
+            </a>
+            <a href="schools.html" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-lg text-[#505f76]">
+                <span class="material-symbols-outlined">school</span>
+                <span class="text-[12px] font-[500] leading-[16px] tracking-[0.05em]">Schools</span>
+            </a>
+            <a href="admins.html" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-lg text-[#505f76]">
+                <span class="material-symbols-outlined">admin_panel_settings</span>
+                <span class="text-[12px] font-[500] leading-[16px] tracking-[0.05em]">Admins</span>
+            </a>
+            <a href="setting.html"
+                class="sidebar-link active flex items-center gap-4 px-4 py-3 rounded-lg text-[#004ac6] bg-[rgba(37,99,235,0.1)] border-l-4 border-[#004ac6] font-bold">
+                <span class="material-symbols-outlined" style="font-variation-settings:'FILL'1;">settings</span>
+                <span class="text-[12px] font-[500] leading-[16px] tracking-[0.05em]">Settings</span>
+            </a>
+            <a href="profile.html" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-lg text-[#505f76]">
+                <span class="material-symbols-outlined">person</span>
+                <span class="text-[12px] font-[500] leading-[16px] tracking-[0.05em]">Profile</span>
+            </a>
+        </nav>
+        <div class="px-4 mt-auto pt-4 border-t border-[#c3c6d7]">
+            <div class="flex items-center gap-3">
+                <img alt="Admin profile"
+                    class="w-10 h-10 rounded-full border border-[#c3c6d7] object-cover profile-avatar"
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuDpZHWKxbg_7mVa3e9uLpwwsQRoLG7UXaf3vdohxrtMTsb_b9Kmb6GAWDrKHmjBfHxkvn8j-NRaOw6HOcVpOCGvnldzCZ4UXZqk3dIfOgN4aZhuzyXLv5sS5MfFMVtzYxWI4S5fbGJ4KvljKoJ_SUOX4S46VNYZor1Xjf128MB00HS9_h75_I1kYsMGzz88U_okp_P-xJyD8c3od0IVDBQadb8kXJvGuF_i_q0of6_B3nzxd_T30AfYjUmeRqdovAzgm8ufFBt7VNpB" />
+                <div>
+                    <p class="text-[14px] font-[400] leading-[20px] font-bold profile-name text-[#111c2d]">Dr. Ahmed
+                        Mansour</p>
+                    <p class="text-[12px] font-[500] leading-[16px] tracking-[0.05em] profile-role text-[#505f76]">Super
+                        Admin</p>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="ml-[260px] min-h-screen flex flex-col">
+        <header
+            class="sticky top-0 z-40 w-full h-16 bg-[#f9f9ff] border-b border-[#c3c6d7] shadow-sm flex justify-between items-center px-6">
+            <div class="flex items-center gap-4 flex-1">
+                <div class="relative w-full max-w-md">
+                    <span
+                        class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-[#737686]">search</span>
+                    <input
+                        class="w-full bg-[#f0f3ff] border-none rounded-full py-2 pl-10 pr-4 text-[14px] font-[400] leading-[20px] focus:ring-2 focus:ring-[#2563eb] focus:ring-opacity-20 transition-all"
+                        placeholder="Search settings..." type="text" id="settingsSearch" />
+                </div>
+            </div>
+            <div class="flex items-center gap-4">
+                <button class="p-2 text-[#505f76] hover:bg-[#f0f3ff] rounded-full transition-colors relative"
+                    onclick="window.location.href='notifications.html'">
+                    <span class="material-symbols-outlined">notifications</span>
+                    <span
+                        class="absolute top-2 right-2 w-2 h-2 bg-[#ba1a1a] rounded-full notification-badge hidden"></span>
+                </button>
+                <div class="flex items-center gap-2 cursor-pointer hover:bg-[#f0f3ff] p-1 rounded-lg transition-colors"
+                    onclick="window.location.href='profile.html'">
+                    <img alt="Admin avatar" class="w-8 h-8 rounded-full object-cover profile-avatar"
+                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuDpZHWKxbg_7mVa3e9uLpwwsQRoLG7UXaf3vdohxrtMTsb_b9Kmb6GAWDrKHmjBfHxkvn8j-NRaOw6HOcVpOCGvnldzCZ4UXZqk3dIfOgN4aZhuzyXLv5sS5MfFMVtzYxWI4S5fbGJ4KvljKoJ_SUOX4S46VNYZor1Xjf128MB00HS9_h75_I1kYsMGzz88U_okp_P-xJyD8c3od0IVDBQadb8kXJvGuF_i_q0of6_B3nzxd_T30AfYjUmeRqdovAzgm8ufFBt7VNpB" />
+                    <div class="hidden md:block text-left">
+                        <p
+                            class="text-[12px] font-[500] leading-[16px] tracking-[0.05em] font-bold leading-tight profile-name">
+                            Dr. Ahmed Mansour</p>
+                        <p class="text-[10px] text-[#505f76] profile-role">Super Admin</p>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="p-6 space-y-6">
+            <!-- Header -->
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div>
+                    <h2 class="text-[24px] font-[600] leading-[32px] text-[#111c2d]">System Settings</h2>
+                    <p class="text-[16px] font-[400] leading-[24px] text-[#505f76]">Configure platform settings and
+                        preferences.</p>
+                </div>
+                <button
+                    class="bg-[#004ac6] text-white px-4 py-2.5 rounded-lg text-[12px] font-[500] leading-[16px] tracking-[0.05em] font-bold shadow-md hover:bg-[#2563eb] transition-all active:scale-95 flex items-center gap-2"
+                    onclick="saveSettings()">
+                    <span class="material-symbols-outlined text-[18px]">save</span>
+                    Save Settings
+                </button>
+            </div>
+
+            <!-- Settings Tabs -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                <div class="lg:col-span-3 space-y-2">
+                    <div class="bg-[#f9f9ff] rounded-xl border border-[#c3c6d7] card-shadow p-2">
+                        <button
+                            class="w-full text-left px-4 py-2.5 rounded-lg bg-[rgba(37,99,235,0.1)] text-[#004ac6] font-bold text-[14px] font-[400] leading-[20px] flex items-center gap-2"
+                            onclick="switchSettingTab('general')">
+                            <span class="material-symbols-outlined">settings</span>
+                            General
+                        </button>
+                        <button
+                            class="w-full text-left px-4 py-2.5 rounded-lg text-[#505f76] hover:bg-[#f0f3ff] transition-colors text-[14px] font-[400] leading-[20px] flex items-center gap-2"
+                            onclick="switchSettingTab('notifications')">
+                            <span class="material-symbols-outlined">notifications</span>
+                            Notifications
+                        </button>
+                        <button
+                            class="w-full text-left px-4 py-2.5 rounded-lg text-[#505f76] hover:bg-[#f0f3ff] transition-colors text-[14px] font-[400] leading-[20px] flex items-center gap-2"
+                            onclick="switchSettingTab('security')">
+                            <span class="material-symbols-outlined">security</span>
+                            Security
+                        </button>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-9 space-y-6">
+                    <!-- General Settings -->
+                    <div id="content-general" class="space-y-4">
+                        <div class="bg-[#f9f9ff] rounded-xl border border-[#c3c6d7] card-shadow p-6">
+                            <h3 class="text-[18px] font-[600] leading-[24px] text-[#111c2d] mb-4">General Settings</h3>
+                            <div class="space-y-4">
+                                <div>
+                                    <label
+                                        class="block text-[12px] font-[500] leading-[16px] tracking-[0.05em] text-[#505f76] mb-1">Platform
+                                        Name</label>
+                                    <input
+                                        class="w-full bg-[#f9f9ff] border border-[#c3c6d7] rounded-lg p-2.5 text-[14px] font-[400] leading-[20px] focus:ring-2 focus:ring-[#004ac6] focus:border-[#004ac6] outline-none transition-all"
+                                        value="EduManage" id="platformName" />
+                                </div>
+                                <div>
+                                    <label
+                                        class="block text-[12px] font-[500] leading-[16px] tracking-[0.05em] text-[#505f76] mb-1">Default
+                                        Language</label>
+                                    <select
+                                        class="w-full bg-[#f9f9ff] border border-[#c3c6d7] rounded-lg p-2.5 text-[14px] font-[400] leading-[20px] focus:ring-2 focus:ring-[#004ac6] focus:border-[#004ac6] outline-none transition-all"
+                                        id="defaultLanguage">
+                                        <option value="en">English</option>
+                                        <option value="ar">العربية</option>
+                                        <option value="fr">Français</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label
+                                        class="block text-[12px] font-[500] leading-[16px] tracking-[0.05em] text-[#505f76] mb-1">Timezone</label>
+                                    <select
+                                        class="w-full bg-[#f9f9ff] border border-[#c3c6d7] rounded-lg p-2.5 text-[14px] font-[400] leading-[20px] focus:ring-2 focus:ring-[#004ac6] focus:border-[#004ac6] outline-none transition-all"
+                                        id="timezone">
+                                        <option value="UTC">UTC</option>
+                                        <option value="EST">Eastern Time</option>
+                                        <option value="CET">Central European Time</option>
+                                        <option value="EET">Eastern European Time</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Notifications Settings -->
+                    <div id="content-notifications" class="hidden space-y-4">
+                        <div class="bg-[#f9f9ff] rounded-xl border border-[#c3c6d7] card-shadow p-6">
+                            <h3 class="text-[18px] font-[600] leading-[24px] text-[#111c2d] mb-4">Notification
+                                Preferences</h3>
+                            <div class="space-y-4">
+                                <div
+                                    class="flex items-center justify-between p-3 bg-[#f0f3ff] rounded-lg setting-group">
+                                    <div>
+                                        <p class="text-[14px] font-[400] leading-[20px] font-bold text-[#111c2d]">Email
+                                            Notifications</p>
+                                        <p
+                                            class="text-[12px] font-[500] leading-[16px] tracking-[0.05em] text-[#505f76]">
+                                            Receive email updates</p>
+                                    </div>
+                                    <div class="switch active w-12 h-6 rounded-full cursor-pointer relative"
+                                        onclick="toggleSwitch(this)">
+                                        <div
+                                            class="absolute right-0.5 top-0.5 w-5 h-5 bg-white rounded-full shadow-md transition-all">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div
+                                    class="flex items-center justify-between p-3 bg-[#f0f3ff] rounded-lg setting-group">
+                                    <div>
+                                        <p class="text-[14px] font-[400] leading-[20px] font-bold text-[#111c2d]">Push
+                                            Notifications</p>
+                                        <p
+                                            class="text-[12px] font-[500] leading-[16px] tracking-[0.05em] text-[#505f76]">
+                                            In-app notifications</p>
+                                    </div>
+                                    <div class="switch active w-12 h-6 rounded-full cursor-pointer relative"
+                                        onclick="toggleSwitch(this)">
+                                        <div
+                                            class="absolute right-0.5 top-0.5 w-5 h-5 bg-white rounded-full shadow-md transition-all">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div
+                                    class="flex items-center justify-between p-3 bg-[#f0f3ff] rounded-lg setting-group">
+                                    <div>
+                                        <p class="text-[14px] font-[400] leading-[20px] font-bold text-[#111c2d]">SMS
+                                            Alerts</p>
+                                        <p
+                                            class="text-[12px] font-[500] leading-[16px] tracking-[0.05em] text-[#505f76]">
+                                            Send SMS for important updates</p>
+                                    </div>
+                                    <div class="switch inactive w-12 h-6 rounded-full cursor-pointer relative"
+                                        onclick="toggleSwitch(this)">
+                                        <div
+                                            class="absolute left-0.5 top-0.5 w-5 h-5 bg-white rounded-full shadow-md transition-all">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Security Settings -->
+                    <div id="content-security" class="hidden space-y-4">
+                        <div class="bg-[#f9f9ff] rounded-xl border border-[#c3c6d7] card-shadow p-6">
+                            <h3 class="text-[18px] font-[600] leading-[24px] text-[#111c2d] mb-4">Security Settings</h3>
+                            <div class="space-y-4">
+                                <div
+                                    class="flex items-center justify-between p-3 bg-[#f0f3ff] rounded-lg setting-group">
+                                    <div>
+                                        <p class="text-[14px] font-[400] leading-[20px] font-bold text-[#111c2d]">
+                                            Two-Factor Authentication</p>
+                                        <p
+                                            class="text-[12px] font-[500] leading-[16px] tracking-[0.05em] text-[#505f76]">
+                                            Require 2FA for admin accounts</p>
+                                    </div>
+                                    <div class="switch inactive w-12 h-6 rounded-full cursor-pointer relative"
+                                        onclick="toggleSwitch(this)">
+                                        <div
+                                            class="absolute left-0.5 top-0.5 w-5 h-5 bg-white rounded-full shadow-md transition-all">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div
+                                    class="flex items-center justify-between p-3 bg-[#f0f3ff] rounded-lg setting-group">
+                                    <div>
+                                        <p class="text-[14px] font-[400] leading-[20px] font-bold text-[#111c2d]">
+                                            Session Timeout</p>
+                                        <p
+                                            class="text-[12px] font-[500] leading-[16px] tracking-[0.05em] text-[#505f76]">
+                                            Auto-logout after inactivity</p>
+                                    </div>
+                                    <select
+                                        class="bg-[#f9f9ff] border border-[#c3c6d7] rounded-lg px-3 py-1 text-[12px] font-[500] leading-[16px] tracking-[0.05em]">
+                                        <option value="30">30 minutes</option>
+                                        <option value="60">1 hour</option>
+                                        <option value="120">2 hours</option>
+                                        <option value="never">Never</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer class="mt-auto py-4 px-6 border-t border-[#c3c6d7] bg-[#f9f9ff]">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-[12px] font-[500] leading-[16px] tracking-[0.05em] text-[#505f76]">© 2024 EduManage. All
+                    rights reserved.</p>
+                <div class="flex gap-6">
+                    <a class="text-[12px] font-[500] leading-[16px] tracking-[0.05em] text-[#505f76] hover:text-[#004ac6] transition-colors"
+                        href="#">Help Center</a>
+                    <a class="text-[12px] font-[500] leading-[16px] tracking-[0.05em] text-[#505f76] hover:text-[#004ac6] transition-colors"
+                        href="#">Privacy Policy</a>
+                    <a class="text-[12px] font-[500] leading-[16px] tracking-[0.05em] text-[#505f76] hover:text-[#004ac6] transition-colors"
+                        href="#">Terms of Service</a>
+                </div>
+            </div>
+        </footer>
+    </main>
+
+    <script src="../app.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            if (!Permissions.check('super-admin')) return;
+            UI.loadUserProfile();
+            UI.updateAllBadges();
+        });
+
+        function switchSettingTab(tab) {
+            const tabs = ['general', 'notifications', 'security'];
+            tabs.forEach(t => document.getElementById(`content-${t}`).classList.add('hidden'));
+            document.getElementById(`content-${tab}`).classList.remove('hidden');
+            document.querySelectorAll('.lg\\:col-span-3 button').forEach(btn => {
+                btn.classList.remove('bg-[rgba(37,99,235,0.1)]', 'text-[#004ac6]', 'font-bold');
+                btn.classList.add('text-[#505f76]');
+            });
+            if (event && event.currentTarget) {
+                event.currentTarget.classList.add('bg-[rgba(37,99,235,0.1)]', 'text-[#004ac6]', 'font-bold');
+                event.currentTarget.classList.remove('text-[#505f76]');
+            }
+        }
+
+        function toggleSwitch(el) {
+            const isActive = el.classList.contains('active');
+            const dot = el.querySelector('div');
+            if (isActive) {
+                el.classList.remove('active');
+                el.classList.add('inactive');
+                dot.classList.remove('right-0.5');
+                dot.classList.add('left-0.5');
+            } else {
+                el.classList.remove('inactive');
+                el.classList.add('active');
+                dot.classList.remove('left-0.5');
+                dot.classList.add('right-0.5');
+            }
+        }
+
+        function saveSettings() {
+            const btn = event.currentTarget;
+            btn.innerHTML = '<span class="material-symbols-outlined text-[18px] animate-spin">sync</span> Saving...';
+            btn.disabled = true;
+            setTimeout(() => {
+                btn.innerHTML = '<span class="material-symbols-outlined text-[18px]">check_circle</span> Saved!';
+                btn.style.backgroundColor = '#006242';
+                setTimeout(() => {
+                    btn.innerHTML = '<span class="material-symbols-outlined text-[18px]">save</span> Save Settings';
+                    btn.style.backgroundColor = '';
+                    btn.disabled = false;
+                    UI.showToast('Settings Saved', 'All settings have been saved successfully.');
+                }, 1500);
+            }, 1500);
+        }
+
+        document.getElementById('settingsSearch').addEventListener('input', function () {
+            const query = this.value.toLowerCase();
+            document.querySelectorAll('.setting-group, .space-y-4 > div, .space-y-4 > .flex').forEach(el => {
+                if (el) {
+                    const text = el.textContent.toLowerCase();
+                    el.style.display = text.includes(query) ? '' : 'none';
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

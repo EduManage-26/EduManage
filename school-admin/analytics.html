@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Analytics | School Admin</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries">
+    </script>
+    <link rel="icon" type="image/x-icon" href="../image/icon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js">
+    </script>
+    <style>
+        * { font-family: 'Inter', sans-serif; }
+        body { background-color: #f9f9ff; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .sidebar-link { transition: all 0.2s ease; }
+        .sidebar-link:hover { background-color: #f0f3ff; transform: translateX(4px); }
+        .sidebar-link.active { background-color: rgba(37, 99, 235, 0.1); color: #004ac6; border-left: 4px solid #004ac6; font-weight: 700; }
+        .card-shadow { box-shadow: 0 1px 3px 0 rgba(0,0,0,0.1), 0 1px 2px -1px rgba(0,0,0,0.1); }
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #e2e8f0; border-radius: 10px; }
+        .chart-container { position: relative; height: 250px; width: 100%; }
+    </style>
+</head>
+<body>
+
+    <!-- ==================== SIDEBAR ==================== -->
+    <aside class="fixed left-0 top-0 h-full w-[260px] z-50 bg-[#f9f9ff] border-r border-[#c3c6d7] shadow-sm flex flex-col py-4 gap-1">
+        <div class="px-4 mb-6">
+            <div class="flex items-center gap-2">
+                <div class="w-10 h-10 rounded-lg bg-[#2563eb] flex items-center justify-center text-white">
+                    <span class="material-symbols-outlined" style="font-variation-settings:'FILL'1;">school</span>
+                </div>
+                <div>
+                    <h1 class="text-[20px] font-[600] leading-[28px] text-[#004ac6]">EduManage</h1>
+                    <p class="text-[12px] font-[500] leading-[16px] tracking-[0.05em] text-[#505f76]">School Admin</p>
+                </div>
+            </div>
+        </div>
+        <nav class="flex-1 px-2 space-y-1 overflow-y-auto custom-scrollbar">
+            <a href="index.html" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-lg text-[#505f76]">
+                <span class="material-symbols-outlined">dashboard</span>
+                <span class="text-[12px] font-[500] leading-[16px] tracking-[0.05em]">Dashboard</span>
+            </a>
+            <a href="teachers.html" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-lg text-[#505f76]">
+                <span class="material-symbols-outlined">person</span>
+                <span class="text-[12px] font-[500] leading-[16px] tracking-[0.05em]">Teachers</span>
+            </a>
+            <a href="students.html" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-lg text-[#505f76]">
+                <span class="material-symbols-outlined">groups</span>
+                <span class="text-[12px] font-[500] leading-[16px] tracking-[0.05em]">Students</span>
+            </a>
+            <a href="parents.html" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-lg text-[#505f76]">
+                <span class="material-symbols-outlined">family_restroom</span>
+                <span class="text-[12px] font-[500] leading-[16px] tracking-[0.05em]">Parents</span>
+            </a>
+            <a href="classes.html" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-lg text-[#505f76]">
+                <span class="material-symbols-outlined">class</span>
+                <span class="text-[12px] font-[500] leading-[16px] tracking-[0.05em]">Classes</span>
+            </a>
+            <a href="subjects.html" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-lg text-[#505f76]">
+                <span class="material-symbols-outlined">menu_book</span>
+                <span class="text-[12px] font-[500] leading-[16px] tracking-[0.05em]">Subjects</span>
+            </a>
+            <a href="schedule.html" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-lg text-[#505f76]">
+                <span class="material-symbols-outlined">calendar_month</span>
+                <span class="text-[12px] font-[500] leading-[16px] tracking-[0.05em]">Schedule</span>
+            </a>
+            <a href="attendance.html" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-lg text-[#505f76]">
+                <span class="material-symbols-outlined">fact_check</span>
+                <span class="text-[12px] font-[500] leading-[16px] tracking-[0.05em]">Attendance</span>
+            </a>
+            <a href="analytics.html" class="sidebar-link active flex items-center gap-4 px-4 py-3 rounded-lg text-[#004ac6] bg-[rgba(37,99,235,0.1)] border-l-4 border-[#004ac6] font-bold">
+                <span class="material-symbols-outlined">analytics</span>
+                <span class="text-[12px] font-[500] leading-[16px] tracking-[0.05em]">Analytics</span>
+            </a>
+            <a href="reports.html" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-lg text-[#505f76]">
+                <span class="material-symbols-outlined">description</span>
+                <span class="text-[12px] font-[500] leading-[16px] tracking-[0.05em]">Reports</span>
+            </a>
+            <a href="notifications.html" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-lg text-[#505f76]">
+                <span class="material-symbols-outlined">notifications</span>
+                <span class="text-[12px] font-[500] leading-[16px] tracking-[0.05em]">Notifications</span>
+            </a>
+            <a href="settings.html" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-lg text-[#505f76]">
+                <span class="material-symbols-outlined">settings</span>
+                <span class="text-[12px] font-[500] leading-[16px] tracking-[0.05em]">Settings</span>
+            </a>
+            <a href="profile.html" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-lg text-[#505f76]">
+                <span class="material-symbols-outlined">person</span>
+                <span class="text-[12px] font-[500] leading-[16px] tracking-[0.05em]">Profile</span>
+            </a>
+        </nav>
+        <div class="px-4 mt-auto pt-4 border-t border-[#c3c6d7]">
+            <div class="flex items-center gap-3">
+                <img alt="Admin profile" class="w-10 h-10 rounded-full border border-[#c3c6d7] object-cover"
+                src="https://ui-avatars.com/api/?name=John+Doe&background=137fec&color=fff&size=128" />
+                <div>
+                    <p class="text-[14px] font-[400] leading-[20px] font-bold text-[#111c2d]">John Doe</p>
+                    <p class="text-[12px] font-[500] leading-[16px] tracking-[0.05em] text-[#505f76]">School Admin</p>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- ==================== MAIN CONTENT ==================== -->
+    <main class="ml-[260px] min-h-screen flex flex-col">
+
+        <header class="sticky top-0 z-40 w-full h-16 bg-[#f9f9ff] border-b border-[#c3c6d7] shadow-sm flex justify-between items-center px-6">
+            <div class="flex items-center gap-4 flex-1">
+                <div class="relative w-full max-w-md">
+                    <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-[#737686]">search</span>
+                    <input class="w-full bg-[#f0f3ff] border-none rounded-full py-2 pl-10 pr-4 text-[14px] font-[400] leading-[20px] focus:ring-2 focus:ring-[#2563eb] focus:ring-opacity-20 transition-all"
+                    placeholder="Search analytics..." type="text" />
+                </div>
+            </div>
+            <div class="flex items-center gap-4">
+                <button class="p-2 text-[#505f76] hover:bg-[#f0f3ff] rounded-full transition-colors relative" onclick="showToast('Notifications', 'You have 3 new notifications')">
+                    <span class="material-symbols-outlined">notifications</span>
+                    <span class="absolute top-2 right-2 w-2 h-2 bg-[#ba1a1a] rounded-full"></span>
+                </button>
+                <div class="flex items-center gap-2 cursor-pointer hover:bg-[#f0f3ff] p-1 rounded-lg transition-colors">
+                    <img alt="Admin avatar" class="w-8 h-8 rounded-full object-cover"
+                    src="https://ui-avatars.com/api/?name=John+Doe&background=137fec&color=fff&size=128" />
+                    <div class="hidden md:block text-left">
+                        <p class="text-[12px] font-[500] leading-[16px] tracking-[0.05em] font-bold leading-tight">John Doe</p>
+                        <p class="text-[10px] text-[#505f76]">School Admin</p>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="p-6 space-y-6">
+
+            <div>
+                <h2 class="text-[24px] font-[600] leading-[32px] text-[#111c2d]">School Analytics</h2>
+                <p class="text-[16px] font-[400] leading-[24px] text-[#505f76]">Data-driven insights for Greenwood Academy</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div class="bg-white rounded-xl border card-shadow p-4">
+                    <h3 class="text-[18px] font-[600] text-[#111c2d] mb-4">Performance Trends by Subject</h3>
+                    <div class="chart-container">
+                        <canvas id="subjectChart"></canvas>
+                    </div>
+                </div>
+                <div class="bg-white rounded-xl border card-shadow p-4">
+                    <h3 class="text-[18px] font-[600] text-[#111c2d] mb-4">Grade Distribution</h3>
+                    <div class="chart-container">
+                        <canvas id="gradeDistributionChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl border card-shadow p-4">
+                <h3 class="text-[18px] font-[600] text-[#111c2d] mb-4">Student Growth</h3>
+                <div class="chart-container" style="height:250px;">
+                    <canvas id="growthChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <footer class="mt-auto py-4 px-6 border-t border-[#c3c6d7] bg-[#f9f9ff]">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-[12px] font-[500] text-[#505f76]">© 2024 EduManage Solutions. All rights reserved.</p>
+                <div class="flex gap-6">
+                    <a class="text-[12px] text-[#505f76] hover:text-[#004ac6]" href="#">Help Center</a>
+                    <a class="text-[12px] text-[#505f76] hover:text-[#004ac6]" href="#">Privacy Policy</a>
+                    <a class="text-[12px] text-[#505f76] hover:text-[#004ac6]" href="#">Terms of Service</a>
+                </div>
+            </div>
+        </footer>
+    </main>
+
+    <!-- ==================== TOAST ==================== -->
+    <div id="toast" class="fixed bottom-6 right-6 z-50 bg-[#111c2d] text-white rounded-xl p-4 shadow-2xl max-w-sm transform translate-y-full opacity-0 transition-all duration-500">
+        <div class="flex items-start gap-3">
+            <span class="material-symbols-outlined text-[#6ffbbe]">check_circle</span>
+            <div>
+                <p class="text-[14px] font-bold" id="toastTitle">Success</p>
+                <p class="text-[12px] text-[#b7c8e1]" id="toastMessage">Action completed!</p>
+            </div>
+            <button onclick="closeToast()" class="text-[#b7c8e1] hover:text-white">
+                <span class="material-symbols-outlined text-[16px]">close</span>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        function showToast(title, message) {
+            document.getElementById('toastTitle').textContent = title;
+            document.getElementById('toastMessage').textContent = message;
+            const toast = document.getElementById('toast');
+            toast.classList.remove('translate-y-full', 'opacity-0');
+            toast.classList.add('translate-y-0', 'opacity-100');
+            setTimeout(closeToast, 4000);
+        }
+        function closeToast() {
+            const toast = document.getElementById('toast');
+            toast.classList.add('translate-y-full', 'opacity-0');
+            toast.classList.remove('translate-y-0', 'opacity-100');
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            new Chart(document.getElementById('subjectChart'), {
+                type: 'bar',
+                data: {
+                    labels: ['Math', 'Science', 'English', 'History', 'Arts'],
+                    datasets: [{ label: 'Average Score', data: [86, 84, 89, 78, 92], backgroundColor: '#004ac6' }]
+                },
+                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
+            });
+
+            new Chart(document.getElementById('gradeDistributionChart'), {
+                type: 'doughnut',
+                data: {
+                    labels: ['A (90-100)', 'B (80-89)', 'C (70-79)', 'D (60-69)', 'F (<60)'],
+                    datasets: [{ data: [32, 38, 18, 8, 4], backgroundColor: ['#10b981', '#3b82f6', '#f59e0b', '#ef4444', '#8b5cf6'] }]
+                },
+                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom' } } }
+            });
+
+            new Chart(document.getElementById('growthChart'), {
+                type: 'line',
+                data: {
+                    labels: ['2019', '2020', '2021', '2022', '2023', '2024'],
+                    datasets: [{ label: 'Total Students', data: [980, 1050, 1120, 1180, 1200, 1245], borderColor: '#004ac6', tension: 0.4, fill: true }]
+                },
+                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom' } } }
+            });
+        });
+    </script>
+</body>
+</html>

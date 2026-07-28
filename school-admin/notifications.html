@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Notifications | School Admin</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries">
+    </script>
+    <link rel="icon" type="image/x-icon" href="../image/icon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+    <style>
+        * { font-family: 'Inter', sans-serif; }
+        body { background-color: #f9f9ff; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .sidebar-link { transition: all 0.2s ease; }
+        .sidebar-link:hover { background-color: #f0f3ff; transform: translateX(4px); }
+        .sidebar-link.active { background-color: rgba(37, 99, 235, 0.1); color: #004ac6; border-left: 4px solid #004ac6; font-weight: 700; }
+        .card-shadow { box-shadow: 0 1px 3px 0 rgba(0,0,0,0.1), 0 1px 2px -1px rgba(0,0,0,0.1); }
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #e2e8f0; border-radius: 10px; }
+        .animate-fade-in { animation: fadeIn 0.3s ease-out forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .notification-item { transition: all 0.3s ease; }
+        .notification-item:hover { background-color: #f0f3ff; }
+        .notification-item.unread { border-left: 4px solid #004ac6; background-color: rgba(37,99,235,0.03); }
+        .badge-pulse { animation: pulse 2s infinite; }
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.2); } 100% { transform: scale(1); } }
+        .notification-toast { transition: all 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55); }
+    </style>
+</head>
+<body>
+
+    <!-- ==================== SIDEBAR ==================== -->
+    <aside class="fixed left-0 top-0 h-full w-[260px] z-50 bg-[#f9f9ff] border-r border-[#c3c6d7] shadow-sm flex flex-col py-4 gap-1">
+        <div class="px-4 mb-6">
+            <div class="flex items-center gap-2">
+                <div class="w-10 h-10 rounded-lg bg-[#2563eb] flex items-center justify-center text-white">
+                    <span class="material-symbols-outlined" style="font-variation-settings:'FILL'1;">school</span>
+                </div>
+                <div>
+                    <h1 class="text-[20px] font-[600] leading-[28px] text-[#004ac6]">EduManage</h1>
+                    <p class="text-[12px] font-[500] leading-[16px] tracking-[0.05em] text-[#505f76]">School Admin</p>
+                </div>
+            </div>
+        </div>
+        <nav class="flex-1 px-2 space-y-1 overflow-y-auto custom-scrollbar">
+            <a href="index.html" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-lg text-[#505f76]">
+                <span class="material-symbols-outlined">dashboard</span>
+                <span class="text-[12px] font-[500] leading-[16px] tracking-[0.05em]">Dashboard</span>
+            </a>
+            <a href="teachers.html" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-lg text-[#505f76]">
+                <span class="material-symbols-outlined">person</span>
+                <span class="text-[12px] font-[500] leading-[16px] tracking-[0.05em]">Teachers</span>
+            </a>
+            <a href="students.html" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-lg text-[#505f76]">
+                <span class="material-symbols-outlined">groups</span>
+                <span class="text-[12px] font-[500] leading-[16px] tracking-[0.05em]">Students</span>
+            </a>
+            <a href="parents.html" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-lg text-[#505f76]">
+                <span class="material-symbols-outlined">family_restroom</span>
+                <span class="text-[12px] font-[500] leading-[16px] tracking-[0.05em]">Parents</span>
+            </a>
+            <a href="classes.html" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-lg text-[#505f76]">
+                <span class="material-symbols-outlined">class</span>
+                <span class="text-[12px] font-[500] leading-[16px] tracking-[0.05em]">Classes</span>
+            </a>
+            <a href="subjects.html" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-lg text-[#505f76]">
+                <span class="material-symbols-outlined">menu_book</span>
+                <span class="text-[12px] font-[500] leading-[16px] tracking-[0.05em]">Subjects</span>
+            </a>
+            <a href="schedule.html" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-lg text-[#505f76]">
+                <span class="material-symbols-outlined">calendar_month</span>
+                <span class="text-[12px] font-[500] leading-[16px] tracking-[0.05em]">Schedule</span>
+            </a>
+            <a href="attendance.html" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-lg text-[#505f76]">
+                <span class="material-symbols-outlined">fact_check</span>
+                <span class="text-[12px] font-[500] leading-[16px] tracking-[0.05em]">Attendance</span>
+            </a>
+            <a href="analytics.html" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-lg text-[#505f76]">
+                <span class="material-symbols-outlined">analytics</span>
+                <span class="text-[12px] font-[500] leading-[16px] tracking-[0.05em]">Analytics</span>
+            </a>
+            <a href="reports.html" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-lg text-[#505f76]">
+                <span class="material-symbols-outlined">description</span>
+                <span class="text-[12px] font-[500] leading-[16px] tracking-[0.05em]">Reports</span>
+            </a>
+            <a href="notifications.html" class="sidebar-link active flex items-center gap-4 px-4 py-3 rounded-lg text-[#004ac6] bg-[rgba(37,99,235,0.1)] border-l-4 border-[#004ac6] font-bold">
+                <span class="material-symbols-outlined">notifications</span>
+                <span class="text-[12px] font-[500] leading-[16px] tracking-[0.05em]">Notifications</span>
+            </a>
+            <a href="settings.html" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-lg text-[#505f76]">
+                <span class="material-symbols-outlined">settings</span>
+                <span class="text-[12px] font-[500] leading-[16px] tracking-[0.05em]">Settings</span>
+            </a>
+            <a href="profile.html" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-lg text-[#505f76]">
+                <span class="material-symbols-outlined">person</span>
+                <span class="text-[12px] font-[500] leading-[16px] tracking-[0.05em]">Profile</span>
+            </a>
+        </nav>
+        <div class="px-4 mt-auto pt-4 border-t border-[#c3c6d7]">
+            <div class="flex items-center gap-3">
+                <img alt="Admin profile" class="w-10 h-10 rounded-full border border-[#c3c6d7] object-cover"
+                src="https://ui-avatars.com/api/?name=John+Doe&background=137fec&color=fff&size=128" />
+                <div>
+                    <p class="text-[14px] font-[400] leading-[20px] font-bold text-[#111c2d]">John Doe</p>
+                    <p class="text-[12px] font-[500] leading-[16px] tracking-[0.05em] text-[#505f76]">School Admin</p>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- ==================== MAIN CONTENT ==================== -->
+    <main class="ml-[260px] min-h-screen flex flex-col">
+
+        <!-- ==================== TOP NAV BAR ==================== -->
+        <header class="sticky top-0 z-40 w-full h-16 bg-[#f9f9ff] border-b border-[#c3c6d7] shadow-sm flex justify-between items-center px-6">
+            <div class="flex items-center gap-4 flex-1">
+                <div class="relative w-full max-w-md">
+                    <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-[#737686]">search</span>
+                    <input class="w-full bg-[#f0f3ff] border-none rounded-full py-2 pl-10 pr-4 text-[14px] font-[400] leading-[20px] focus:ring-2 focus:ring-[#2563eb] focus:ring-opacity-20 transition-all"
+                    placeholder="Search notifications..." type="text" id="searchInput" oninput="renderNotifications()" />
+                </div>
+            </div>
+            <div class="flex items-center gap-4">
+                <!-- ===== NOTIFICATION BUTTON WITH BADGE ===== -->
+                <button class="p-2 text-[#505f76] hover:bg-[#f0f3ff] rounded-full transition-colors relative" onclick="toggleNotifications()" id="notifBtn">
+                    <span class="material-symbols-outlined">notifications</span>
+                    <span class="absolute -top-1 -right-1 min-w-[18px] h-[18px] bg-[#ba1a1a] text-white text-[10px] font-bold rounded-full flex items-center justify-center px-1 badge-pulse" id="notifBadge">0</span>
+                </button>
+                <!-- ===== PROFILE ===== -->
+                <div class="flex items-center gap-2 cursor-pointer hover:bg-[#f0f3ff] p-1 rounded-lg transition-colors" onclick="window.location.href='profile.html'">
+                    <img alt="Admin avatar" class="w-8 h-8 rounded-full object-cover"
+                    src="https://ui-avatars.com/api/?name=John+Doe&background=137fec&color=fff&size=128" />
+                    <div class="hidden md:block text-left">
+                        <p class="text-[12px] font-[500] leading-[16px] tracking-[0.05em] font-bold leading-tight">John Doe</p>
+                        <p class="text-[10px] text-[#505f76]">School Admin</p>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- ==================== NOTIFICATION DROPDOWN ==================== -->
+        <div id="notifDropdown" class="fixed top-16 right-6 z-50 bg-white rounded-xl border border-[#c3c6d7] shadow-2xl max-w-sm w-full transform scale-95 opacity-0 transition-all duration-200 pointer-events-none">
+            <div class="p-4 border-b border-[#c3c6d7] flex justify-between items-center">
+                <h3 class="text-[16px] font-bold text-[#111c2d]">Notifications</h3>
+                <span class="text-[12px] text-[#004ac6] font-bold cursor-pointer hover:underline" onclick="markAllRead()">Mark all read</span>
+            </div>
+            <div class="max-h-80 overflow-y-auto custom-scrollbar" id="notifDropdownList">
+                <!-- Populated by JS -->
+            </div>
+            <div class="p-3 border-t border-[#c3c6d7] text-center">
+                <button class="text-[12px] text-[#004ac6] font-bold hover:underline" onclick="window.location.href='notifications.html'">View all notifications →</button>
+            </div>
+        </div>
+
+        <!-- ==================== PAGE CONTENT ==================== -->
+        <div class="p-6 space-y-6">
+
+            <!-- Page Header -->
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                <div>
+                    <h2 class="text-[24px] font-[600] leading-[32px] text-[#111c2d]">Notifications</h2>
+                    <p class="text-[16px] font-[400] leading-[24px] text-[#505f76]">Stay updated with school activities and announcements</p>
+                </div>
+                <div class="flex gap-3">
+                    <button onclick="markAllRead()" class="bg-[#004ac6] text-white px-4 py-2.5 rounded-lg text-[12px] font-bold hover:bg-[#2563eb] transition-all flex items-center gap-2">
+                        <span class="material-symbols-outlined text-[18px]">done_all</span>
+                        Mark All Read
+                    </button>
+                    <button onclick="openSendNotificationModal()" class="bg-[#f0f3ff] text-[#004ac6] px-4 py-2.5 rounded-lg text-[12px] font-bold border border-[#004ac6] hover:bg-[#dee8ff] transition-all flex items-center gap-2">
+                        <span class="material-symbols-outlined text-[18px]">send</span>
+                        Send New
+                    </button>
+                </div>
+            </div>
+
+            <!-- Stats -->
+            <div class="grid grid-cols-1 sm:grid-cols-4 gap-6">
+                <div class="bg-white rounded-xl border p-4 text-center card-shadow">
+                    <p class="text-2xl font-bold text-[#004ac6]" id="totalNotif">0</p>
+                    <p class="text-sm text-gray-500">Total</p>
+                </div>
+                <div class="bg-white rounded-xl border p-4 text-center card-shadow">
+                    <p class="text-2xl font-bold text-red-500" id="unreadNotif">0</p>
+                    <p class="text-sm text-gray-500">Unread</p>
+                </div>
+                <div class="bg-white rounded-xl border p-4 text-center card-shadow">
+                    <p class="text-2xl font-bold text-green-600" id="readNotif">0</p>
+                    <p class="text-sm text-gray-500">Read</p>
+                </div>
+                <div class="bg-white rounded-xl border p-4 text-center card-shadow">
+                    <p class="text-2xl font-bold text-purple-600" id="todayNotif">0</p>
+                    <p class="text-sm text-gray-500">Today</p>
+                </div>
+            </div>
+
+            <!-- Filter Bar -->
+            <div class="bg-white rounded-xl border p-3 flex flex-wrap gap-3 items-center">
+                <button onclick="filterNotifications('all')" class="px-4 py-1.5 rounded-lg text-[12px] font-bold bg-[#004ac6] text-white" id="filterAll">All</button>
+                <button onclick="filterNotifications('unread')" class="px-4 py-1.5 rounded-lg text-[12px] font-bold text-[#505f76] hover:bg-[#f0f3ff] transition-colors" id="filterUnread">Unread</button>
+                <button onclick="filterNotifications('read')" class="px-4 py-1.5 rounded-lg text-[12px] font-bold text-[#505f76] hover:bg-[#f0f3ff] transition-colors" id="filterRead">Read</button>
+                <div class="flex-1"></div>
+                <button onclick="clearAllNotifications()" class="text-[12px] text-red-500 font-bold hover:underline">Clear All</button>
+            </div>
+
+            <!-- Notifications List -->
+            <div class="bg-white rounded-xl border card-shadow overflow-hidden" id="notificationsContainer">
+                <div id="notificationsList"></div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="mt-auto py-4 px-6 border-t border-[#c3c6d7] bg-[#f9f9ff]">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-[12px] font-[500] text-[#505f76]">© 2024 EduManage Solutions. All rights reserved.</p>
+                <div class="flex gap-6">
+                    <a class="text-[12px] text-[#505f76] hover:text-[#004ac6]" href="#">Help Center</a>
+                    <a class="text-[12px] text-[#505f76] hover:text-[#004ac6]" href="#">Privacy Policy</a>
+                    <a class="text-[12px] text-[#505f76] hover:text-[#004ac6]" href="#">Terms of Service</a>
+                </div>
+            </div>
+        </footer>
+    </main>
+
+    <!-- ==================== SEND NOTIFICATION MODAL ==================== -->
+    <div id="sendNotificationModal" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-black/50 backdrop-blur-sm">
+        <div class="bg-white rounded-xl max-w-md w-full mx-4 p-6 shadow-2xl animate-fade-in">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-[18px] font-[600] text-[#111c2d]">Send Notification</h3>
+                <button onclick="closeSendNotificationModal()" class="p-1 hover:bg-[#f0f3ff] rounded-lg">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+            </div>
+            <form id="sendNotificationForm" class="space-y-4">
+                <div>
+                    <label class="block text-[12px] font-semibold text-[#505f76]">Recipient</label>
+                    <select id="recipient" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-[#004ac6] outline-none">
+                        <option value="All Students">All Students</option>
+                        <option value="All Teachers">All Teachers</option>
+                        <option value="All Parents">All Parents</option>
+                        <option value="Specific Class">Specific Class</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-[12px] font-semibold text-[#505f76]">Title</label>
+                    <input type="text" id="notificationTitle" placeholder="Enter notification title" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-[#004ac6] outline-none" required>
+                </div>
+                <div>
+                    <label class="block text-[12px] font-semibold text-[#505f76]">Message</label>
+                    <textarea id="notificationMessage" placeholder="Enter notification message..." rows="4" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-[#004ac6] outline-none" required></textarea>
+                </div>
+                <div class="flex gap-3 pt-2">
+                    <button type="button" onclick="closeSendNotificationModal()" class="flex-1 py-2 bg-[#f0f3ff] text-[#505f76] rounded-lg font-bold hover:bg-[#dee8ff] transition-colors">Cancel</button>
+                    <button type="submit" class="flex-1 py-2 bg-[#004ac6] text-white rounded-lg font-bold hover:bg-[#2563eb] transition-all">Send</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ==================== TOAST ==================== -->
+    <div id="toast" class="fixed bottom-6 right-6 z-50 bg-[#111c2d] text-white rounded-xl p-4 shadow-2xl max-w-sm transform translate-y-full opacity-0 transition-all duration-500 notification-toast">
+        <div class="flex items-start gap-3">
+            <span class="material-symbols-outlined text-[#6ffbbe]" id="toastIcon">check_circle</span>
+            <div>
+                <p class="text-[14px] font-bold" id="toastTitle">Success</p>
+                <p class="text-[12px] text-[#b7c8e1]" id="toastMessage">Action completed!</p>
+            </div>
+            <button onclick="closeToast()" class="text-[#b7c8e1] hover:text-white">
+                <span class="material-symbols-outlined text-[16px]">close</span>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // ==================== DATA ====================
+        let notifications = [
+            { id: 1, title: "Parent-Teacher Meeting", message: "Meeting scheduled for March 25th at 4PM in the main hall.", time: "2 hours ago", read: false, date: new Date() },
+            { id: 2, title: "Holiday Notice", message: "School will be closed on March 30th for National Holiday.", time: "1 day ago", read: false, date: new Date(Date.now() - 86400000) },
+            { id: 3, title: "Exam Schedule Released", message: "Final exams will start from April 1st. Check the schedule for details.", time: "3 days ago", read: true, date: new Date(Date.now() - 259200000) },
+            { id: 4, title: "New Student Enrolled", message: "Alex Rivera has been enrolled in Grade 11 - Section A.", time: "5 days ago", read: true, date: new Date(Date.now() - 432000000) },
+            { id: 5, title: "Teacher Workshop", message: "Professional development workshop on April 5th for all teachers.", time: "1 week ago", read: true, date: new Date(Date.now() - 604800000) },
+        ];
+
+        let currentFilter = 'all';
+        let notifOpen = false;
+
+        // ==================== TOAST ====================
+        function showToast(title, message, icon = 'check_circle') {
+            document.getElementById('toastTitle').textContent = title;
+            document.getElementById('toastMessage').textContent = message;
+            document.getElementById('toastIcon').textContent = icon;
+            const toast = document.getElementById('toast');
+            toast.classList.remove('translate-y-full', 'opacity-0');
+            toast.classList.add('translate-y-0', 'opacity-100');
+            setTimeout(closeToast, 4000);
+        }
+        function closeToast() {
+            const toast = document.getElementById('toast');
+            toast.classList.add('translate-y-full', 'opacity-0');
+            toast.classList.remove('translate-y-0', 'opacity-100');
+        }
+
+        // ==================== NOTIFICATION DROPDOWN ====================
+        function toggleNotifications() {
+            const dropdown = document.getElementById('notifDropdown');
+            notifOpen = !notifOpen;
+            if (notifOpen) {
+                dropdown.classList.remove('scale-95', 'opacity-0', 'pointer-events-none');
+                dropdown.classList.add('scale-100', 'opacity-100', 'pointer-events-auto');
+                renderDropdown();
+            } else {
+                dropdown.classList.add('scale-95', 'opacity-0', 'pointer-events-none');
+                dropdown.classList.remove('scale-100', 'opacity-100', 'pointer-events-auto');
+            }
+        }
+
+        document.addEventListener('click', function(e) {
+            const dropdown = document.getElementById('notifDropdown');
+            const btn = document.getElementById('notifBtn');
+            if (notifOpen && !dropdown.contains(e.target) && !btn.contains(e.target)) {
+                toggleNotifications();
+            }
+        });
+
+        function renderDropdown() {
+            const list = document.getElementById('notifDropdownList');
+            const unread = notifications.filter(n => !n.read);
+            const display = unread.length > 0 ? unread.slice(0, 5) : notifications.slice(0, 5);
+            if (display.length === 0) {
+                list.innerHTML = `<div class="p-4 text-center text-[#505f76]">No notifications</div>`;
+            } else {
+                list.innerHTML = display.map(n => `
+                    <div class="p-3 border-b border-[rgba(195,198,215,0.3)] hover:bg-[#f0f3ff] transition-all cursor-pointer ${!n.read ? 'unread' : ''}" onclick="markRead(${n.id})">
+                        <p class="text-[14px] font-semibold text-[#111c2d]">${n.title}</p>
+                        <p class="text-[12px] text-[#505f76]">${n.message.substring(0, 50)}${n.message.length > 50 ? '...' : ''}</p>
+                        <p class="text-[10px] text-[#737686] mt-1">${n.time}</p>
+                    </div>
+                `).join('');
+            }
+        }
+
+        // ==================== RENDER NOTIFICATIONS ====================
+        function renderNotifications() {
+            const searchTerm = document.getElementById('searchInput')?.value.toLowerCase() || '';
+            
+            let filtered = notifications.filter(n =>
+                n.title.toLowerCase().includes(searchTerm) ||
+                n.message.toLowerCase().includes(searchTerm)
+            );
+
+            if (currentFilter === 'unread') {
+                filtered = filtered.filter(n => !n.read);
+            } else if (currentFilter === 'read') {
+                filtered = filtered.filter(n => n.read);
+            }
+
+            // Update stats
+            const total = notifications.length;
+            const unread = notifications.filter(n => !n.read).length;
+            const read = notifications.filter(n => n.read).length;
+            const today = notifications.filter(n => {
+                const todayDate = new Date().toDateString();
+                return n.date.toDateString() === todayDate;
+            }).length;
+
+            document.getElementById('totalNotif').textContent = total;
+            document.getElementById('unreadNotif').textContent = unread;
+            document.getElementById('readNotif').textContent = read;
+            document.getElementById('todayNotif').textContent = today;
+
+            // Update badge
+            const badge = document.getElementById('notifBadge');
+            if (unread > 0) {
+                badge.textContent = unread;
+                badge.style.display = 'flex';
+            } else {
+                badge.style.display = 'none';
+            }
+
+            // Render list
+            const list = document.getElementById('notificationsList');
+            if (filtered.length === 0) {
+                list.innerHTML = `
+                    <div class="p-8 text-center">
+                        <span class="material-symbols-outlined text-[48px] text-[#c3c6d7]">notifications_off</span>
+                        <p class="text-[16px] text-[#505f76] mt-2">No notifications found</p>
+                        <p class="text-[12px] text-[#737686]">Try changing your filters</p>
+                    </div>
+                `;
+            } else {
+                list.innerHTML = filtered.map(n => `
+                    <div class="notification-item ${!n.read ? 'unread' : ''} p-4 border-b border-[#c3c6d7] animate-fade-in">
+                        <div class="flex justify-between items-start">
+                            <div class="flex-1">
+                                <h4 class="text-[16px] font-bold text-[#111c2d]">${n.title}</h4>
+                                <p class="text-[14px] text-[#505f76] mt-1">${n.message}</p>
+                                <p class="text-[12px] text-[#737686] mt-2">${n.time}</p>
+                            </div>
+                            <div class="flex gap-2">
+                                ${!n.read ? `<button onclick="markRead(${n.id})" class="text-[#004ac6] text-[12px] font-bold hover:underline">Mark Read</button>` : `<span class="text-[12px] text-green-600 font-bold">✓ Read</span>`}
+                                <button onclick="deleteNotification(${n.id})" class="text-[#ba1a1a] text-[12px] font-bold hover:underline">Delete</button>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+            }
+        }
+
+        // ==================== MARK READ ====================
+        function markRead(id) {
+            const notification = notifications.find(n => n.id === id);
+            if (notification) {
+                notification.read = true;
+                renderNotifications();
+                renderDropdown();
+                if (notifOpen) {
+                    const unread = notifications.filter(n => !n.read).length;
+                    if (unread === 0) {
+                        document.getElementById('notifBadge').style.display = 'none';
+                    }
+                }
+                showToast('Marked Read', 'Notification marked as read.');
+            }
+        }
+
+        function markAllRead() {
+            notifications.forEach(n => n.read = true);
+            renderNotifications();
+            renderDropdown();
+            document.getElementById('notifBadge').style.display = 'none';
+            showToast('All Read', 'All notifications marked as read.');
+        }
+
+        // ==================== DELETE ====================
+        function deleteNotification(id) {
+            if (confirm('Delete this notification?')) {
+                notifications = notifications.filter(n => n.id !== id);
+                renderNotifications();
+                renderDropdown();
+                showToast('Deleted', 'Notification removed.');
+            }
+        }
+
+        function clearAllNotifications() {
+            if (confirm('Clear all notifications?')) {
+                notifications = [];
+                renderNotifications();
+                renderDropdown();
+                document.getElementById('notifBadge').style.display = 'none';
+                showToast('Cleared', 'All notifications cleared.');
+            }
+        }
+
+        // ==================== FILTER ====================
+        function filterNotifications(filter) {
+            currentFilter = filter;
+            // Update button styles
+            document.querySelectorAll('[id^="filter"]').forEach(btn => {
+                btn.classList.remove('bg-[#004ac6]', 'text-white');
+                btn.classList.add('text-[#505f76]');
+            });
+            const btnMap = {
+                'all': 'filterAll',
+                'unread': 'filterUnread',
+                'read': 'filterRead'
+            };
+            const activeBtn = document.getElementById(btnMap[filter]);
+            if (activeBtn) {
+                activeBtn.classList.add('bg-[#004ac6]', 'text-white');
+                activeBtn.classList.remove('text-[#505f76]');
+            }
+            renderNotifications();
+        }
+
+        // ==================== SEND NOTIFICATION ====================
+        function openSendNotificationModal() {
+            document.getElementById('sendNotificationModal').classList.remove('hidden');
+        }
+        function closeSendNotificationModal() {
+            document.getElementById('sendNotificationModal').classList.add('hidden');
+            document.getElementById('sendNotificationForm').reset();
+        }
+
+        document.getElementById('sendNotificationForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const title = document.getElementById('notificationTitle').value;
+            const message = document.getElementById('notificationMessage').value;
+            const recipient = document.getElementById('recipient').value;
+
+            if (!title || !message) {
+                showToast('Error', 'Please fill in all fields.', 'error');
+                return;
+            }
+
+            const newNotification = {
+                id: notifications.length + 1,
+                title,
+                message,
+                time: "Just now",
+                read: false,
+                date: new Date()
+            };
+            notifications.unshift(newNotification);
+            renderNotifications();
+            renderDropdown();
+            closeSendNotificationModal();
+            showToast('Sent', `Notification sent to ${recipient}`, 'send');
+        });
+
+        // ==================== BADGE UPDATE ON LOAD ====================
+        function updateBadge() {
+            const unread = notifications.filter(n => !n.read).length;
+            const badge = document.getElementById('notifBadge');
+            if (unread > 0) {
+                badge.textContent = unread;
+                badge.style.display = 'flex';
+            } else {
+                badge.style.display = 'none';
+            }
+        }
+
+        // ==================== INIT ====================
+        document.addEventListener('DOMContentLoaded', function() {
+            renderNotifications();
+            updateBadge();
+        });
+    </script>
+</body>
+</html>

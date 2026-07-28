@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Profile | School Admin</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries">
+    </script>
+    <link rel="icon" type="image/x-icon" href="../image/icon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+    <style>
+        * { font-family: 'Inter', sans-serif; }
+        body { background-color: #f9f9ff; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .sidebar-link { transition: all 0.2s ease; }
+        .sidebar-link:hover { background-color: #f0f3ff; transform: translateX(4px); }
+        .sidebar-link.active { background-color: rgba(37, 99, 235, 0.1); color: #004ac6; border-left: 4px solid #004ac6; font-weight: 700; }
+        .card-shadow { box-shadow: 0 1px 3px 0 rgba(0,0,0,0.1), 0 1px 2px -1px rgba(0,0,0,0.1); }
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #e2e8f0; border-radius: 10px; }
+        .animate-fade-in { animation: fadeIn 0.3s ease-out forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .profile-avatar-wrapper { position: relative; }
+        .profile-avatar-wrapper:hover .avatar-overlay { opacity: 1; }
+        .avatar-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.5); border-radius: 50%; display: flex; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.3s ease; cursor: pointer; }
+        .badge-pulse { animation: pulse 2s infinite; }
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.2); } 100% { transform: scale(1); } }
+        .notification-toast { transition: all 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55); }
+    </style>
+</head>
+<body>
+
+    <!-- ==================== SIDEBAR ==================== -->
+    <aside class="fixed left-0 top-0 h-full w-[260px] z-50 bg-[#f9f9ff] border-r border-[#c3c6d7] shadow-sm flex flex-col py-4 gap-1">
+        <div class="px-4 mb-6">
+            <div class="flex items-center gap-2">
+                <div class="w-10 h-10 rounded-lg bg-[#2563eb] flex items-center justify-center text-white">
+                    <span class="material-symbols-outlined" style="font-variation-settings:'FILL'1;">school</span>
+                </div>
+                <div>
+                    <h1 class="text-[20px] font-[600] leading-[28px] text-[#004ac6]">EduManage</h1>
+                    <p class="text-[12px] font-[500] leading-[16px] tracking-[0.05em] text-[#505f76]">School Admin</p>
+                </div>
+            </div>
+        </div>
+        <nav class="flex-1 px-2 space-y-1 overflow-y-auto custom-scrollbar">
+            <a href="index.html" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-lg text-[#505f76]">
+                <span class="material-symbols-outlined">dashboard</span>
+                <span class="text-[12px] font-[500] leading-[16px] tracking-[0.05em]">Dashboard</span>
+            </a>
+            <a href="teachers.html" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-lg text-[#505f76]">
+                <span class="material-symbols-outlined">person</span>
+                <span class="text-[12px] font-[500] leading-[16px] tracking-[0.05em]">Teachers</span>
+            </a>
+            <a href="students.html" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-lg text-[#505f76]">
+                <span class="material-symbols-outlined">groups</span>
+                <span class="text-[12px] font-[500] leading-[16px] tracking-[0.05em]">Students</span>
+            </a>
+            <a href="parents.html" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-lg text-[#505f76]">
+                <span class="material-symbols-outlined">family_restroom</span>
+                <span class="text-[12px] font-[500] leading-[16px] tracking-[0.05em]">Parents</span>
+            </a>
+            <a href="classes.html" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-lg text-[#505f76]">
+                <span class="material-symbols-outlined">class</span>
+                <span class="text-[12px] font-[500] leading-[16px] tracking-[0.05em]">Classes</span>
+            </a>
+            <a href="subjects.html" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-lg text-[#505f76]">
+                <span class="material-symbols-outlined">menu_book</span>
+                <span class="text-[12px] font-[500] leading-[16px] tracking-[0.05em]">Subjects</span>
+            </a>
+            <a href="schedule.html" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-lg text-[#505f76]">
+                <span class="material-symbols-outlined">calendar_month</span>
+                <span class="text-[12px] font-[500] leading-[16px] tracking-[0.05em]">Schedule</span>
+            </a>
+            <a href="attendance.html" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-lg text-[#505f76]">
+                <span class="material-symbols-outlined">fact_check</span>
+                <span class="text-[12px] font-[500] leading-[16px] tracking-[0.05em]">Attendance</span>
+            </a>
+            <a href="analytics.html" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-lg text-[#505f76]">
+                <span class="material-symbols-outlined">analytics</span>
+                <span class="text-[12px] font-[500] leading-[16px] tracking-[0.05em]">Analytics</span>
+            </a>
+            <a href="reports.html" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-lg text-[#505f76]">
+                <span class="material-symbols-outlined">description</span>
+                <span class="text-[12px] font-[500] leading-[16px] tracking-[0.05em]">Reports</span>
+            </a>
+            <a href="notifications.html" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-lg text-[#505f76]">
+                <span class="material-symbols-outlined">notifications</span>
+                <span class="text-[12px] font-[500] leading-[16px] tracking-[0.05em]">Notifications</span>
+            </a>
+            <a href="settings.html" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-lg text-[#505f76]">
+                <span class="material-symbols-outlined">settings</span>
+                <span class="text-[12px] font-[500] leading-[16px] tracking-[0.05em]">Settings</span>
+            </a>
+            <a href="profile.html" class="sidebar-link active flex items-center gap-4 px-4 py-3 rounded-lg text-[#004ac6] bg-[rgba(37,99,235,0.1)] border-l-4 border-[#004ac6] font-bold">
+                <span class="material-symbols-outlined">person</span>
+                <span class="text-[12px] font-[500] leading-[16px] tracking-[0.05em]">Profile</span>
+            </a>
+        </nav>
+        <div class="px-4 mt-auto pt-4 border-t border-[#c3c6d7]">
+            <div class="flex items-center gap-3">
+                <img alt="Admin profile" class="w-10 h-10 rounded-full border border-[#c3c6d7] object-cover"
+                src="https://ui-avatars.com/api/?name=John+Doe&background=137fec&color=fff&size=128" />
+                <div>
+                    <p class="text-[14px] font-[400] leading-[20px] font-bold text-[#111c2d]">John Doe</p>
+                    <p class="text-[12px] font-[500] leading-[16px] tracking-[0.05em] text-[#505f76]">School Admin</p>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- ==================== MAIN CONTENT ==================== -->
+    <main class="ml-[260px] min-h-screen flex flex-col">
+
+        <!-- ==================== TOP NAV BAR ==================== -->
+        <header class="sticky top-0 z-40 w-full h-16 bg-[#f9f9ff] border-b border-[#c3c6d7] shadow-sm flex justify-between items-center px-6">
+            <div class="flex items-center gap-4 flex-1">
+                <div class="relative w-full max-w-md">
+                    <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-[#737686]">search</span>
+                    <input class="w-full bg-[#f0f3ff] border-none rounded-full py-2 pl-10 pr-4 text-[14px] font-[400] leading-[20px] focus:ring-2 focus:ring-[#2563eb] focus:ring-opacity-20 transition-all"
+                    placeholder="Search students, teachers..." type="text" id="globalSearch" onkeydown="if(event.key==='Enter'){showToast('Search', 'Searching for: '+this.value)}" />
+                </div>
+            </div>
+            <div class="flex items-center gap-4">
+                <button class="p-2 text-[#505f76] hover:bg-[#f0f3ff] rounded-full transition-colors relative" onclick="toggleNotifications()">
+                    <span class="material-symbols-outlined">notifications</span>
+                    <span class="absolute top-2 right-2 w-2 h-2 bg-[#ba1a1a] rounded-full badge-pulse" id="notifBadge"></span>
+                </button>
+                <div class="flex items-center gap-2 cursor-pointer hover:bg-[#f0f3ff] p-1 rounded-lg transition-colors" onclick="window.location.href='profile.html'">
+                    <img alt="Admin avatar" class="w-8 h-8 rounded-full object-cover"
+                    src="https://ui-avatars.com/api/?name=John+Doe&background=137fec&color=fff&size=128" />
+                    <div class="hidden md:block text-left">
+                        <p class="text-[12px] font-[500] leading-[16px] tracking-[0.05em] font-bold leading-tight">John Doe</p>
+                        <p class="text-[10px] text-[#505f76]">School Admin</p>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- ==================== PAGE CONTENT ==================== -->
+        <div class="p-6 space-y-6">
+
+            <!-- Page Header -->
+            <div>
+                <h2 class="text-[24px] font-[600] leading-[32px] text-[#111c2d]">My Profile</h2>
+                <p class="text-[16px] font-[400] leading-[24px] text-[#505f76]">Manage your personal information and security settings</p>
+            </div>
+
+            <!-- Profile Card -->
+            <div class="bg-white rounded-xl border card-shadow p-8 max-w-4xl mx-auto">
+                <!-- Avatar & Name -->
+                <div class="flex flex-col md:flex-row items-center gap-6 mb-8">
+                    <div class="profile-avatar-wrapper">
+                        <img src="https://ui-avatars.com/api/?name=John+Doe&background=137fec&color=fff&size=120" class="w-24 h-24 rounded-full border-4 border-[#004ac6] object-cover" id="profileAvatar">
+                        <div class="avatar-overlay" onclick="document.getElementById('avatarUpload').click()">
+                            <span class="material-symbols-outlined text-white text-[32px]">photo_camera</span>
+                        </div>
+                        <input type="file" id="avatarUpload" class="hidden" accept="image/*" onchange="uploadAvatar(event)" />
+                    </div>
+                    <div class="text-center md:text-left">
+                        <h2 class="text-2xl font-bold text-[#111c2d]" id="displayName">John Doe</h2>
+                        <p class="text-gray-500">School Administrator</p>
+                        <p class="text-sm text-[#004ac6]">Greenwood Academy</p>
+                        <div class="flex gap-2 mt-2 justify-center md:justify-start">
+                            <span class="px-2 py-1 bg-green-100 text-green-600 rounded-full text-xs font-bold">● Active</span>
+                            <span class="px-2 py-1 bg-blue-100 text-blue-600 rounded-full text-xs font-bold">Verified</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tabs -->
+                <div class="flex border-b border-[#c3c6d7] mb-6">
+                    <button class="px-4 py-2 text-[14px] font-bold text-[#004ac6] border-b-2 border-[#004ac6] transition-all" id="tabPersonal" onclick="switchTab('personal')">Personal Info</button>
+                    <button class="px-4 py-2 text-[14px] font-bold text-[#505f76] hover:text-[#004ac6] transition-all" id="tabSecurity" onclick="switchTab('security')">Security</button>
+                    <button class="px-4 py-2 text-[14px] font-bold text-[#505f76] hover:text-[#004ac6] transition-all" id="tabActivity" onclick="switchTab('activity')">Activity</button>
+                </div>
+
+                <!-- Tab: Personal Info -->
+                <div id="personalTab" class="space-y-4">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-[12px] font-semibold text-[#505f76]">Full Name</label>
+                            <input type="text" value="John Doe" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-[#004ac6] outline-none" id="fullName">
+                        </div>
+                        <div>
+                            <label class="block text-[12px] font-semibold text-[#505f76]">Email Address</label>
+                            <input type="email" value="john.doe@greenwood.edu" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-[#004ac6] outline-none" id="userEmail">
+                        </div>
+                        <div>
+                            <label class="block text-[12px] font-semibold text-[#505f76]">Phone Number</label>
+                            <input type="tel" value="+1 (555) 123-4567" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-[#004ac6] outline-none" id="userPhone">
+                        </div>
+                        <div>
+                            <label class="block text-[12px] font-semibold text-[#505f76]">Role</label>
+                            <input type="text" value="School Administrator" class="w-full px-4 py-2 border rounded-lg bg-gray-50" disabled>
+                        </div>
+                        <div>
+                            <label class="block text-[12px] font-semibold text-[#505f76]">School</label>
+                            <input type="text" value="Greenwood Academy" class="w-full px-4 py-2 border rounded-lg bg-gray-50" disabled>
+                        </div>
+                        <div>
+                            <label class="block text-[12px] font-semibold text-[#505f76]">Joined</label>
+                            <input type="text" value="January 15, 2022" class="w-full px-4 py-2 border rounded-lg bg-gray-50" disabled>
+                        </div>
+                        <div class="md:col-span-2">
+                            <label class="block text-[12px] font-semibold text-[#505f76]">Bio</label>
+                            <textarea rows="3" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-[#004ac6] outline-none" id="userBio">Experienced school administrator with over 10 years in education management. Passionate about technology-driven learning and student success.</textarea>
+                        </div>
+                    </div>
+                    <button onclick="updateProfile()" class="px-6 py-2 bg-[#004ac6] text-white rounded-lg font-bold hover:bg-[#2563eb] transition-all flex items-center gap-2">
+                        <span class="material-symbols-outlined text-[18px]">save</span>
+                        Save Changes
+                    </button>
+                </div>
+
+                <!-- Tab: Security -->
+                <div id="securityTab" class="space-y-4 hidden">
+                    <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-4">
+                        <p class="text-[14px] text-yellow-700 flex items-center gap-2">
+                            <span class="material-symbols-outlined">info</span>
+                            For security, your password must be at least 8 characters with uppercase, lowercase, and numbers.
+                        </p>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-[12px] font-semibold text-[#505f76]">Current Password</label>
+                            <div class="relative">
+                                <input type="password" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-[#004ac6] outline-none" id="currentPassword" placeholder="Enter current password">
+                                <button type="button" onclick="togglePasswordVisibility('currentPassword')" class="absolute right-3 top-1/2 -translate-y-1/2 text-[#737686] hover:text-[#004ac6]">
+                                    <span class="material-symbols-outlined text-[18px]">visibility</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-[12px] font-semibold text-[#505f76]">New Password</label>
+                            <div class="relative">
+                                <input type="password" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-[#004ac6] outline-none" id="newPassword" placeholder="Enter new password">
+                                <button type="button" onclick="togglePasswordVisibility('newPassword')" class="absolute right-3 top-1/2 -translate-y-1/2 text-[#737686] hover:text-[#004ac6]">
+                                    <span class="material-symbols-outlined text-[18px]">visibility</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-[12px] font-semibold text-[#505f76]">Confirm New Password</label>
+                            <div class="relative">
+                                <input type="password" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-[#004ac6] outline-none" id="confirmPassword" placeholder="Confirm new password">
+                                <button type="button" onclick="togglePasswordVisibility('confirmPassword')" class="absolute right-3 top-1/2 -translate-y-1/2 text-[#737686] hover:text-[#004ac6]">
+                                    <span class="material-symbols-outlined text-[18px]">visibility</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="flex items-end">
+                            <button onclick="changePassword()" class="w-full px-6 py-2 bg-[#004ac6] text-white rounded-lg font-bold hover:bg-[#2563eb] transition-all flex items-center justify-center gap-2">
+                                <span class="material-symbols-outlined text-[18px]">lock_reset</span>
+                                Change Password
+                            </button>
+                        </div>
+                    </div>
+                    <div class="mt-4 p-4 bg-[#f0f3ff] rounded-lg border border-[#c3c6d7]">
+                        <h4 class="text-[14px] font-bold text-[#111c2d] flex items-center gap-2">
+                            <span class="material-symbols-outlined text-[#004ac6]">shield</span>
+                            Two-Factor Authentication
+                        </h4>
+                        <p class="text-[12px] text-[#505f76] mt-1">Add an extra layer of security to your account.</p>
+                        <button onclick="showToast('2FA', 'Two-Factor Authentication setup initiated!')" class="mt-2 px-4 py-1.5 border border-[#004ac6] text-[#004ac6] rounded-lg text-[12px] font-bold hover:bg-[#004ac6] hover:text-white transition-all">
+                            Enable 2FA
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Tab: Activity -->
+                <div id="activityTab" class="space-y-4 hidden">
+                    <div class="space-y-3" id="activityLog">
+                        <div class="flex items-center gap-3 p-3 bg-[#f0f3ff] rounded-lg border border-[rgba(195,198,215,0.3)]">
+                            <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center text-blue-600">
+                                <span class="material-symbols-outlined">login</span>
+                            </div>
+                            <div class="flex-1">
+                                <p class="text-[14px] font-semibold">Logged in from Chrome</p>
+                                <p class="text-[12px] text-[#505f76]">Today, 10:30 AM • IP: 192.168.1.1</p>
+                            </div>
+                            <span class="text-[10px] text-green-600 font-bold">Active</span>
+                        </div>
+                        <div class="flex items-center gap-3 p-3 bg-[#f0f3ff] rounded-lg border border-[rgba(195,198,215,0.3)]">
+                            <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center text-green-600">
+                                <span class="material-symbols-outlined">edit</span>
+                            </div>
+                            <div class="flex-1">
+                                <p class="text-[14px] font-semibold">Profile updated</p>
+                                <p class="text-[12px] text-[#505f76]">Yesterday, 3:15 PM</p>
+                            </div>
+                            <span class="text-[10px] text-gray-400">1d ago</span>
+                        </div>
+                        <div class="flex items-center gap-3 p-3 bg-[#f0f3ff] rounded-lg border border-[rgba(195,198,215,0.3)]">
+                            <div class="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center text-purple-600">
+                                <span class="material-symbols-outlined">lock</span>
+                            </div>
+                            <div class="flex-1">
+                                <p class="text-[14px] font-semibold">Password changed</p>
+                                <p class="text-[12px] text-[#505f76]">3 days ago</p>
+                            </div>
+                            <span class="text-[10px] text-gray-400">3d ago</span>
+                        </div>
+                        <div class="flex items-center gap-3 p-3 bg-[#f0f3ff] rounded-lg border border-[rgba(195,198,215,0.3)]">
+                            <div class="w-10 h-10 bg-orange-100 rounded-full flex items-center justify-center text-orange-600">
+                                <span class="material-symbols-outlined">devices</span>
+                            </div>
+                            <div class="flex-1">
+                                <p class="text-[14px] font-semibold">New device login</p>
+                                <p class="text-[12px] text-[#505f76]">5 days ago • Safari on iPhone</p>
+                            </div>
+                            <span class="text-[10px] text-gray-400">5d ago</span>
+                        </div>
+                    </div>
+                    <button onclick="showToast('Activity', 'Full activity log loaded!')" class="text-[#004ac6] text-[14px] font-bold hover:underline">View All Activity →</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="mt-auto py-4 px-6 border-t border-[#c3c6d7] bg-[#f9f9ff]">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-[12px] font-[500] text-[#505f76]">© 2024 EduManage Solutions. All rights reserved.</p>
+                <div class="flex gap-6">
+                    <a class="text-[12px] text-[#505f76] hover:text-[#004ac6]" href="#">Help Center</a>
+                    <a class="text-[12px] text-[#505f76] hover:text-[#004ac6]" href="#">Privacy Policy</a>
+                    <a class="text-[12px] text-[#505f76] hover:text-[#004ac6]" href="#">Terms of Service</a>
+                </div>
+            </div>
+        </footer>
+    </main>
+
+    <!-- ==================== NOTIFICATION DROPDOWN ==================== -->
+    <div id="notifDropdown" class="fixed top-16 right-6 z-50 bg-white rounded-xl border border-[#c3c6d7] shadow-2xl max-w-sm w-full transform scale-95 opacity-0 transition-all duration-200 pointer-events-none">
+        <div class="p-4 border-b border-[#c3c6d7] flex justify-between items-center">
+            <h3 class="text-[16px] font-bold text-[#111c2d]">Notifications</h3>
+            <span class="text-[12px] text-[#004ac6] font-bold cursor-pointer hover:underline" onclick="markAllNotifRead()">Mark all read</span>
+        </div>
+        <div class="max-h-80 overflow-y-auto custom-scrollbar" id="notifList">
+            <div class="p-3 border-b border-[rgba(195,198,215,0.3)] hover:bg-[#f0f3ff] transition-all cursor-pointer unread">
+                <p class="text-[14px] font-semibold text-[#111c2d]">New student enrolled</p>
+                <p class="text-[12px] text-[#505f76]">Alex Rivera joined Grade 11</p>
+                <p class="text-[10px] text-[#737686] mt-1">2 mins ago</p>
+            </div>
+            <div class="p-3 border-b border-[rgba(195,198,215,0.3)] hover:bg-[#f0f3ff] transition-all cursor-pointer unread">
+                <p class="text-[14px] font-semibold text-[#111c2d]">Teacher added</p>
+                <p class="text-[12px] text-[#505f76]">Sarah Jenkins added to Science department</p>
+                <p class="text-[10px] text-[#737686] mt-1">1 hour ago</p>
+            </div>
+            <div class="p-3 border-b border-[rgba(195,198,215,0.3)] hover:bg-[#f0f3ff] transition-all cursor-pointer">
+                <p class="text-[14px] font-semibold text-[#111c2d]">Attendance report ready</p>
+                <p class="text-[12px] text-[#505f76]">Monthly attendance summary is available</p>
+                <p class="text-[10px] text-[#737686] mt-1">3 hours ago</p>
+            </div>
+            <div class="p-3 hover:bg-[#f0f3ff] transition-all cursor-pointer">
+                <p class="text-[14px] font-semibold text-[#111c2d]">System update</p>
+                <p class="text-[12px] text-[#505f76]">New version 2.4.0 released</p>
+                <p class="text-[10px] text-[#737686] mt-1">1 day ago</p>
+            </div>
+        </div>
+        <div class="p-3 border-t border-[#c3c6d7] text-center">
+            <button class="text-[12px] text-[#004ac6] font-bold hover:underline" onclick="window.location.href='notifications.html'">View all notifications</button>
+        </div>
+    </div>
+
+    <!-- ==================== TOAST ==================== -->
+    <div id="toast" class="fixed bottom-6 right-6 z-50 bg-[#111c2d] text-white rounded-xl p-4 shadow-2xl max-w-sm transform translate-y-full opacity-0 transition-all duration-500 notification-toast">
+        <div class="flex items-start gap-3">
+            <span class="material-symbols-outlined text-[#6ffbbe]">check_circle</span>
+            <div>
+                <p class="text-[14px] font-bold" id="toastTitle">Success</p>
+                <p class="text-[12px] text-[#b7c8e1]" id="toastMessage">Action completed!</p>
+            </div>
+            <button onclick="closeToast()" class="text-[#b7c8e1] hover:text-white">
+                <span class="material-symbols-outlined text-[16px]">close</span>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // ==================== TOAST ====================
+        function showToast(title, message) {
+            document.getElementById('toastTitle').textContent = title;
+            document.getElementById('toastMessage').textContent = message;
+            const toast = document.getElementById('toast');
+            toast.classList.remove('translate-y-full', 'opacity-0');
+            toast.classList.add('translate-y-0', 'opacity-100');
+            setTimeout(closeToast, 4000);
+        }
+        function closeToast() {
+            const toast = document.getElementById('toast');
+            toast.classList.add('translate-y-full', 'opacity-0');
+            toast.classList.remove('translate-y-0', 'opacity-100');
+        }
+
+        // ==================== NOTIFICATIONS DROPDOWN ====================
+        let notifOpen = false;
+        function toggleNotifications() {
+            const dropdown = document.getElementById('notifDropdown');
+            notifOpen = !notifOpen;
+            if (notifOpen) {
+                dropdown.classList.remove('scale-95', 'opacity-0', 'pointer-events-none');
+                dropdown.classList.add('scale-100', 'opacity-100', 'pointer-events-auto');
+                document.getElementById('notifBadge').style.display = 'none';
+            } else {
+                dropdown.classList.add('scale-95', 'opacity-0', 'pointer-events-none');
+                dropdown.classList.remove('scale-100', 'opacity-100', 'pointer-events-auto');
+            }
+        }
+        document.addEventListener('click', function(e) {
+            const dropdown = document.getElementById('notifDropdown');
+            const btn = e.target.closest('button');
+            if (notifOpen && !dropdown.contains(e.target) && !btn?.closest('button')?.onclick?.toString().includes('toggleNotifications')) {
+                toggleNotifications();
+            }
+        });
+
+        function markAllNotifRead() {
+            document.querySelectorAll('#notifList .unread').forEach(el => {
+                el.classList.remove('unread');
+                el.style.borderLeft = 'none';
+            });
+            showToast('Notifications', 'All notifications marked as read!');
+        }
+
+        // ==================== AVATAR UPLOAD ====================
+        function uploadAvatar(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('profileAvatar').src = e.target.result;
+                    showToast('Avatar Updated', 'Profile photo updated successfully!');
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        // ==================== TAB SWITCH ====================
+        function switchTab(tab) {
+            document.querySelectorAll('[id$="Tab"]').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('[id^="tab"]').forEach(el => {
+                el.classList.remove('text-[#004ac6]', 'border-b-2', 'border-[#004ac6]');
+                el.classList.add('text-[#505f76]');
+            });
+            if (tab === 'personal') {
+                document.getElementById('personalTab').classList.remove('hidden');
+                document.getElementById('tabPersonal').classList.add('text-[#004ac6]', 'border-b-2', 'border-[#004ac6]');
+                document.getElementById('tabPersonal').classList.remove('text-[#505f76]');
+            } else if (tab === 'security') {
+                document.getElementById('securityTab').classList.remove('hidden');
+                document.getElementById('tabSecurity').classList.add('text-[#004ac6]', 'border-b-2', 'border-[#004ac6]');
+                document.getElementById('tabSecurity').classList.remove('text-[#505f76]');
+            } else {
+                document.getElementById('activityTab').classList.remove('hidden');
+                document.getElementById('tabActivity').classList.add('text-[#004ac6]', 'border-b-2', 'border-[#004ac6]');
+                document.getElementById('tabActivity').classList.remove('text-[#505f76]');
+            }
+        }
+
+        // ==================== PASSWORD VISIBILITY ====================
+        function togglePasswordVisibility(inputId) {
+            const input = document.getElementById(inputId);
+            const btn = input.nextElementSibling;
+            if (input.type === 'password') {
+                input.type = 'text';
+                btn.innerHTML = '<span class="material-symbols-outlined text-[18px]">visibility_off</span>';
+            } else {
+                input.type = 'password';
+                btn.innerHTML = '<span class="material-symbols-outlined text-[18px]">visibility</span>';
+            }
+        }
+
+        // ==================== UPDATE PROFILE ====================
+        function updateProfile() {
+            const name = document.getElementById('fullName').value;
+            const email = document.getElementById('userEmail').value;
+            const phone = document.getElementById('userPhone').value;
+            const bio = document.getElementById('userBio').value;
+
+            if (!name || !email) {
+                showToast('Error', 'Please fill in all required fields!');
+                return;
+            }
+
+            document.getElementById('displayName').textContent = name;
+            showToast('Profile Updated', 'Your profile has been updated successfully!');
+        }
+
+        // ==================== CHANGE PASSWORD ====================
+        function changePassword() {
+            const current = document.getElementById('currentPassword').value;
+            const newPass = document.getElementById('newPassword').value;
+            const confirm = document.getElementById('confirmPassword').value;
+
+            if (!current) {
+                showToast('Error', 'Please enter your current password!');
+                return;
+            }
+            if (newPass.length < 8) {
+                showToast('Error', 'Password must be at least 8 characters!');
+                return;
+            }
+            if (newPass !== confirm) {
+                showToast('Error', 'Passwords do not match!');
+                return;
+            }
+
+            showToast('Password Changed', 'Your password has been updated successfully!');
+            document.getElementById('currentPassword').value = '';
+            document.getElementById('newPassword').value = '';
+            document.getElementById('confirmPassword').value = '';
+
+            // Add activity log entry
+            const log = document.getElementById('activityLog');
+            const entry = document.createElement('div');
+            entry.className = 'flex items-center gap-3 p-3 bg-[#f0f3ff] rounded-lg border border-[rgba(195,198,215,0.3)] animate-fade-in';
+            entry.innerHTML = `
+                <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center text-green-600">
+                    <span class="material-symbols-outlined">lock</span>
+                </div>
+                <div class="flex-1">
+                    <p class="text-[14px] font-semibold">Password changed</p>
+                    <p class="text-[12px] text-[#505f76]">Just now</p>
+                </div>
+                <span class="text-[10px] text-green-600 font-bold">New</span>
+            `;
+            log.prepend(entry);
+        }
+
+        // ==================== NOTIFICATION BADGE COUNT ====================
+        function updateNotifBadge() {
+            const unread = document.querySelectorAll('#notifList .unread').length;
+            const badge = document.getElementById('notifBadge');
+            if (unread > 0) {
+                badge.style.display = 'block';
+                badge.textContent = unread;
+            } else {
+                badge.style.display = 'none';
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            updateNotifBadge();
+        });
+    </script>
+</body>
+</html>

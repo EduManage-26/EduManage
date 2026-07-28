@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Classes | School Admin</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries">
+    </script>
+    <link rel="icon" type="image/x-icon" href="../image/icon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+    <style>
+        * { font-family: 'Inter', sans-serif; }
+        body { background-color: #f9f9ff; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .sidebar-link { transition: all 0.2s ease; }
+        .sidebar-link:hover { background-color: #f0f3ff; transform: translateX(4px); }
+        .sidebar-link.active { background-color: rgba(37, 99, 235, 0.1); color: #004ac6; border-left: 4px solid #004ac6; font-weight: 700; }
+        .card-shadow { box-shadow: 0 1px 3px 0 rgba(0,0,0,0.1), 0 1px 2px -1px rgba(0,0,0,0.1); }
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #e2e8f0; border-radius: 10px; }
+        .animate-fade-in { animation: fadeIn 0.3s ease-out forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .admin-row:hover { background-color: #f0f3ff; }
+    </style>
+</head>
+<body>
+
+    <!-- ==================== SIDEBAR ==================== -->
+    <aside class="fixed left-0 top-0 h-full w-[260px] z-50 bg-[#f9f9ff] border-r border-[#c3c6d7] shadow-sm flex flex-col py-4 gap-1">
+        <div class="px-4 mb-6">
+            <div class="flex items-center gap-2">
+                <div class="w-10 h-10 rounded-lg bg-[#2563eb] flex items-center justify-center text-white">
+                    <span class="material-symbols-outlined" style="font-variation-settings:'FILL'1;">school</span>
+                </div>
+                <div>
+                    <h1 class="text-[20px] font-[600] leading-[28px] text-[#004ac6]">EduManage</h1>
+                    <p class="text-[12px] font-[500] leading-[16px] tracking-[0.05em] text-[#505f76]">School Admin</p>
+                </div>
+            </div>
+        </div>
+        <nav class="flex-1 px-2 space-y-1 overflow-y-auto custom-scrollbar">
+            <a href="index.html" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-lg text-[#505f76]">
+                <span class="material-symbols-outlined">dashboard</span>
+                <span class="text-[12px] font-[500] leading-[16px] tracking-[0.05em]">Dashboard</span>
+            </a>
+            <a href="teachers.html" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-lg text-[#505f76]">
+                <span class="material-symbols-outlined">person</span>
+                <span class="text-[12px] font-[500] leading-[16px] tracking-[0.05em]">Teachers</span>
+            </a>
+            <a href="students.html" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-lg text-[#505f76]">
+                <span class="material-symbols-outlined">groups</span>
+                <span class="text-[12px] font-[500] leading-[16px] tracking-[0.05em]">Students</span>
+            </a>
+            <a href="parents.html" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-lg text-[#505f76]">
+                <span class="material-symbols-outlined">family_restroom</span>
+                <span class="text-[12px] font-[500] leading-[16px] tracking-[0.05em]">Parents</span>
+            </a>
+            <a href="classes.html" class="sidebar-link active flex items-center gap-4 px-4 py-3 rounded-lg text-[#004ac6] bg-[rgba(37,99,235,0.1)] border-l-4 border-[#004ac6] font-bold">
+                <span class="material-symbols-outlined">class</span>
+                <span class="text-[12px] font-[500] leading-[16px] tracking-[0.05em]">Classes</span>
+            </a>
+            <a href="subjects.html" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-lg text-[#505f76]">
+                <span class="material-symbols-outlined">menu_book</span>
+                <span class="text-[12px] font-[500] leading-[16px] tracking-[0.05em]">Subjects</span>
+            </a>
+            <a href="schedule.html" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-lg text-[#505f76]">
+                <span class="material-symbols-outlined">calendar_month</span>
+                <span class="text-[12px] font-[500] leading-[16px] tracking-[0.05em]">Schedule</span>
+            </a>
+            <a href="attendance.html" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-lg text-[#505f76]">
+                <span class="material-symbols-outlined">fact_check</span>
+                <span class="text-[12px] font-[500] leading-[16px] tracking-[0.05em]">Attendance</span>
+            </a>
+            <a href="analytics.html" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-lg text-[#505f76]">
+                <span class="material-symbols-outlined">analytics</span>
+                <span class="text-[12px] font-[500] leading-[16px] tracking-[0.05em]">Analytics</span>
+            </a>
+            <a href="reports.html" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-lg text-[#505f76]">
+                <span class="material-symbols-outlined">description</span>
+                <span class="text-[12px] font-[500] leading-[16px] tracking-[0.05em]">Reports</span>
+            </a>
+            <a href="notifications.html" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-lg text-[#505f76]">
+                <span class="material-symbols-outlined">notifications</span>
+                <span class="text-[12px] font-[500] leading-[16px] tracking-[0.05em]">Notifications</span>
+            </a>
+            <a href="settings.html" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-lg text-[#505f76]">
+                <span class="material-symbols-outlined">settings</span>
+                <span class="text-[12px] font-[500] leading-[16px] tracking-[0.05em]">Settings</span>
+            </a>
+            <a href="profile.html" class="sidebar-link flex items-center gap-4 px-4 py-3 rounded-lg text-[#505f76]">
+                <span class="material-symbols-outlined">person</span>
+                <span class="text-[12px] font-[500] leading-[16px] tracking-[0.05em]">Profile</span>
+            </a>
+        </nav>
+        <div class="px-4 mt-auto pt-4 border-t border-[#c3c6d7]">
+            <div class="flex items-center gap-3">
+                <img alt="Admin profile" class="w-10 h-10 rounded-full border border-[#c3c6d7] object-cover"
+                src="https://ui-avatars.com/api/?name=John+Doe&background=137fec&color=fff&size=128" />
+                <div>
+                    <p class="text-[14px] font-[400] leading-[20px] font-bold text-[#111c2d]">John Doe</p>
+                    <p class="text-[12px] font-[500] leading-[16px] tracking-[0.05em] text-[#505f76]">School Admin</p>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- ==================== MAIN CONTENT ==================== -->
+    <main class="ml-[260px] min-h-screen flex flex-col">
+
+        <header class="sticky top-0 z-40 w-full h-16 bg-[#f9f9ff] border-b border-[#c3c6d7] shadow-sm flex justify-between items-center px-6">
+            <div class="flex items-center gap-4 flex-1">
+                <div class="relative w-full max-w-md">
+                    <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-[#737686]">search</span>
+                    <input class="w-full bg-[#f0f3ff] border-none rounded-full py-2 pl-10 pr-4 text-[14px] font-[400] leading-[20px] focus:ring-2 focus:ring-[#2563eb] focus:ring-opacity-20 transition-all"
+                    placeholder="Search classes..." type="text" id="searchInput" oninput="renderClasses()" />
+                </div>
+            </div>
+            <div class="flex items-center gap-4">
+                <button class="p-2 text-[#505f76] hover:bg-[#f0f3ff] rounded-full transition-colors relative" onclick="showToast('Notifications', 'You have 3 new notifications')">
+                    <span class="material-symbols-outlined">notifications</span>
+                    <span class="absolute top-2 right-2 w-2 h-2 bg-[#ba1a1a] rounded-full"></span>
+                </button>
+                <div class="flex items-center gap-2 cursor-pointer hover:bg-[#f0f3ff] p-1 rounded-lg transition-colors">
+                    <img alt="Admin avatar" class="w-8 h-8 rounded-full object-cover"
+                    src="https://ui-avatars.com/api/?name=John+Doe&background=137fec&color=fff&size=128" />
+                    <div class="hidden md:block text-left">
+                        <p class="text-[12px] font-[500] leading-[16px] tracking-[0.05em] font-bold leading-tight">John Doe</p>
+                        <p class="text-[10px] text-[#505f76]">School Admin</p>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="p-6 space-y-6">
+
+            <div class="flex justify-between items-center">
+                <div>
+                    <h2 class="text-[24px] font-[600] leading-[32px] text-[#111c2d]">Classes Management</h2>
+                    <p class="text-[16px] font-[400] leading-[24px] text-[#505f76]">Manage all classes and sections</p>
+                </div>
+                <button onclick="openAddClassModal()" class="bg-[#004ac6] text-white px-4 py-2.5 rounded-lg text-[12px] font-bold hover:bg-[#2563eb] transition-all flex items-center gap-2">
+                    <span class="material-symbols-outlined text-[18px]">add</span>
+                    Add Class
+                </button>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-4 gap-6">
+                <div class="bg-white rounded-xl border p-4 text-center card-shadow">
+                    <p class="text-2xl font-bold text-[#004ac6]" id="totalClasses">0</p>
+                    <p class="text-sm text-gray-500">Total Classes</p>
+                </div>
+                <div class="bg-white rounded-xl border p-4 text-center card-shadow">
+                    <p class="text-2xl font-bold text-green-600" id="activeClasses">0</p>
+                    <p class="text-sm text-gray-500">Active</p>
+                </div>
+                <div class="bg-white rounded-xl border p-4 text-center card-shadow">
+                    <p class="text-2xl font-bold text-purple-600" id="totalStudents">0</p>
+                    <p class="text-sm text-gray-500">Total Students</p>
+                </div>
+                <div class="bg-white rounded-xl border p-4 text-center card-shadow">
+                    <p class="text-2xl font-bold text-orange-600" id="avgCapacity">0</p>
+                    <p class="text-sm text-gray-500">Avg. Capacity</p>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl border card-shadow overflow-hidden">
+                <div class="px-4 py-3 border-b bg-[#f0f3ff]">
+                    <h3 class="text-[18px] font-[600] text-[#111c2d]">All Classes</h3>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left">
+                        <thead class="bg-[rgba(240,243,255,0.5)]">
+                            <tr>
+                                <th class="px-4 py-3 text-[12px] font-bold text-[#505f76]">Class Name</th>
+                                <th class="px-4 py-3 text-[12px] font-bold text-[#505f76]">Teacher</th>
+                                <th class="px-4 py-3 text-[12px] font-bold text-[#505f76]">Students</th>
+                                <th class="px-4 py-3 text-[12px] font-bold text-[#505f76]">Capacity</th>
+                                <th class="px-4 py-3 text-[12px] font-bold text-[#505f76]">Room</th>
+                                <th class="px-4 py-3 text-[12px] font-bold text-[#505f76] text-right">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-[rgba(195,198,215,0.3)]" id="classesTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <footer class="mt-auto py-4 px-6 border-t border-[#c3c6d7] bg-[#f9f9ff]">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-[12px] font-[500] text-[#505f76]">© 2024 EduManage Solutions. All rights reserved.</p>
+                <div class="flex gap-6">
+                    <a class="text-[12px] text-[#505f76] hover:text-[#004ac6]" href="#">Help Center</a>
+                    <a class="text-[12px] text-[#505f76] hover:text-[#004ac6]" href="#">Privacy Policy</a>
+                    <a class="text-[12px] text-[#505f76] hover:text-[#004ac6]" href="#">Terms of Service</a>
+                </div>
+            </div>
+        </footer>
+    </main>
+
+    <!-- ==================== ADD CLASS MODAL ==================== -->
+    <div id="addClassModal" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-black/50 backdrop-blur-sm">
+        <div class="bg-white rounded-xl max-w-md w-full mx-4 p-6 shadow-2xl">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-[18px] font-[600] text-[#111c2d]">Add New Class</h3>
+                <button onclick="closeAddClassModal()" class="p-1 hover:bg-[#f0f3ff] rounded-lg">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+            </div>
+            <form id="addClassForm" class="space-y-4">
+                <input type="text" id="className" placeholder="Class Name (e.g., Grade 10-A)" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-[#004ac6] outline-none" required>
+                <select id="classTeacher" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-[#004ac6] outline-none">
+                    <option value="Sarah Jenkins">Sarah Jenkins</option>
+                    <option value="Michael Brown">Michael Brown</option>
+                    <option value="Linda White">Linda White</option>
+                    <option value="Robert Chen">Robert Chen</option>
+                    <option value="Emily Davis">Emily Davis</option>
+                </select>
+                <input type="number" id="classCapacity" placeholder="Capacity" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-[#004ac6] outline-none">
+                <input type="text" id="classRoom" placeholder="Room Number" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-[#004ac6] outline-none">
+                <div class="flex gap-3 pt-2">
+                    <button type="button" onclick="closeAddClassModal()" class="flex-1 py-2 bg-[#f0f3ff] text-[#505f76] rounded-lg font-bold hover:bg-[#dee8ff]">Cancel</button>
+                    <button type="submit" class="flex-1 py-2 bg-[#004ac6] text-white rounded-lg font-bold hover:bg-[#2563eb]">Create Class</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ==================== TOAST ==================== -->
+    <div id="toast" class="fixed bottom-6 right-6 z-50 bg-[#111c2d] text-white rounded-xl p-4 shadow-2xl max-w-sm transform translate-y-full opacity-0 transition-all duration-500">
+        <div class="flex items-start gap-3">
+            <span class="material-symbols-outlined text-[#6ffbbe]">check_circle</span>
+            <div>
+                <p class="text-[14px] font-bold" id="toastTitle">Success</p>
+                <p class="text-[12px] text-[#b7c8e1]" id="toastMessage">Action completed!</p>
+            </div>
+            <button onclick="closeToast()" class="text-[#b7c8e1] hover:text-white">
+                <span class="material-symbols-outlined text-[16px]">close</span>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        let classes = [
+            { id: 1, name: "Grade 10-A", teacher: "Sarah Jenkins", students: 32, capacity: 35, room: "Room 204" },
+            { id: 2, name: "Grade 11-B", teacher: "Michael Brown", students: 28, capacity: 30, room: "Lab B" },
+            { id: 3, name: "Grade 9-C", teacher: "Linda White", students: 30, capacity: 32, room: "Room 102" }
+        ];
+
+        function showToast(title, message) {
+            document.getElementById('toastTitle').textContent = title;
+            document.getElementById('toastMessage').textContent = message;
+            const toast = document.getElementById('toast');
+            toast.classList.remove('translate-y-full', 'opacity-0');
+            toast.classList.add('translate-y-0', 'opacity-100');
+            setTimeout(closeToast, 4000);
+        }
+        function closeToast() {
+            const toast = document.getElementById('toast');
+            toast.classList.add('translate-y-full', 'opacity-0');
+            toast.classList.remove('translate-y-0', 'opacity-100');
+        }
+
+        function renderClasses() {
+            const searchTerm = document.getElementById('searchInput')?.value.toLowerCase() || '';
+
+            let filtered = classes.filter(c =>
+                c.name.toLowerCase().includes(searchTerm) ||
+                c.teacher.toLowerCase().includes(searchTerm) ||
+                c.room.toLowerCase().includes(searchTerm)
+            );
+
+            const total = filtered.length;
+            const totalStudents = filtered.reduce((sum, c) => sum + c.students, 0);
+            const avgCap = total > 0 ? (filtered.reduce((sum, c) => sum + c.capacity, 0) / total).toFixed(0) : 0;
+
+            document.getElementById('totalClasses').textContent = total;
+            document.getElementById('activeClasses').textContent = total;
+            document.getElementById('totalStudents').textContent = totalStudents;
+            document.getElementById('avgCapacity').textContent = avgCap;
+
+            const tbody = document.getElementById('classesTableBody');
+            tbody.innerHTML = filtered.map(c => `
+                <tr class="admin-row animate-fade-in">
+                    <td class="px-4 py-3 font-semibold">${c.name}</td>
+                    <td class="px-4 py-3">${c.teacher}</td>
+                    <td class="px-4 py-3">${c.students}</td>
+                    <td class="px-4 py-3">${c.capacity}</td>
+                    <td class="px-4 py-3">${c.room}</td>
+                    <td class="px-4 py-3 text-right">
+                        <button onclick="deleteClass(${c.id})" class="text-[#737686] hover:text-[#ba1a1a] transition-colors">
+                            <span class="material-symbols-outlined text-[18px]">delete</span>
+                        </button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function openAddClassModal() {
+            document.getElementById('addClassModal').classList.remove('hidden');
+        }
+        function closeAddClassModal() {
+            document.getElementById('addClassModal').classList.add('hidden');
+            document.getElementById('addClassForm').reset();
+        }
+
+        document.getElementById('addClassForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const name = document.getElementById('className').value;
+            const teacher = document.getElementById('classTeacher').value;
+            const capacity = parseInt(document.getElementById('classCapacity').value) || 30;
+            const room = document.getElementById('classRoom').value || 'TBD';
+
+            const newClass = {
+                id: classes.length + 1,
+                name,
+                teacher,
+                students: 0,
+                capacity,
+                room
+            };
+            classes.push(newClass);
+            renderClasses();
+            closeAddClassModal();
+            showToast('Class Created', `${name} has been created successfully!`);
+        });
+
+        function deleteClass(id) {
+            if (confirm('Delete this class?')) {
+                classes = classes.filter(c => c.id !== id);
+                renderClasses();
+                showToast('Deleted', 'Class removed successfully.');
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', renderClasses);
+    </script>
+</body>
+</html>
